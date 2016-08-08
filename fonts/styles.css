@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "lccc-font-icons";
+  src:url("lccc-font-icons.eot");
+  src:url("lccc-font-icons.eot?#iefix") format("embedded-opentype"),
+    url("lccc-font-icons.woff") format("woff"),
+    url("lccc-font-icons.ttf") format("truetype"),
+    url("lccc-font-icons.svg#lccc-font-icons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "lccc-font-icons" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="lccc-font-"]:before,
+[class*=" lccc-font-"]:before {
+  font-family: "lccc-font-icons" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.lccc-font-camera:before {
+  content: "\62";
+}
+.lccc-font-calendar:before {
+  content: "\63";
+}
+.lccc-font-home:before {
+  content: "\64";
+}
+.lccc-font-save:before {
+  content: "\65";
+}
+.lccc-font-zoom-in:before {
+  content: "\67";
+}
+.lccc-font-zoom-out:before {
+  content: "\68";
+}
+.lccc-font-print:before {
+  content: "\66";
+}
+.lccc-font-database:before {
+  content: "\69";
+}
+.lccc-font-foundation:before {
+  content: "\6a";
+}
+.lccc-font-lccc:before {
+  content: "\61";
+}
+.lccc-font-facebook-alt:before {
+  content: "\6b";
+}
+.lccc-font-linkedin-alt:before {
+  content: "\6c";
+}
+.lccc-font-linkedin:before {
+  content: "\6d";
+}
+.lccc-font-youtube:before {
+  content: "\6e";
+}
+.lccc-font-youtube-alt:before {
+  content: "\6f";
+}
+.lccc-font-facebook-places:before {
+  content: "\70";
+}
+.lccc-font-wordpress:before {
+  content: "\71";
+}
+.lccc-font-tumblr-square:before {
+  content: "\72";
+}
+.lccc-font-lccc-reverse:before {
+  content: "\73";
+}

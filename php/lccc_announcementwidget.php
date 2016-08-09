@@ -45,13 +45,14 @@ class LCCC_Whats_Going_On_Announcement_Widget extends WP_Widget {
 			echo '</div>';
 			}
 	  	$today = getdate();
+				$widgetcategory = get_cat_slug($widgetcategory);
 		
 		if ($whattodisplay == 'lccc_announcement'){
 					$announcementargs=array(
 					'post_type' => lccc_announcement,
 					'post_status' => 'publish',
 					'taxonomy'	=> 'category',
-					'term'	=> 'womens-varsity-volleyball',
+					'term'	=> $widgetcategory,
 					//'cat' => $widgetcategory,
 					'orderby' => 'date',
 					'order' => 'DESC',

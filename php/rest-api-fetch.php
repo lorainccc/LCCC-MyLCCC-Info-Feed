@@ -67,11 +67,11 @@ class Endpoint {
 	}
 
 	/**
-	 * Reset cache for a day
+	 * Reset cache every 3 Hours
 	 */
 	protected function set_cache() {
 		if ( ! empty( $this->posts ) ) {
-			set_transient( $this->cache_key(), $this->posts, DAY_IN_SECONDS );
+			set_transient( $this->cache_key(), $this->posts, 10800 );
 		}
 	}
 

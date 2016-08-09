@@ -49,7 +49,7 @@ class LCCC_Whats_Going_On_Announcement_Widget extends WP_Widget {
 		
 		if ($whattodisplay == 'lccc_announcement'){
 					$announcementargs=array(
-					'post_type' => lccc_announcement,
+					'post_type' => 'lccc_announcement',
 					'post_status' => 'publish',
 					'taxonomy'	=> 'category',
 					'term'	=> $widgetcategory,

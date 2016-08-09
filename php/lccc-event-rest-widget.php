@@ -41,6 +41,7 @@ class LCCC_Feed_Widget extends WP_Widget {
 			echo '	 ';
 			echo '  </div>';
 			echo '</div>';
+					 echo '<div class="small-12 medium-12 large-12 columns lccc_events">';
 //displays the header block of the events
 	if( $widgetheader == 'stocker-header'){
 		echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
@@ -74,10 +75,11 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		echo '</div>';
 	}
 	
-		//$lcccevents = '';	
-		//$stockerevents = '';
-		//$athleticevents = '';	
-//Grab posts (endpoints)
+		$lcccevents = '';	
+		$stockerevents = '';
+		$athleticevents = '';	
+
+	//Grab posts (endpoints)
 	switch ( $eventfeeds ){
 		case 'all-events':
 			$lcccevents = new Endpoint( 'http://lorainccc.dev/mylccc/wp-json/wp/v2/posts' );
@@ -120,14 +122,36 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	foreach ( $posts as $post ){
 		//echo posts		
 		echo '<div class="small-12 medium-12 large-12 columns eventcontainer">';
-	echo '<div class="samll-12 medium-12 large-3 columns calendar">';
-		echo '</div>';
+	echo '<div class="samll-12 medium-12 large-3 columns calendar-small">';
+		echo '<p class="month">'.$post->event_start_date_month.'</p>';
+  echo '<p class="day">'.$post->event_start_date_day.'</p>';
+	echo '</div>';
 				echo '<div class="small-12 medium-12 large-9 columns">';?>
 						<a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php
 						echo '<p>' . $post->excerpt->rendered . '</p>' ;
 				echo '</div>';
 		echo '</div>';
 		}
+				switch ( $eventfeeds ){
+						case 'all-events':
+									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
+										echo '<a href="'.get_post_type_archive_link( $whattodisplay ).'" class="button expand">View All Events </a>';
+									echo '</div>';	
+							echo '</div>';
+						break;
+						case 'all-athletics':
+									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
+										echo '<a href="https://test.lorainccc.edu/athletics/lccc_events/" class="button expand">View All Events </a>';
+									echo '</div>';	
+							echo '</div>';
+						break;
+						case 'all-stocker':
+									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
+										echo '<a href="https://sites.lorainccc.edu/stocker/lccc_events/" class="button expand">View All Events </a>';
+									echo '</div>';	
+							echo '</div>';
+						break;
+				}
 			echo $after_widget;			
 	}	
 

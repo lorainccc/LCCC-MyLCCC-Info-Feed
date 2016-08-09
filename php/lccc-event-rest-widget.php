@@ -206,7 +206,7 @@ echo '<option value="' . $option . '" id="' . $option . '"', $eventheader == $op
 	<label for="<?php echo $this->get_field_id('selectedfeedtype'); ?>"><?php _e('Feed Name:', 'lc_myinfo_feed');?></label>
 <select name="<?php echo $this->get_field_name('selectedfeedtype'); ?>" id="<?php echo $this->get_field_id('feedtype'); ?>" class="widefat">
 	<?php
-		$feedtypes = array('select..', 'All Events', 'All Stocker', 'All Athletics', '&nbsp;&nbsp;-&nbsp;Mens Soccer');
+		$feedtypes = array('select..', 'All Events', 'All Stocker', 'All Athletics', '&nbsp;&nbsp;-&nbsp;Volleyball',  '&nbsp;&nbsp;-&nbsp;Baseball','&nbsp;&nbsp;-&nbsp;Mens Basketball', '&nbsp;&nbsp;-&nbsp;Womens Basketball', '&nbsp;&nbsp;-&nbsp;Cross Country', '&nbsp;&nbsp;-&nbsp;Softball','Enrollment','Financial Services','Careers','Bookstore','Library','Student Life','Faculty','eLearning','Community','Early College','Fab Lab','Fitness and Rec','Human Resources','Learning Centers','Security','Veterans','Womens Link');
 		foreach ( $feedtypes as $feedtype ) {
    $feedtypeslug = trim(str_replace('&nbsp;&nbsp;-&nbsp;', '', $feedtype));
 			$feedtypeslug = strtolower(str_replace(' ', '-', $feedtypeslug));

@@ -182,9 +182,10 @@ echo '<option value="' . $option . '" id="' . $option . '"', $eventheader == $op
 	<label for="<?php echo $this->get_field_id('selectedfeedtype'); ?>"><?php _e('Feed Name:', 'lc_myinfo_feed');?></label>
 <select name="<?php echo $this->get_field_name('selectedfeedtype'); ?>" id="<?php echo $this->get_field_id('feedtype'); ?>" class="widefat">
 	<?php
-		$feedtypes = array('select..', 'All Events', 'All Stocker', 'All Athletics');
+		$feedtypes = array('select..', 'All Events', 'All Stocker', 'All Athletics', '&nbsp;&nbsp;-&nbsp;Mens Soccer');
 		foreach ( $feedtypes as $feedtype ) {
-			$feedtypeslug = strtolower(str_replace(' ', '-', $feedtype));
+   $feedtypeslug = trim(str_replace('&nbsp;&nbsp;-&nbsp;', '', $feedtype));
+			$feedtypeslug = strtolower(str_replace(' ', '-', $feedtypeslug));
 			echo '<option value="' . $feedtypeslug . '" id="' . $feedtype . '"', $selectedfeedtype == $feedtypeslug ? 'selected="selected"' : '', '>', $feedtype, '</option>'; 
 		}
 		?>

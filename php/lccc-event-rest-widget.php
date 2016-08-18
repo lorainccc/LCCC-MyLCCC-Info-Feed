@@ -143,9 +143,6 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 
 	//$posts will be an array of all posts sorted by post date
 	foreach ( $posts as $post ){
-		//echo posts
-  //echo $post->date . '<br />';
-  echo $post->event_start_date . '<br />';
 		echo '<div class="small-12 medium-12 large-12 columns eventcontainer">';
 	echo '<div class="samll-12 medium-12 large-3 columns calendar-small">';
 		echo '<p class="month">'.$post->event_start_date_month.'</p>';
@@ -157,13 +154,11 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 				echo '</div>';
 		echo '</div>';
 		}
-
-			echo $after_widget;
-	}
-
-
-	/**
-=======
+   
+   /* Generate View all button at bottom of event feed
+    * Based upon which event feed is being shown.
+    */
+   
 				switch ( $eventfeeds ){
 						case 'all-events':
 									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
@@ -203,7 +198,6 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 			echo $after_widget;			
 	}	
 	/** 
->>>>>>> origin/development
 		*	Outputs the options form on admin
 		*
 		* @param array $instance The widget options
@@ -241,7 +235,7 @@ echo '<option value="' . $option . '" id="' . $option . '"', $eventheader == $op
 	<label for="<?php echo $this->get_field_id('numberofposts'); ?>"><?php _e('Number of posts', 'lc_myinfo_feed'); ?></label>
 	<select name="<?php echo $this->get_field_name('numberofposts'); ?>" id="<?php echo $this->get_field_id('numberofposts'); ?>">
 		<?php
-			$options = array('select..', 5, 10, 15);
+			$options = array('select..', 6, 9, 15);
 		foreach ($options as $option) {
 			echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $option ? 'selected="selected"' : '', '>', $option, '</option>';
 		}

@@ -256,6 +256,7 @@ echo '<option value="' . $option . '" id="' . $option . '"', $eventheader == $op
 		?>
 	</select>
 </p>
+
 		<p>
 <label for="<?php echo $this->get_field_id('wheretodisplay'); ?>"><?php _e('Where To Display:', 'wp_widget_plugin'); ?></label>
 

@@ -67,11 +67,11 @@ class Endpoint {
 	}
 
 	/**
-	 * Reset cache for a day
+	 * Reset cache every 3 Hours
 	 */
 	protected function set_cache() {
 		if ( ! empty( $this->posts ) ) {
-			set_transient( $this->cache_key(), $this->posts, DAY_IN_SECONDS );
+			set_transient( $this->cache_key(), $this->posts, 10800 );
 		}
 	}
 
@@ -171,11 +171,18 @@ class MultiBlog {
 	 * @return array
 	 */
 	protected function sort( array $data ) {
-		usort( $data, function ( $a, $b ) {
-			return strtotime( $a->post_date ) - strtotime( $b->post_date );
-		} );
+  usort( $data, function ( $a, $b ) {
+   if($a->event_start_date != ''){
+     return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
+   }elseif($a->announcment_start_date != ''){
+    return strtotime( $a->announcment_start_date ) - strtotime( $b->announcment_start_date );
+   }else{
+     return strtotime( $a->post_date ) - strtotime( $b->post_date );
+   }
+   //return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
+  } );
 
-		$data = array_reverse( $data );
+		//$data = array_reverse( $data );
 		return $data;
 	}
 }

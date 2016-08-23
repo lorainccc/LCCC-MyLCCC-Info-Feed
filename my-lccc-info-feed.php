@@ -242,7 +242,7 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_stocker_eventwidget.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/event-rest-api-fetch.php' );
+require_once( plugin_dir_path( __FILE__ ).'php/rest-api-fetch.php' );
 	
 require_once( plugin_dir_path( __FILE__ ).'php/lccc-event-rest-widget.php' );
 
@@ -258,6 +258,12 @@ function query_post_type($query) {
     $query->set('post_type',$post_type);
     return $query;
     }
+}
+
+function get_cat_slug($cat_id) {
+	$cat_id = (int) $cat_id;
+	$category = get_category($cat_id);
+	return $category->slug;
 }
 
 ?>

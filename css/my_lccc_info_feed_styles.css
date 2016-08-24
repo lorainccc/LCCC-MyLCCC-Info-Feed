@@ -107,7 +107,7 @@ h2.headertext{margin: 0;}
     background-image: url(../images/calendar.png);
     text-align: center;
 }
-.widget p.month{margin-bottom: 0;margin-top: 12px;margin-left: 4px;width: 100%; font-weight: bold;color: #003B76;line-height: 1.7;font-size: 0.97rem;}
+.widget p.month{margin-bottom: 0;margin-top: 12px;margin-left: 4px;width: 100%; font-weight: bold;color: #003B76;line-height: 1.7;font-size: 0.90rem;}
 .widget p.day{margin-bottom: 0;    margin-top: -10px;
     margin-left: 9px; font-weight: bold;color: #003B76;}
 .widget h3.eventtitle{line-height: 1.3125;    

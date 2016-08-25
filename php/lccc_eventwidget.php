@@ -40,7 +40,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 }else{ 	
 	echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
 		echo '<div class="small-5 medium-5 large-5 columns '.$whattodisplay.' headerlogo">';
-			echo '<i class="lccc-font-lccc-reverse">'.'</i>';
+					echo '<img src="' . plugins_url( '../images/lccc-logo.svg', __FILE__ ) . '"  height="60" width="73" alt="Lorain County Community College Logo" > ';
 		echo '</div>';
 		echo '<div class="small-7 medium-7 large-7 columns event-header-text-container">';
 			echo '<h2 class="headertext">'.'Events'.'</h2>';

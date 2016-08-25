@@ -32,7 +32,7 @@ class LCCC_Whats_Going_On_Announcement_Widget extends WP_Widget {
 		 if ($whattodisplay == 'lccc_event'){
    echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
 							echo '<div class="small-12 medium-4 large-4 columns '.$whattodisplay.' headerlogo">';
-											echo '<i class="lccc-font-lccc-reverse">'.'</i>';
+											echo '<img src="' . plugins_url( '../images/lccc-logo.svg', __FILE__ ) . '"  height="60" width="73" alt="Lorain County Community College Logo" > ';
 							echo '</div>';
 							echo '<div class="small-12 medium-8 large-8 columns ">';
 										echo '<h2 class="headertext">'.'Events'.'</h2>';

@@ -85,7 +85,7 @@ public function widget( $args, $instance ) {
 		echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'-sub-site">';
    echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header-sub-site">';
 							echo '<div class="small-5 medium-4 large-4 columns '.$whattodisplay.'-sub-site headerlogo-sub-site">';
-											echo '<i class="lccc-font-lccc-reverse">'.'</i>';
+								echo '<img src="' . plugins_url( '../images/lccc-logo.svg', __FILE__ ) . '"  height="60" width="73" alt="Lorain County Community College Logo" > ';
 							echo '</div>';
 							echo '<div class="small-7 medium-8 large-8 columns announcement-header-text-container">';
 										echo '<h2 class="headertext">'.'Announcements'.'</h2>';

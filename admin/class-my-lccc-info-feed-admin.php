@@ -73,7 +73,8 @@ class My_Lccc_Info_Feed_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/my-lccc-info-feed-admin.css', array(), $this->version, 'all' );
+		//Commenting out since the files are empty.
+  //wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/my-lccc-info-feed-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +97,9 @@ class My_Lccc_Info_Feed_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/my-lccc-info-feed-admin.js', array( 'jquery' ), $this->version, false );
+		//Commenting out since the files are empty.
+  //wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/my-lccc-info-feed-admin.js', array( 'jquery' ), $this->version, false );
+
 
 	}
 

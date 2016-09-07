@@ -139,7 +139,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	//echo 'Event End Date:'.$endeventdate.'<br />';
 	if( $endeventdate >= $today){
 							echo '<div class="small-12 medium-12 large-12 columns eventcontainer">';
-							echo '<div class="small-12 medium-12 large-3 columns calender-small">';
+							echo '<div class="small-12 medium-12 large-3 columns calendar-small">';
 							echo '<p class="month">'.$eventstartmonth.'</p>';
 							echo '<p class="day">'.$eventstartday.'</p>';
 							echo '</div>';

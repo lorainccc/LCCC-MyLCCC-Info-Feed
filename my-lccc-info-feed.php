@@ -98,8 +98,9 @@ wp_enqueue_style( 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1
 }
 add_action ('init','my_lccc_info_feed_scripts');
 
+/*
 function enqueue_foundation() {
-/* Add Foundation CSS 
+ Add Foundation CSS 
  wp_enqueue_style( 'foundation-normalize',  plugin_dir_url( __FILE__ ) . '/foundation/css/normalizemin.css' );
  wp_enqueue_style( 'foundation',  plugin_dir_url( __FILE__ ) . '/foundation/css/foundation.min.css' );
  */
@@ -111,10 +112,10 @@ function enqueue_foundation() {
  */               
 /* Foudnation Init JS 
  wp_enqueue_script( 'foundation-init-js',  plugin_dir_url( __FILE__ ) . 'foundation.js', array( 'jquery', 'foundation-js' ), '1', true );
-	*/
+	
 	  }
 add_action( 'wp_enqueue_scripts', 'enqueue_foundation' );
-
+*/
 
 // Add various fields to the JSON output
 function eventapi_register_fields() {

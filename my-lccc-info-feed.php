@@ -79,40 +79,40 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc_posttypes.php' );
 * The Enque Function for the Jquery UI function of the metabox code below
 */
 function my_lccc_info_feed_scripts() {
-	wp_enqueue_style( 'lato-google-fonts', 'https://fonts.googleapis.com/css?family=Lato:400,700,400italic', false ); 	
-	
+	wp_enqueue_style( 'lato-google-fonts', 'https://fonts.googleapis.com/css?family=Lato:400,700,400italic', false );
+
 	wp_enqueue_script('jquery-ui-datepicker');
-	
+
 	wp_enqueue_script('jquery-ui-core');
-	
+
 	wp_enqueue_script( 'jquery-ui-timepicker-addon-js', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker-addon.js', array( 'jquery','jquery-ui-core','jquery-ui-datepicker' ), '1', true );
-	
+
 wp_enqueue_style( 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/smoothness/jquery-ui.css', true);
 
 	wp_enqueue_style('jquery-ui-timepicker-addon-style', plugin_dir_url( __FILE__ ) . 'css/jquery-ui-timepicker-addon.css');
-	
+
 	wp_enqueue_style('my_lccc_info_feed_style', plugin_dir_url( __FILE__ ) . 'css/my_lccc_info_feed_styles.css');
-	
+
 		wp_enqueue_style('my_lccc_font', plugin_dir_url( __FILE__ ) . 'fonts/styles.css');
-	
+
 }
 add_action ('init','my_lccc_info_feed_scripts');
 
 /*
 function enqueue_foundation() {
- Add Foundation CSS 
+ Add Foundation CSS
  wp_enqueue_style( 'foundation-normalize',  plugin_dir_url( __FILE__ ) . '/foundation/css/normalizemin.css' );
  wp_enqueue_style( 'foundation',  plugin_dir_url( __FILE__ ) . '/foundation/css/foundation.min.css' );
  */
-       
+
 /* Add Foundation JS */
-                
+
  /*wp_enqueue_script( 'foundation-js', get_template_directory_uri() . '/foundation/js/foundation.min.js', array( 'jquery' ), '1', true );
  wp_enqueue_script( 'foundation-modernizr-js',  plugin_dir_url( __FILE__ ) . '/foundation/js/vendor/modernizr.js', array( 'jquery' ), '1', true );
- */               
-/* Foudnation Init JS 
+ */
+/* Foudnation Init JS
  wp_enqueue_script( 'foundation-init-js',  plugin_dir_url( __FILE__ ) . 'foundation.js', array( 'jquery', 'foundation-js' ), '1', true );
-	
+
 	  }
 add_action( 'wp_enqueue_scripts', 'enqueue_foundation' );
 */
@@ -155,7 +155,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
-    
+
     // Add Event end_date
 	register_api_field( 'lccc_events',
 		'event_end_date',
@@ -164,8 +164,8 @@ function eventapi_register_fields() {
 			'update_callback'	=> null,
 			'schema'			=> null
 		)
-	);    
-    
+	);
+
     // Add Event end_time
 	register_api_field( 'lccc_events',
 		'event_end_time',
@@ -174,9 +174,9 @@ function eventapi_register_fields() {
 			'update_callback'	=> null,
 			'schema'			=> null
 		)
-	);    
-    
-    
+	);
+
+
     // Add Stocker bg_color
 	register_api_field( 'lccc_events',
 		'event_meta_box_stocker_bg_color',
@@ -216,16 +216,16 @@ function gofurther_get_event_start_time( $object, $field_name, $request ) {
 	return event_meta_box_get_meta('event_start_time');
 }
 function gofurther_get_event_end_date( $object, $field_name, $request ) {
-	return event_meta_box_get_meta('event_end_date');   
+	return event_meta_box_get_meta('event_end_date');
 }
 function gofurther_get_event_end_time( $object, $field_name, $request ) {
-	return event_meta_box_get_meta('event_end_time');   
+	return event_meta_box_get_meta('event_end_time');
 }
 function gofurther_get_event_stocker_bg_color( $object, $field_name, $request ) {
-	return event_meta_box_get_meta('event_meta_box_stoccker_bg_color'); 
+	return event_meta_box_get_meta('event_meta_box_stoccker_bg_color');
 }
 function gofurther_get_event_stocker_ticket_link( $object, $field_name, $request ) {
-	return event_meta_box_get_meta('event_meta_box_stocker_ticket_link');   
+	return event_meta_box_get_meta('event_meta_box_stocker_ticket_link');
 }
 add_action( 'rest_api_init', 'eventapi_register_fields');
 
@@ -244,9 +244,10 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_stocker_eventwidget.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/rest-api-fetch.php' );
-	
+
 require_once( plugin_dir_path( __FILE__ ).'php/lccc-event-rest-widget.php' );
 
+require_once( plugin_dir_path( __FILE__ ).'php/lccc-announcement-rest-widget.php' );
 
 add_filter('pre_get_posts', 'query_post_type');
 function query_post_type($query) {

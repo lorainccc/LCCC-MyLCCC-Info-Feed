@@ -76,12 +76,12 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		//$stockerevents = '';
 		//$athleticevents = '';
 //Grab posts (endpoints)
-	
-		$lcccevents = '';	
+
+		$lcccevents = '';
 		$stockerevents = '';
 		$athleticevents = '';
 		$sportevents = '';
-		$categoryevents = '';	
+		$categoryevents = '';
 
 	//Grab posts (endpoints)
 
@@ -129,11 +129,11 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 
 		if ( $sportevents != ''){
 		$multi->add_endpoint ( $sportevents );
-	};		
+	};
 		if ( $categoryevents != ''){
 		$multi->add_endpoint ( $categoryevents );
-	};																																				
-	
+	};
+
 
 	//Fetch Endpoints
 	$posts = $multi->get_posts();
@@ -154,28 +154,28 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 				echo '</div>';
 		echo '</div>';
 		}
-   
+
    /* Generate View all button at bottom of event feed
     * Based upon which event feed is being shown.
     */
-   
+
 				switch ( $eventfeeds ){
 						case 'all-events':
 									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
 										echo '<a href="https://test.lorainccc.edu/mylccc/lccc_events/" class="button expand">View All Events </a>';
-									echo '</div>';	
+									echo '</div>';
 							echo '</div>';
 						break;
 						case 'all-athletics':
 									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
 										echo '<a href="https://test.lorainccc.edu/athletics/lccc_events/" class="button expand">View All Events </a>';
-									echo '</div>';	
+									echo '</div>';
 							echo '</div>';
 						break;
 						case 'all-stocker':
 									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
 										echo '<a href="https://sites.lorainccc.edu/stocker/lccc_events/" class="button expand">View All Events </a>';
-									echo '</div>';	
+									echo '</div>';
 							echo '</div>';
 						break;
 						case 'volleyball':
@@ -186,18 +186,18 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 						case 'softball':
 							echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
 										echo '<a href="https://test.lorainccc.edu/athletics/event-categories/'.$eventfeeds.'" class="button expand">View All Events </a>';
-									echo '</div>';	
+									echo '</div>';
 							echo '</div>';
 						break;
 						default:
 						echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
 										echo '<a href="https://test.lorainccc.edu/mylccc/event-categories/'.$eventfeeds.'" class="button expand">View All Events </a>';
-									echo '</div>';	
+									echo '</div>';
 							echo '</div>';
 				}
-			echo $after_widget;			
-	}	
-	/** 
+			echo $after_widget;
+	}
+	/**
 		*	Outputs the options form on admin
 		*
 		* @param array $instance The widget options
@@ -245,7 +245,7 @@ echo '<option value="' . $option . '" id="' . $option . '"', $eventheader == $op
 
 <p>
 	<label for="<?php echo $this->get_field_id('selectedfeedtype'); ?>"><?php _e('Feed Name:', 'lc_myinfo_feed');?></label>
-<select name="<?php echo $this->get_field_name('selectedfeedtype'); ?>" id="<?php echo $this->get_field_id('feedtype'); ?>" class="widefat">
+<select name="<?php echo $this->get_field_name('selectedfeedtype'); ?>" id="<?php echo $this->get_field_id('selectedfeedtype'); ?>" class="widefat">
 	<?php
 		$feedtypes = array('select..', 'All Events', 'All Stocker', 'All Athletics', '&nbsp;&nbsp;-&nbsp;Volleyball',  '&nbsp;&nbsp;-&nbsp;Baseball','&nbsp;&nbsp;-&nbsp;Mens Basketball', '&nbsp;&nbsp;-&nbsp;Womens Basketball', '&nbsp;&nbsp;-&nbsp;Cross Country', '&nbsp;&nbsp;-&nbsp;Softball','Enrollment','Financial Services','Careers','Bookstore','Library','Student Life','Faculty','eLearning','Community','Early College','Fab Lab','Fitness and Rec','Human Resources','Learning Centers','Security','Veterans','Womens Link');
 		foreach ( $feedtypes as $feedtype ) {

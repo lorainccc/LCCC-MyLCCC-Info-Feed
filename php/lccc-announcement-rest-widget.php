@@ -10,9 +10,9 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
  	public function __construct() {
 		$widget_ops = array(
 			'classname' 		=> 'LCCC_Announcement_Feed_Widget',
-			'description' =>	'LCCC Feed widget for displaying LCCC Events from other LCCC web sites.',
+			'description' =>	'LCCC Feed widget for displaying LCCC Announcments from other LCCC web sites.',
 		);
-		parent::__construct( 'LCCC_Announcement_Feed_Widget', 'LCCC Announcement Widget', $widget_ops );
+		parent::__construct( 'LCCC_Announcement_Feed_Widget', 'LCCC Announcement Feed Widget', $widget_ops );
 	}
 
  /**
@@ -49,7 +49,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 			}
 	  	$today = getdate();
 				$widgetcategory = get_cat_slug($widgetcategory);
-
+  
 		if ($whattodisplay == 'lccc_announcement'){
 /*
      $announcementargs=array(
@@ -68,20 +68,20 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 
    switch ( $selectedfeedtype ){
     case 'all-announcements':
-        $lcccannouncments = new EndPoint( 'https://temp.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_announcement' );
-        $athleticannouncements = new EndPoint( 'https://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_announcement' );
-        break;
+        $lcccannouncments = new EndPoint( 'http://temp.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_announcement' );
+        //$athleticannouncements = new EndPoint( 'https://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_announcement' );
+     break;
 
     case 'all-athletics':
-        $athleticannouncements = new EndPoint( 'https://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_announcement' );
+        $athleticannouncements = new EndPoint( 'http://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_announcement' );
         break;
    }
-
+   
    //Create instance
    $multi = new MultiBlog( 1 );
 
    //Add endpoints to instance
-   if ($lcccannouncments != ''){
+   if ( $lcccannouncments != ''){
     $multi->add_endpoint ( $lcccannouncments );
    };
 
@@ -102,9 +102,9 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 								echo '</div>';
 								echo '<div class="small-12 medium-9 large-9 columns">';
   						?>
-								<a href="<?php $post->link ?>"><?php $post->title->rendered('<h3 class="eventtitle">','</h3>');?></a>
+								<a href="<?php echo $post->link; ?>"><h3><?php echo $post->title->rendered;?></h3></a>
 								<?php
-											$post->excerpt->rendered('<p>','</p>');
+											echo '<p>' . $post->excerpt->rendered . '</p>';
 								echo '</div>';
 			  			echo '<div class="column row">';
     								echo '<hr />';
@@ -188,7 +188,7 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
 		       $instance = $old_instance;
       // Fields
      		$instance['numberofposts'] = strip_tags($new_instance['numberofposts']);
-     		$instance['feedtype'] = strip_tags($new_instance['feedtype']);
+     		$instance['selectedfeedtype'] = strip_tags($new_instance['selectedfeedtype']);
      		$instance['category'] = $new_instance['category'];
 		return $instance;
 	}

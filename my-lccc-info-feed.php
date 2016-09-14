@@ -199,7 +199,18 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
+
+// Add Announcment Start Date
+	register_api_field( 'lccc_events',
+		'announcement_start_date',
+		array(
+			'get_callback'		=> 'lccc_get_announcement_start_date',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
 }
+
 function gofurther_get_event_start_date( $object, $field_name, $request ) {
 	return event_meta_box_get_meta('event_start_date');
 }
@@ -230,6 +241,11 @@ function gofurther_get_event_stocker_bg_color( $object, $field_name, $request ) 
 function gofurther_get_event_stocker_ticket_link( $object, $field_name, $request ) {
 	return event_meta_box_get_meta('event_meta_box_stocker_ticket_link');
 }
+
+function lccc_get_announcement_start_date( $object, $field_name, $request ) {
+	return announcement_meta_box_get_meta('announcement_start_date');
+}
+
 add_action( 'rest_api_init', 'eventapi_register_fields');
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_pluginmetabox.php' );
@@ -238,9 +254,9 @@ require_once( plugin_dir_path( __FILE__ ).'php/displayfunctions.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_eventwidget.php' );
 
-//require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcementwidget.php' );
+require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcementwidget.php' );
 
-//require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.php' );
+require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_stocker_eventwidget.php' );
 

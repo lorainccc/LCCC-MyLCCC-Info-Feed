@@ -87,8 +87,8 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 
 	switch ( $eventfeeds ){
 		case 'all-events':
-			$lcccevents = new Endpoint( 'http://lorainccc.dev/mylccc/wp-json/wp/v2/lccc_events' );
-			$athleticevents = new Endpoint( 'https://test.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events' );
+			$lcccevents = new Endpoint( 'http://temp.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_announcement' );
+			$athleticevents = new Endpoint( 'http://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events' );
 			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events' );
 			break;
 

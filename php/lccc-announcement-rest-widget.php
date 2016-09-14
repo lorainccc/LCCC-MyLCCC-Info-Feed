@@ -7,13 +7,13 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
  /**
   * Sets up the widgets name etc
   */
- public function __construct() {
-  $widget_ops = array(
-   'classname' => 'LCCC_Announcement_Feed_Widget',
-   'description' => 'LCCC Announcement Feed widget for displaying LCCC Announcements from other LCCC web sites.',
-  );
-  parent::__construct( 'LCCC_Announcement_Widget', 'LCCC Announcement Widget', $widget_ops );
- }
+ 	public function __construct() {
+		$widget_ops = array(
+			'classname' 		=> 'LCCC_Announcement_Feed_Widget',
+			'description' =>	'LCCC Feed widget for displaying LCCC Events from other LCCC web sites.',
+		);
+		parent::__construct( 'LCCC_Announcement_Feed_Widget', 'LCCC Announcement Widget', $widget_ops );
+	}
 
  /**
 	 * Outputs the content of the widget
@@ -136,14 +136,13 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 if( $instance) {
 					$numberofposts = esc_attr($instance['numberofposts']);
 					$widgetcategory = esc_attr($instance['category']);
-     $announcementfeed = esc_attr($instance['selectedfeedtype']);
+     $selectedfeedtype = esc_attr($instance['selectedfeedtype']);
 } else {
 					$numberofposts = '';
 					$widgetcategory = '';
-     $announcementfeed = '';
+     $selectedfeedtype = '';
 }
 ?>
-
 <p>
 <label for="<?php echo $this->get_field_id('numberofposts'); ?>"><?php _e('Number of posts', 'wp_widget_plugin'); ?></label>
 <select name="<?php echo $this->get_field_name('numberofposts'); ?>" id="<?php echo $this->get_field_id('numberofposts'); ?>">
@@ -161,17 +160,20 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
 </p>
 <p>
  <label for="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>"><?php _e( 'Select feed type', 'wp_widget_plugin' ); ?>:</label>
- <select name="<?php echo $this-get_field_id( 'selectedfeedtype' ); ?>" id="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>" class="widefat">
+ <select name="<?php echo $this->get_field_name( 'selectedfeedtype' ); ?>" id="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>" class="widefat">
  <?php
-   $feedtypes = array('all-announcements', 'all-athletics');
-  foreach ( $feedtypes as $feedtype ) {
-   $feedtypeslug = trim(str_replace('&nbsp;&nbsp;-&nbsp;', '', $feedtype));
-   $feedtypeslug = strtolower(str_replace(' ', '-', $feedtypeslug));
-   echo '<option value="' . $feedtypeslug . '" id="' .$feedtype . '"', $selectedfeedtype == $feedtypeslug ? 'selected="selected"' : '', '>', $feedtype, '</option>';
+   
+  $feedtypeoptions = array('all-announcements', 'all-athletics');
+  
+  foreach ( $feedtypeoptions as $feedtype ) {
+   //$feedtypeslug = trim(str_replace('&nbsp;&nbsp;-&nbsp;', '', $feedtype));
+   //$feedtypeslug = strtolower(str_replace(' ', '-', $feedtypeslug));
+   echo '<option value="' . $feedtype . '" id="' . $feedtype . '"', $selectedfeedtype == $feedtype ? ' selected="selected"' : '', '>', $feedtype, '</option>';
   }
   ?>
 </select>
 </p>
+
 <?php
 	}
 
@@ -194,4 +196,5 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
 add_action( 'widgets_init', function(){
 	register_widget( 'LCCC_Announcement_Feed_Widget' );
 });
+
 ?>

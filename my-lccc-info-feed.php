@@ -238,9 +238,9 @@ require_once( plugin_dir_path( __FILE__ ).'php/displayfunctions.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_eventwidget.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcementwidget.php' );
+//require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcementwidget.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.php' );
+//require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_stocker_eventwidget.php' );
 

@@ -79,24 +79,27 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc_posttypes.php' );
 * The Enque Function for the Jquery UI function of the metabox code below
 */
 function my_lccc_info_feed_scripts() {
-	wp_enqueue_style( 'lato-google-fonts', 'https://fonts.googleapis.com/css?family=Lato:400,700,400italic', false );
 
-	wp_enqueue_script('jquery-ui-datepicker');
+	wp_enqueue_style('my_lccc_info_feed_style', plugin_dir_url( __FILE__ ) . 'css/my_lccc_info_feed_styles.css');
+
+	wp_enqueue_style('my_lccc_font', plugin_dir_url( __FILE__ ) . 'fonts/styles.css');
+
+}
+add_action ('init','my_lccc_info_feed_scripts');
+
+function my_lccc_info_feed_wp_admin_scripts() {
+ wp_enqueue_script('jquery-ui-datepicker');
 
 	wp_enqueue_script('jquery-ui-core');
 
 	wp_enqueue_script( 'jquery-ui-timepicker-addon-js', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker-addon.js', array( 'jquery','jquery-ui-core','jquery-ui-datepicker' ), '1', true );
 
-wp_enqueue_style( 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/smoothness/jquery-ui.css', true);
+ wp_enqueue_style( 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/smoothness/jquery-ui.css', true);
 
 	wp_enqueue_style('jquery-ui-timepicker-addon-style', plugin_dir_url( __FILE__ ) . 'css/jquery-ui-timepicker-addon.css');
-
-	wp_enqueue_style('my_lccc_info_feed_style', plugin_dir_url( __FILE__ ) . 'css/my_lccc_info_feed_styles.css');
-
-		wp_enqueue_style('my_lccc_font', plugin_dir_url( __FILE__ ) . 'fonts/styles.css');
-
 }
-add_action ('init','my_lccc_info_feed_scripts');
+
+add_action( 'admin_enqueue_scripts', 'my_lccc_info_feed_wp_admin_scripts' );
 
 /*
 function enqueue_foundation() {
@@ -228,8 +231,6 @@ function gofurther_get_event_stocker_ticket_link( $object, $field_name, $request
 	return event_meta_box_get_meta('event_meta_box_stocker_ticket_link');
 }
 add_action( 'rest_api_init', 'eventapi_register_fields');
-
-
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_pluginmetabox.php' );
 

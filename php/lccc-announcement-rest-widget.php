@@ -32,7 +32,6 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 			$displaylayout = $instance['layout'];
    echo $before_widget;
    // Display the widget
-<<<<<<< HEAD
 		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.' nopadding">';
 		 if ($whattodisplay == 'lccc_event'){
    echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
@@ -44,15 +43,14 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 							echo '</div>';
 			echo '</div>';
 			}
-=======
+
 		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'">';
->>>>>>> origin/development
 		if ($whattodisplay == 'lccc_announcement'){
 			switch($displaylayout){
-				case 'Home-page':	
+				case 'Home-page':
 			echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
 						echo '<h2 class="announcementheader">'.'In The News'.'</h2>';
-			echo '</div>';	
+			echo '</div>';
 				break;
 				case 'Sub-page':
 			   echo '<div class="small-12 medium-12 large-12 columns lccc_announcement-sub-site">';
@@ -65,11 +63,11 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 			echo '</div>';
 				break;
 			}
-   
+
 		}
 	  	$today = getdate();
 				$widgetcategory = get_cat_slug($widgetcategory);
-  
+
 		if ($whattodisplay == 'lccc_announcement'){
 /*
      $announcementargs=array(
@@ -96,7 +94,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
         $athleticannouncements = new EndPoint( 'http://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_announcement' );
         break;
    }
-   
+
    //Create instance
    $multi = new MultiBlog( 1 );
 
@@ -115,7 +113,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
     echo 'No Posts Found!';
    }
 			switch($displaylayout){
-					case 'Home-page':	
+					case 'Home-page':
 									foreach ( $posts as $post ){
 			     echo '<div class="small-12 medium-12 large-12 columns news-container">';
 								echo '<div class="small-12 medium-3 large-3 columns eventhumbnail">';
@@ -146,7 +144,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
 		     echo '</div>';
        break;
-					
+
 		}
 					break;
 					case 'Sub-page':
@@ -161,7 +159,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 															echo '<p>' . $post->excerpt->rendered . '</p>' ;
 												echo '</div>';
 								echo '</div>';
-			
+
      }
    switch ( $selectedfeedtype ){
     case 'all-announcements' :
@@ -176,14 +174,14 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
 		     echo '</div>';
      break;
-					
+
 		}
 								echo '</div>';
 					break;
 			}
 
 
-			
+
 		echo '</div>';
   echo $after_widget;
 	}
@@ -239,9 +237,9 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
  <label for="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>"><?php _e( 'Select feed type', 'wp_widget_plugin' ); ?>:</label>
  <select name="<?php echo $this->get_field_name( 'selectedfeedtype' ); ?>" id="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>" class="widefat">
  <?php
-   
+
   $feedtypeoptions = array('all-announcements', 'all-athletics');
-  
+
   foreach ( $feedtypeoptions as $feedtype ) {
    //$feedtypeslug = trim(str_replace('&nbsp;&nbsp;-&nbsp;', '', $feedtype));
    //$feedtypeslug = strtolower(str_replace(' ', '-', $feedtypeslug));

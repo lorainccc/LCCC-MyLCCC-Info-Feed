@@ -209,7 +209,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
- 
+
  // Add Start Date Month
 	register_api_field( 'lccc_announcement',
 		'announcement_start_date_month',
@@ -219,7 +219,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
- 
+
  // Add Start Date Day
 	register_api_field( 'lccc_announcement',
 		'announcement_start_date_day',
@@ -285,11 +285,11 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc_pluginmetabox.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/displayfunctions.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc_eventwidget.php' );
+//require_once( plugin_dir_path( __FILE__ ).'php/lccc_eventwidget.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcementwidget.php' );
+//require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcementwidget.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.php' );
+//require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_stocker_eventwidget.php' );
 

@@ -32,16 +32,6 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    echo $before_widget;
    // Display the widget
 		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'">';
-		 if ($whattodisplay == 'lccc_event'){
-   echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
-							echo '<div class="small-12 medium-4 large-4 columns '.$whattodisplay.' headerlogo">';
-											echo '<i class="lccc-font-lccc-reverse">'.'</i>';
-							echo '</div>';
-							echo '<div class="small-12 medium-8 large-8 columns ">';
-										echo '<h2 class="headertext">'.'Events'.'</h2>';
-							echo '</div>';
-			echo '</div>';
-			}
 		if ($whattodisplay == 'lccc_announcement'){
    echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
 						echo '<h2 class="announcementheader">'.'In The News'.'</h2>';

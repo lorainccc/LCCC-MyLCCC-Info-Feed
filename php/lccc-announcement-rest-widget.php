@@ -32,6 +32,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 			$displaylayout = $instance['layout'];
    echo $before_widget;
    // Display the widget
+<<<<<<< HEAD
 		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.' nopadding">';
 		 if ($whattodisplay == 'lccc_event'){
    echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
@@ -43,6 +44,9 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 							echo '</div>';
 			echo '</div>';
 			}
+=======
+		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'">';
+>>>>>>> origin/development
 		if ($whattodisplay == 'lccc_announcement'){
 			switch($displaylayout){
 				case 'Home-page':	

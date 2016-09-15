@@ -177,7 +177,7 @@ class MultiBlog {
    }elseif($a->announcment_start_date != ''){
     return strtotime( $a->announcment_start_date ) - strtotime( $b->announcment_start_date );
    }else{
-     return strtotime( $a->post_date ) - strtotime( $b->post_date );
+     return strtotime( $a->date ) - strtotime( $b->date );
    }
    //return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
   } );

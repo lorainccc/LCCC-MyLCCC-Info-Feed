@@ -29,9 +29,10 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 			$whattodisplay = 'lccc_announcement';
    $selectedfeedtype = $instance['selectedfeedtype'];
 			$widgetcategory = $instance['category'];
+			$displaylayout = $instance['layout'];
    echo $before_widget;
    // Display the widget
-		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'">';
+		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.' nopadding">';
 		 if ($whattodisplay == 'lccc_event'){
    echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
 							echo '<div class="small-12 medium-4 large-4 columns '.$whattodisplay.' headerlogo">';
@@ -43,10 +44,25 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 			echo '</div>';
 			}
 		if ($whattodisplay == 'lccc_announcement'){
-   echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
+			switch($displaylayout){
+				case 'Home-page':	
+			echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
 						echo '<h2 class="announcementheader">'.'In The News'.'</h2>';
+			echo '</div>';	
+				break;
+				case 'Sub-page':
+			   echo '<div class="small-12 medium-12 large-12 columns lccc_announcement-sub-site">';
+							echo '<div class="small-12 medium-4 large-3 columns '.$whattodisplay.' headerlogo">';
+											echo '<i class="lccc-font-lccc-reverse">'.'</i>';
+							echo '</div>';
+							echo '<div class="small-12 medium-8 large-9 columns ">';
+										echo '<h2 class="headertext">'.'Announcments'.'</h2>';
+							echo '</div>';
 			echo '</div>';
+				break;
 			}
+   
+		}
 	  	$today = getdate();
 				$widgetcategory = get_cat_slug($widgetcategory);
   
@@ -94,8 +110,9 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    if(empty ($posts)){
     echo 'No Posts Found!';
    }
-
-					foreach ( $posts as $post ){
+			switch($displaylayout){
+					case 'Home-page':	
+									foreach ( $posts as $post ){
 			     echo '<div class="small-12 medium-12 large-12 columns news-container">';
 								echo '<div class="small-12 medium-3 large-3 columns eventhumbnail">';
 								echo '<img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" border="0">';
@@ -112,14 +129,57 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 								echo '</div>';
      }
 
-   switch ( $announcementfeed ){
+   switch ( $selectedfeedtype ){
     case 'all-announcements' :
 							$currentpostype = 'Announcments';
        echo '<div class="small-12 medium-12 large-12 columns">';
 							echo '<a href="https://test.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
 		     echo '</div>';
        break;
+					case 'all-athletics' :
+							$currentpostype = 'Announcments';
+       echo '<div class="small-12 medium-12 large-12 columns">';
+							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
+		     echo '</div>';
+       break;
+					
 		}
+					break;
+					case 'Sub-page':
+								foreach ( $posts as $post ){
+			     echo '<div class="small-12 medium-12 large-12 columns sub-announcement-container">';
+															echo '<div class="samll-12 medium-12 large-3 columns calendar-small">';
+																			echo '<p class="month">'.$post->announcement_start_date_month.'</p>';
+  																	echo '<p class="day">'.$post->announcement_start_date_day.'</p>';
+															echo '</div>';
+															echo '<div class="small-12 medium-12 large-9 columns">';?>
+																			<a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php
+															echo '<p>' . $post->excerpt->rendered . '</p>' ;
+												echo '</div>';
+								echo '</div>';
+			
+     }
+   switch ( $selectedfeedtype ){
+    case 'all-announcements' :
+							$currentpostype = 'Announcments';
+       echo '<div class="small-12 medium-12 large-12 columns view-all-athletics-button">';
+							echo '<a href="https://test.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
+		     echo '</div>';
+     break;
+					case 'all-athletics' :
+							$currentpostype = 'Announcments';
+       echo '<div class="small-12 medium-12 large-12 columns view-all-athletics-button">';
+							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
+		     echo '</div>';
+     break;
+					
+		}
+								echo '</div>';
+					break;
+			}
+
+
+			
 		echo '</div>';
   echo $after_widget;
 	}
@@ -134,15 +194,28 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 
 // Check values
 if( $instance) {
+					$layout = esc_attr($instance['layout']);
 					$numberofposts = esc_attr($instance['numberofposts']);
 					$widgetcategory = esc_attr($instance['category']);
      $selectedfeedtype = esc_attr($instance['selectedfeedtype']);
 } else {
+					$layout = '';
 					$numberofposts = '';
 					$widgetcategory = '';
      $selectedfeedtype = '';
 }
 ?>
+<p>
+<label for="<?php echo $this->get_field_id('layout'); ?>"><?php _e('Announcement Layout', 'wp_widget_plugin'); ?></label>
+<select name="<?php echo $this->get_field_name('layout'); ?>" id="<?php echo $this->get_field_id('layout'); ?>">
+<?php
+$options = array('select..','Home-page','Sub-page');
+foreach ($options as $option) {
+echo '<option value="' . $option . '" id="' . $option . '"', $layout == $option ? ' selected="selected"' : '', '>', $option, '</option>';
+}
+?>
+</select>
+</p>
 <p>
 <label for="<?php echo $this->get_field_id('numberofposts'); ?>"><?php _e('Number of posts', 'wp_widget_plugin'); ?></label>
 <select name="<?php echo $this->get_field_name('numberofposts'); ?>" id="<?php echo $this->get_field_id('numberofposts'); ?>">
@@ -187,7 +260,8 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
 		// processes widget options to be saved
 		       $instance = $old_instance;
       // Fields
-     		$instance['numberofposts'] = strip_tags($new_instance['numberofposts']);
+     		$instance['layout'] = strip_tags($new_instance['layout']);
+							$instance['numberofposts'] = strip_tags($new_instance['numberofposts']);
      		$instance['selectedfeedtype'] = strip_tags($new_instance['selectedfeedtype']);
      		$instance['category'] = $new_instance['category'];
 		return $instance;

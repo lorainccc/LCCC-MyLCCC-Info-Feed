@@ -15,6 +15,9 @@ p.stocker-day {
     font-weight: 700;
     font-size: 1.75rem;
 }
+.view-all-athletics-button{    text-align: center;
+    padding: 1rem 2rem;
+    box-shadow: inset 0 0 10px #DCDCDC;}
 .checkbox-sub-selection{margin-top: -50px;}
 .midpoint-campus-center-news{background:#5B9340;}
 .lccc-sports-and-recreation-news{background: #764F51;}
@@ -58,6 +61,7 @@ h3.stocker-event-date{text-align: center; color: #fff;    font-size: 0.8375rem;}
 .sub-announcement-container{
 	background: #fff;
 	box-shadow: inset 0 0 10px #DCDCDC;
+	padding: 1rem;
 }
 .columns .lccc_announcement-sub-site .headerlogo-sub-site
 {

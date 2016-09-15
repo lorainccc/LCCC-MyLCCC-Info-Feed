@@ -201,10 +201,30 @@ function eventapi_register_fields() {
 	);
 
 // Add Announcment Start Date
-	register_api_field( 'lccc_events',
+	register_api_field( 'lccc_announcement',
 		'announcement_start_date',
 		array(
 			'get_callback'		=> 'lccc_get_announcement_start_date',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
+ 
+ // Add Start Date Month
+	register_api_field( 'lccc_announcement',
+		'announcement_start_date_month',
+		array(
+			'get_callback'		=> 'lccc_get_announcement_start_date_month',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
+ 
+ // Add Start Date Day
+	register_api_field( 'lccc_announcement',
+		'announcement_start_date_day',
+		array(
+			'get_callback'		=> 'lccc_get_announcement_start_date_day',
 			'update_callback'	=> null,
 			'schema'			=> null
 		)
@@ -244,6 +264,19 @@ function gofurther_get_event_stocker_ticket_link( $object, $field_name, $request
 
 function lccc_get_announcement_start_date( $object, $field_name, $request ) {
 	return announcement_meta_box_get_meta('announcement_start_date');
+}
+
+function lccc_get_announcement_start_date_month( $object, $field_name, $request ) {
+	$starteventdate = announcement_meta_box_get_meta('announcement_start_date');
+    	$startdate=strtotime($starteventdate);
+    	$eventstartmonth=date("M",$startdate);
+	return $eventstartmonth;
+}
+function lccc_get_announcement_start_date_day( $object, $field_name, $request ) {
+    $starteventdate = announcement_meta_box_get_meta('announcement_start_date');
+    $startdate=strtotime($starteventdate);
+    $eventstartday =date("j",$startdate);
+	return $eventstartday;
 }
 
 add_action( 'rest_api_init', 'eventapi_register_fields');

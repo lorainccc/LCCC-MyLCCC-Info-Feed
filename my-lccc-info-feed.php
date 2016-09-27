@@ -85,7 +85,7 @@ function my_lccc_info_feed_scripts() {
 	wp_enqueue_style('my_lccc_font', plugin_dir_url( __FILE__ ) . 'fonts/styles.css');
 
 }
-add_action ('init','my_lccc_info_feed_scripts');
+add_action ('init','my_lccc_info_feed_scripts'); 
 
 function my_lccc_info_feed_wp_admin_scripts() {
  wp_enqueue_script('jquery-ui-datepicker');

@@ -88,8 +88,8 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	switch ( $eventfeeds ){
 		case 'all-events':
 			$lcccacademicevents = new Endpoint( 'http://test.lorainccc.edu/student-resources/wp-json/wp/v2/lccc_academicevent?filter[academic_event_metabox_display_in_event_feed]=true' );
-			$lcccevents = new Endpoint( 'http://temp.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_announcement' );
-			$athleticevents = new Endpoint( 'http://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events' );
+			$lcccevents = new Endpoint( 'http://test.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_announcement' );
+			$athleticevents = new Endpoint( 'http://test.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events' );
 			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events' );
 			break;
 
@@ -117,6 +117,9 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	$multi = new MultiBlog( 1 );
 
 	//Add endpoints to instance
+	if ( $lcccacademicevents != ''){
+		$multi->add_endpoint ( $lcccacademicevents );
+	};
 	if ( $lcccevents != ''){
 		$multi->add_endpoint ( $lcccevents );
 	};
@@ -257,21 +260,6 @@ echo '<option value="' . $option . '" id="' . $option . '"', $eventheader == $op
 		?>
 	</select>
 </p>
-
-		<p>
-<label for="<?php echo $this->get_field_id('wheretodisplay'); ?>"><?php _e('Where To Display:', 'wp_widget_plugin'); ?></label>
-
-<select name="<?php echo $this->get_field_name('wheretodisplay'); ?>" id="<?php echo $this->get_field_id('wheretodisplay'); ?>"class="widefat">
-		<?php
-$options = array('select..','sitewide','stocker-home','athletics-home','athletics-cross-country', 'athletics-womens-basketball','athletics-womens-softball', 'athletics-womens-volleyball', 'athletics-mens-baseball', 'athletics-mens-basketball', 'athletics-club' , 'getting-started', 'student-resources','programs-and-careers','campus-life','business-services','community-services','about',);
-foreach ($options as $option) {
-echo '<option value="' . $option . '" id="' . $option . '"', $wheretodisplay == $option ? ' selected="selected"' : '', '>', $option, '</option>';
-}
-?>
-</select>
-
-</p>
-
 <?php
 	}
 
@@ -288,7 +276,6 @@ echo '<option value="' . $option . '" id="' . $option . '"', $wheretodisplay == 
 		// fields
 		$instance['numberofposts'] = strip_tags($new_instance['numberofposts']);
 		$instance['selectedfeedtype'] = strip_tags($new_instance['selectedfeedtype']);
-		$instance['wheretodisplay'] = strip_tags($new_instance['wheretodisplay']);
 		$instance['eventheader'] = strip_tags($new_instance['eventheader']);
 		return $instance;
 	}

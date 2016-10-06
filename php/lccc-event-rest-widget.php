@@ -55,7 +55,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 }elseif (  $widgetheader =='lccc-header' ){
 		echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
 			echo '<div class="small-5 medium-5 large-5 columns '.$whattodisplay.' headerlogo">';
-			echo '<img src="' . plugins_url( '../images/lccc-logo.svg', __FILE__ ) . '"  height="60" width="73" alt="Lorain County Community College Logo" > ';
+				echo '<i class="lccc-font-lccc-reverse">'.'</i>';
 			echo '</div>';
 			echo '<div class="small-7 medium-7 large-7 columns event-header-text-container">';
 				echo '<h2 class="headertext">'.'Events'.'</h2>';
@@ -64,7 +64,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	}else{
 		echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
 			echo '<div class="small-5 medium-5 large-5 columns '.$whattodisplay.' headerlogo">';
-		echo '<img src="' . plugins_url( '../images/lccc-logo.svg', __FILE__ ) . '"  height="60" width="73" alt="Lorain County Community College Logo" > ';
+				echo '<i class="lccc-font-lccc-reverse">'.'</i>';
 			echo '</div>';
 			echo '<div class="small-7 medium-7 large-7 columns event-header-text-container">';
 				echo '<h2 class="headertext">'.'Events'.'</h2>';
@@ -87,6 +87,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 
 	switch ( $eventfeeds ){
 		case 'all-events':
+			$lcccacademicevents = new Endpoint( 'http://test.lorainccc.edu/student-resources/wp-json/wp/v2/lccc_academicevent?filter[academic_event_metabox_display_in_event_feed]=true' );
 			$lcccevents = new Endpoint( 'http://temp.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_announcement' );
 			$athleticevents = new Endpoint( 'http://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events' );
 			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events' );

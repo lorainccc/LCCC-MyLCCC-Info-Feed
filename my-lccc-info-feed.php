@@ -79,42 +79,46 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc_posttypes.php' );
 * The Enque Function for the Jquery UI function of the metabox code below
 */
 function my_lccc_info_feed_scripts() {
-	wp_enqueue_style( 'lato-google-fonts', 'https://fonts.googleapis.com/css?family=Lato:400,700,400italic', false ); 	
-	
-	wp_enqueue_script('jquery-ui-datepicker');
-	
-	wp_enqueue_script('jquery-ui-core');
-	
-	wp_enqueue_script( 'jquery-ui-timepicker-addon-js', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker-addon.js', array( 'jquery','jquery-ui-core','jquery-ui-datepicker' ), '1', true );
-	
-wp_enqueue_style( 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/smoothness/jquery-ui.css', true);
 
-	wp_enqueue_style('jquery-ui-timepicker-addon-style', plugin_dir_url( __FILE__ ) . 'css/jquery-ui-timepicker-addon.css');
-	
 	wp_enqueue_style('my_lccc_info_feed_style', plugin_dir_url( __FILE__ ) . 'css/my_lccc_info_feed_styles.css');
-	
-		wp_enqueue_style('my_lccc_font', plugin_dir_url( __FILE__ ) . 'fonts/styles.css');
-	
+
+	wp_enqueue_style('my_lccc_font', plugin_dir_url( __FILE__ ) . 'fonts/styles.css');
+
 }
 add_action ('init','my_lccc_info_feed_scripts');
 
+function my_lccc_info_feed_wp_admin_scripts() {
+ wp_enqueue_script('jquery-ui-datepicker');
+
+	wp_enqueue_script('jquery-ui-core');
+
+	wp_enqueue_script( 'jquery-ui-timepicker-addon-js', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker-addon.js', array( 'jquery','jquery-ui-core','jquery-ui-datepicker' ), '1', true );
+
+ wp_enqueue_style( 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/smoothness/jquery-ui.css', true);
+
+	wp_enqueue_style('jquery-ui-timepicker-addon-style', plugin_dir_url( __FILE__ ) . 'css/jquery-ui-timepicker-addon.css');
+}
+
+add_action( 'admin_enqueue_scripts', 'my_lccc_info_feed_wp_admin_scripts' );
+
+/*
 function enqueue_foundation() {
-/* Add Foundation CSS 
+ Add Foundation CSS
  wp_enqueue_style( 'foundation-normalize',  plugin_dir_url( __FILE__ ) . '/foundation/css/normalizemin.css' );
  wp_enqueue_style( 'foundation',  plugin_dir_url( __FILE__ ) . '/foundation/css/foundation.min.css' );
  */
-       
+
 /* Add Foundation JS */
-                
+
  /*wp_enqueue_script( 'foundation-js', get_template_directory_uri() . '/foundation/js/foundation.min.js', array( 'jquery' ), '1', true );
  wp_enqueue_script( 'foundation-modernizr-js',  plugin_dir_url( __FILE__ ) . '/foundation/js/vendor/modernizr.js', array( 'jquery' ), '1', true );
- */               
-/* Foudnation Init JS 
+ */
+/* Foudnation Init JS
  wp_enqueue_script( 'foundation-init-js',  plugin_dir_url( __FILE__ ) . 'foundation.js', array( 'jquery', 'foundation-js' ), '1', true );
-	*/
+
 	  }
 add_action( 'wp_enqueue_scripts', 'enqueue_foundation' );
-
+*/
 
 // Add various fields to the JSON output
 function eventapi_register_fields() {
@@ -123,6 +127,15 @@ function eventapi_register_fields() {
 		'event_start_date',
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_date',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
+		// Add Start Date
+	register_api_field( 'lccc_academicevent',
+		'event_start_date',
+		array(
+			'get_callback'		=> 'lcccacademic_get_event_start_date',
 			'update_callback'	=> null,
 			'schema'			=> null
 		)
@@ -136,7 +149,18 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
-    // Add Start Date Day
+	
+     // Add Start Date Month
+	register_api_field( 'lccc_academicevent',
+		'event_start_date_month',
+		array(
+			'get_callback'		=> 'lcccacademic_get_event_start_date_month',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	); 
+		
+		// Add Start Date Day
 	register_api_field( 'lccc_events',
 		'event_start_date_day',
 		array(
@@ -145,7 +169,18 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
-    // Add Start time
+	
+		// Add Start Date Day
+	register_api_field( 'lccc_academicevent',
+		'event_start_date_day',
+		array(
+			'get_callback'		=> 'lcccacademic_get_event_start_date_day',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);   
+		
+		// Add Start time
 	register_api_field( 'lccc_events',
 		'event_start_time',
 		array(
@@ -154,7 +189,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
-    
+
     // Add Event end_date
 	register_api_field( 'lccc_events',
 		'event_end_date',
@@ -163,8 +198,8 @@ function eventapi_register_fields() {
 			'update_callback'	=> null,
 			'schema'			=> null
 		)
-	);    
-    
+	);
+
     // Add Event end_time
 	register_api_field( 'lccc_events',
 		'event_end_time',
@@ -173,9 +208,9 @@ function eventapi_register_fields() {
 			'update_callback'	=> null,
 			'schema'			=> null
 		)
-	);    
-    
-    
+	);
+
+
     // Add Stocker bg_color
 	register_api_field( 'lccc_events',
 		'event_meta_box_stocker_bg_color',
@@ -195,12 +230,52 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
+
+// Add Announcment Start Date
+	register_api_field( 'lccc_announcement',
+		'announcement_start_date',
+		array(
+			'get_callback'		=> 'lccc_get_announcement_start_date',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
+ 
+ // Add Start Date Month
+	register_api_field( 'lccc_announcement',
+		'announcement_start_date_month',
+		array(
+			'get_callback'		=> 'lccc_get_announcement_start_date_month',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
+ 
+ // Add Start Date Day
+	register_api_field( 'lccc_announcement',
+		'announcement_start_date_day',
+		array(
+			'get_callback'		=> 'lccc_get_announcement_start_date_day',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
 }
+
 function gofurther_get_event_start_date( $object, $field_name, $request ) {
 	return event_meta_box_get_meta('event_start_date');
 }
+function lcccacademic_get_event_start_date( $object, $field_name, $request ) {
+	return academic_event_metabox_get_meta('event_start_date');
+}
 function gofurther_get_event_start_date_month( $object, $field_name, $request ) {
 	$starteventdate = event_meta_box_get_meta('event_start_date');
+    	$startdate=strtotime($starteventdate);
+    	$eventstartmonth=date("M",$startdate);
+	return $eventstartmonth;
+}
+function lcccacademic_get_event_start_date_month( $object, $field_name, $request ) {
+					$starteventdate = academic_event_metabox_get_meta('event_start_date');
     	$startdate=strtotime($starteventdate);
     	$eventstartmonth=date("M",$startdate);
 	return $eventstartmonth;
@@ -211,24 +286,46 @@ function gofurther_get_event_start_date_day( $object, $field_name, $request ) {
     $eventstartday =date("j",$startdate);
 	return $eventstartday;
 }
+function lcccacademic_get_event_start_date_day( $object, $field_name, $request ) {
+    $starteventdate = academic_event_metabox_get_meta('event_start_date');
+    $startdate=strtotime($starteventdate);
+    $eventstartday =date("j",$startdate);
+	return $eventstartday;
+}
 function gofurther_get_event_start_time( $object, $field_name, $request ) {
 	return event_meta_box_get_meta('event_start_time');
 }
 function gofurther_get_event_end_date( $object, $field_name, $request ) {
-	return event_meta_box_get_meta('event_end_date');   
+	return event_meta_box_get_meta('event_end_date');
 }
 function gofurther_get_event_end_time( $object, $field_name, $request ) {
-	return event_meta_box_get_meta('event_end_time');   
+	return event_meta_box_get_meta('event_end_time');
 }
 function gofurther_get_event_stocker_bg_color( $object, $field_name, $request ) {
-	return event_meta_box_get_meta('event_meta_box_stoccker_bg_color'); 
+	return event_meta_box_get_meta('event_meta_box_stoccker_bg_color');
 }
 function gofurther_get_event_stocker_ticket_link( $object, $field_name, $request ) {
-	return event_meta_box_get_meta('event_meta_box_stocker_ticket_link');   
+	return event_meta_box_get_meta('event_meta_box_stocker_ticket_link');
 }
+
+function lccc_get_announcement_start_date( $object, $field_name, $request ) {
+	return announcement_meta_box_get_meta('announcement_start_date');
+}
+
+function lccc_get_announcement_start_date_month( $object, $field_name, $request ) {
+	$starteventdate = announcement_meta_box_get_meta('announcement_start_date');
+    	$startdate=strtotime($starteventdate);
+    	$eventstartmonth=date("M",$startdate);
+	return $eventstartmonth;
+}
+function lccc_get_announcement_start_date_day( $object, $field_name, $request ) {
+    $starteventdate = announcement_meta_box_get_meta('announcement_start_date');
+    $startdate=strtotime($starteventdate);
+    $eventstartday =date("j",$startdate);
+	return $eventstartday;
+}
+
 add_action( 'rest_api_init', 'eventapi_register_fields');
-
-
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_pluginmetabox.php' );
 
@@ -242,10 +339,11 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_stocker_eventwidget.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/event-rest-api-fetch.php' );
-	
+require_once( plugin_dir_path( __FILE__ ).'php/rest-api-fetch.php' );
+
 require_once( plugin_dir_path( __FILE__ ).'php/lccc-event-rest-widget.php' );
 
+require_once( plugin_dir_path( __FILE__ ).'php/lccc-announcement-rest-widget.php' );
 
 add_filter('pre_get_posts', 'query_post_type');
 function query_post_type($query) {
@@ -258,6 +356,12 @@ function query_post_type($query) {
     $query->set('post_type',$post_type);
     return $query;
     }
+}
+
+function get_cat_slug($cat_id) {
+	$cat_id = (int) $cat_id;
+	$category = get_category($cat_id);
+	return $category->slug;
 }
 
 ?>

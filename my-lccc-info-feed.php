@@ -85,7 +85,7 @@ function my_lccc_info_feed_scripts() {
 	wp_enqueue_style('my_lccc_font', plugin_dir_url( __FILE__ ) . 'fonts/styles.css');
 
 }
-add_action ('init','my_lccc_info_feed_scripts');
+add_action ('init','my_lccc_info_feed_scripts'); 
 
 function my_lccc_info_feed_wp_admin_scripts() {
  wp_enqueue_script('jquery-ui-datepicker');
@@ -240,7 +240,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
- 
+
  // Add Start Date Month
 	register_api_field( 'lccc_announcement',
 		'announcement_start_date_month',
@@ -250,7 +250,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
- 
+
  // Add Start Date Day
 	register_api_field( 'lccc_announcement',
 		'announcement_start_date_day',
@@ -348,11 +348,11 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc_pluginmetabox.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/displayfunctions.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc_eventwidget.php' );
+//require_once( plugin_dir_path( __FILE__ ).'php/lccc_eventwidget.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcementwidget.php' );
+//require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcementwidget.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.php' );
+//require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_stocker_eventwidget.php' );
 

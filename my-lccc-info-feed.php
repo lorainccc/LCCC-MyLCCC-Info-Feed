@@ -311,7 +311,6 @@ function gofurther_get_event_stocker_ticket_link( $object, $field_name, $request
 function lccc_get_announcement_start_date( $object, $field_name, $request ) {
 	return announcement_meta_box_get_meta('announcement_start_date');
 }
-<<<<<<< HEAD
 
 function lccc_get_announcement_start_date_month( $object, $field_name, $request ) {
 	$starteventdate = announcement_meta_box_get_meta('announcement_start_date');
@@ -319,6 +318,7 @@ function lccc_get_announcement_start_date_month( $object, $field_name, $request 
     	$eventstartmonth=date("M",$startdate);
 	return $eventstartmonth;
 }
+
 function lccc_get_announcement_start_date_day( $object, $field_name, $request ) {
     $starteventdate = announcement_meta_box_get_meta('announcement_start_date');
     $startdate=strtotime($starteventdate);
@@ -326,22 +326,6 @@ function lccc_get_announcement_start_date_day( $object, $field_name, $request ) 
 	return $eventstartday;
 }
 
-=======
-
-function lccc_get_announcement_start_date_month( $object, $field_name, $request ) {
-	$starteventdate = announcement_meta_box_get_meta('announcement_start_date');
-    	$startdate=strtotime($starteventdate);
-    	$eventstartmonth=date("M",$startdate);
-	return $eventstartmonth;
-}
-function lccc_get_announcement_start_date_day( $object, $field_name, $request ) {
-    $starteventdate = announcement_meta_box_get_meta('announcement_start_date');
-    $startdate=strtotime($starteventdate);
-    $eventstartday =date("j",$startdate);
-	return $eventstartday;
-}
-
->>>>>>> refs/remotes/origin/master
 add_action( 'rest_api_init', 'eventapi_register_fields');
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_pluginmetabox.php' );
@@ -361,6 +345,21 @@ require_once( plugin_dir_path( __FILE__ ).'php/rest-api-fetch.php' );
 require_once( plugin_dir_path( __FILE__ ).'php/lccc-event-rest-widget.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc-announcement-rest-widget.php' );
+
+/*
+ * Adds the ability to query by custom fields.
+ * 
+ * Use ?filter[meta_query][0][key]= ** Custom field (full name not how it has been added to Rest API) ** &filter[meta_query][0][value]= ** Value of * custom field **
+ *
+ * Based upon: https://github.com/WP-API/WP-API/issues/2459
+ * Multiple Query Values: https://github.com/WP-API/WP-API/issues/2499
+*/
+
+add_filter( 'rest_query_vars', 'test_query_vars' );
+   function test_query_vars ( $vars ) {
+       $vars[] = 'meta_query';
+       return $vars;
+   }
 
 add_filter('pre_get_posts', 'query_post_type');
 function query_post_type($query) {

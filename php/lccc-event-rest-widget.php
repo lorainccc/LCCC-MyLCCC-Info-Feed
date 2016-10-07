@@ -112,7 +112,6 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 			$categoryevents = new Endpoint( 'http://test.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_events?filter[event_categories]='.$eventfeeds );
 	}
 
-
 	//Create instance
 	$multi = new MultiBlog( 1 );
 
@@ -137,7 +136,6 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		if ( $categoryevents != ''){
 		$multi->add_endpoint ( $categoryevents );
 	};
-
 
 	//Fetch Endpoints
 	$posts = $multi->get_posts();

@@ -86,8 +86,9 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 
 	switch ( $eventfeeds ){
 		case 'all-events':
-			$lcccevents = new Endpoint( 'http://temp.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_announcement' );
-			$athleticevents = new Endpoint( 'http://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events' );
+				$lcccacademicevents = new Endpoint( 'https://test.lorainccc.edu/student-resources/wp-json/wp/v2/lccc_academicevent/?filter[meta_query][0][key]=academic_event_metabox_display_in_event_feed&filter[meta_query][0][value]=show&posts_per_page=-1' );
+			$lcccevents = new Endpoint( 'http://test.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_announcement' );
+			$athleticevents = new Endpoint( 'http://test.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events' );
 			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events' );
 			break;
 
@@ -115,6 +116,9 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	$multi = new MultiBlog( 1 );
 
 	//Add endpoints to instance
+		if ( $lcccacademicevents != ''){
+		$multi->add_endpoint ( $lcccacademicevents );
+	};		
 	if ( $lcccevents != ''){
 		$multi->add_endpoint ( $lcccevents );
 	};

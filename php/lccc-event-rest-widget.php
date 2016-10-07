@@ -21,7 +21,6 @@ class LCCC_Feed_Widget extends WP_Widget {
 		* @param array $instance
 		*
 		*/
-
 		public function widget( $args, $instance ) {
 			//outputs the content of the widget
 			extract( $args );

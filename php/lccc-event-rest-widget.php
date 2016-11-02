@@ -21,6 +21,7 @@ class LCCC_Feed_Widget extends WP_Widget {
 		* @param array $instance
 		*
 		*/
+
 		public function widget( $args, $instance ) {
 			//outputs the content of the widget
 			extract( $args );
@@ -81,15 +82,17 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		$athleticevents = '';
 		$sportevents = '';
 		$categoryevents = '';
-
+		//$numberoffeeds = 3;
+		//$displaynumber = $numberofposts/$numberoffeeds;
 	//Grab posts (endpoints)
-
+  //$domain = 'http://' . $_SERVER['SERVER_NAME'];
+  $domain = 'http://test.lorainccc.edu';
 	switch ( $eventfeeds ){
 		case 'all-events':
-				$lcccacademicevents = new Endpoint( 'https://test.lorainccc.edu/student-resources/wp-json/wp/v2/lccc_academicevent/?filter[meta_query][0][key]=academic_event_metabox_display_in_event_feed&filter[meta_query][0][value]=show&posts_per_page=-1' );
-			$lcccevents = new Endpoint( 'http://test.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_announcement' );
-			$athleticevents = new Endpoint( 'http://test.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events' );
-			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events' );
+   //?filter[posts_per_page]='.$displaynumber.'
+			$lcccevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events' );
+			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events' );
+			$stockerevents = new Endpoint( $domain . '/stocker/wp-json/wp/v2/lccc_events' );
 			break;
 
 		case 'all-athletics':
@@ -116,9 +119,9 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	$multi = new MultiBlog( 1 );
 
 	//Add endpoints to instance
-		if ( $lcccacademicevents != ''){
+	if ( $lcccacademicevents != ''){
 		$multi->add_endpoint ( $lcccacademicevents );
-	};		
+	};
 	if ( $lcccevents != ''){
 		$multi->add_endpoint ( $lcccevents );
 	};
@@ -144,18 +147,24 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		echo 'No Posts Found!';
 	}
 
+   $icounter = 1;
+
 	//$posts will be an array of all posts sorted by post date
 	foreach ( $posts as $post ){
-		echo '<div class="small-12 medium-12 large-12 columns eventcontainer">';
-	echo '<div class="samll-12 medium-12 large-3 columns calendar-small">';
-		echo '<p class="month">'.$post->event_start_date_month.'</p>';
-  echo '<p class="day">'.$post->event_start_date_day.'</p>';
-	echo '</div>';
-				echo '<div class="small-12 medium-12 large-9 columns">';?>
-						<a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php
-						echo '<p>' . $post->excerpt->rendered . '</p>' ;
-				echo '</div>';
-		echo '</div>';
+  while ($icounter <= $numberofposts){
+    echo '<div class="small-12 medium-12 large-12 columns eventcontainer">';
+    echo ' <div class="samll-12 medium-12 large-3 columns calendar-small">';
+    echo ' <p class="month">'.$post->event_start_date_month.'</p>';
+    echo ' <p class="day">'.$post->event_start_date_day.'</p>';
+    echo ' </div>';
+    echo ' <div class="small-12 medium-12 large-9 columns">';?>
+     <a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php
+    echo ' <p>' . $post->excerpt->rendered . '</p>' ;
+    echo ' </div>';
+    echo '</div>';
+
+    $icounter++;
+   }
 		}
 
    /* Generate View all button at bottom of event feed
@@ -238,7 +247,7 @@ echo '<option value="' . $option . '" id="' . $option . '"', $eventheader == $op
 	<label for="<?php echo $this->get_field_id('numberofposts'); ?>"><?php _e('Number of posts', 'lc_myinfo_feed'); ?></label>
 	<select name="<?php echo $this->get_field_name('numberofposts'); ?>" id="<?php echo $this->get_field_id('numberofposts'); ?>">
 		<?php
-			$options = array('select..', 6, 9, 15);
+			$options = array('select..', 5, 10, 15);
 		foreach ($options as $option) {
 			echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $option ? 'selected="selected"' : '', '>', $option, '</option>';
 		}
@@ -259,21 +268,6 @@ echo '<option value="' . $option . '" id="' . $option . '"', $eventheader == $op
 		?>
 	</select>
 </p>
-
-		<p>
-<label for="<?php echo $this->get_field_id('wheretodisplay'); ?>"><?php _e('Where To Display:', 'wp_widget_plugin'); ?></label>
-
-<select name="<?php echo $this->get_field_name('wheretodisplay'); ?>" id="<?php echo $this->get_field_id('wheretodisplay'); ?>"class="widefat">
-		<?php
-$options = array('select..','sitewide','stocker-home','athletics-home','athletics-cross-country', 'athletics-womens-basketball','athletics-womens-softball', 'athletics-womens-volleyball', 'athletics-mens-baseball', 'athletics-mens-basketball', 'athletics-club' , 'getting-started', 'student-resources','programs-and-careers','campus-life','business-services','community-services','about',);
-foreach ($options as $option) {
-echo '<option value="' . $option . '" id="' . $option . '"', $wheretodisplay == $option ? ' selected="selected"' : '', '>', $option, '</option>';
-}
-?>
-</select>
-
-</p>
-
 <?php
 	}
 
@@ -290,7 +284,6 @@ echo '<option value="' . $option . '" id="' . $option . '"', $wheretodisplay == 
 		// fields
 		$instance['numberofposts'] = strip_tags($new_instance['numberofposts']);
 		$instance['selectedfeedtype'] = strip_tags($new_instance['selectedfeedtype']);
-		$instance['wheretodisplay'] = strip_tags($new_instance['wheretodisplay']);
 		$instance['eventheader'] = strip_tags($new_instance['eventheader']);
 		return $instance;
 	}

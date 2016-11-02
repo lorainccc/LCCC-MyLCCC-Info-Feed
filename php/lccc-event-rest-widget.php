@@ -85,8 +85,8 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		//$numberoffeeds = 3;
 		//$displaynumber = $numberofposts/$numberoffeeds;
 	//Grab posts (endpoints)
-  //$domain = 'http://' . $_SERVER['SERVER_NAME'];
-  $domain = 'http://test.lorainccc.edu';
+  $domain = 'http://' . $_SERVER['SERVER_NAME'];
+  //$domain = 'http://test.lorainccc.edu';
 	switch ( $eventfeeds ){
 		case 'all-events':
    //?filter[posts_per_page]='.$displaynumber.'

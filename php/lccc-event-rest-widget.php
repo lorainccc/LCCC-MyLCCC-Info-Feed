@@ -151,7 +151,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 
 	//$posts will be an array of all posts sorted by post date
 	foreach ( $posts as $post ){
-  while ($icounter <= $numberofposts){
+  if($icounter <= $numberofposts){
     echo '<div class="small-12 medium-12 large-12 columns eventcontainer">';
     echo ' <div class="samll-12 medium-12 large-3 columns calendar-small">';
     echo ' <p class="month">'.$post->event_start_date_month.'</p>';

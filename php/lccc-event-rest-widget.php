@@ -82,15 +82,16 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		$athleticevents = '';
 		$sportevents = '';
 		$categoryevents = '';
-
+		$numberoffeeds = 3;
+		$displaynumber = $numberofposts/$numberoffeeds;
 	//Grab posts (endpoints)
 
 	switch ( $eventfeeds ){
 		case 'all-events':
-			$lcccacademicevents = new Endpoint( 'https://test.lorainccc.edu/student-resources/wp-json/wp/v2/lccc_academicevent/?filter[meta_query][0][key]=academic_event_metabox_display_in_event_feed&filter[meta_query][0][value]=show&posts_per_page=-1' );
-			$lcccevents = new Endpoint( 'http://test.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_announcement' );
-			$athleticevents = new Endpoint( 'http://test.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events' );
-			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events' );
+
+			$lcccevents = new Endpoint( 'http://test.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_events?filter[posts_per_page]='.$displaynumber.'' );
+			$athleticevents = new Endpoint( 'http://test.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events?filter[posts_per_page]='.$displaynumber.'' );
+			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events?filter[posts_per_page]='.$displaynumber.'' );
 			break;
 
 		case 'all-athletics':
@@ -111,6 +112,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 			default:
 			$categoryevents = new Endpoint( 'http://test.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_events?filter[event_categories]='.$eventfeeds );
 	}
+
 
 	//Create instance
 	$multi = new MultiBlog( 1 );
@@ -136,6 +138,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		if ( $categoryevents != ''){
 		$multi->add_endpoint ( $categoryevents );
 	};
+
 
 	//Fetch Endpoints
 	$posts = $multi->get_posts();

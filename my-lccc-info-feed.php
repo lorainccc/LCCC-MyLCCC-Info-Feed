@@ -149,7 +149,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
-	
+
      // Add Start Date Month
 	register_api_field( 'lccc_academicevent',
 		'event_start_date_month',
@@ -158,8 +158,8 @@ function eventapi_register_fields() {
 			'update_callback'	=> null,
 			'schema'			=> null
 		)
-	); 
-		
+	);
+
 		// Add Start Date Day
 	register_api_field( 'lccc_events',
 		'event_start_date_day',
@@ -169,7 +169,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
-	
+
 		// Add Start Date Day
 	register_api_field( 'lccc_academicevent',
 		'event_start_date_day',
@@ -178,8 +178,8 @@ function eventapi_register_fields() {
 			'update_callback'	=> null,
 			'schema'			=> null
 		)
-	);   
-		
+	);
+
 		// Add Start time
 	register_api_field( 'lccc_events',
 		'event_start_time',
@@ -240,7 +240,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
- 
+
  // Add Start Date Month
 	register_api_field( 'lccc_announcement',
 		'announcement_start_date_month',
@@ -318,6 +318,7 @@ function lccc_get_announcement_start_date_month( $object, $field_name, $request 
     	$eventstartmonth=date("M",$startdate);
 	return $eventstartmonth;
 }
+
 function lccc_get_announcement_start_date_day( $object, $field_name, $request ) {
     $starteventdate = announcement_meta_box_get_meta('announcement_start_date');
     $startdate=strtotime($starteventdate);
@@ -347,7 +348,7 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc-announcement-rest-widget.php
 
 /*
  * Adds the ability to query by custom fields.
- * 
+ *
  * Use ?filter[meta_query][0][key]= ** Custom field (full name not how it has been added to Rest API) ** &filter[meta_query][0][value]= ** Value of * custom field **
  *
  * Based upon: https://github.com/WP-API/WP-API/issues/2459

@@ -84,6 +84,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		$categoryevents = '';
 		//$numberoffeeds = 3;
 		//$displaynumber = $numberofposts/$numberoffeeds;
+
 	//Grab posts (endpoints)
   $domain = 'http://' . $_SERVER['SERVER_NAME'];
   //$domain = 'http://test.lorainccc.edu';
@@ -148,24 +149,46 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	}
 
    $icounter = 1;
+   $currentdate = date("Y-m-d");
+   $currentday = date("d");
+   $currentmonth = date("m");
+   $currentmonthname = date("M");
 
 	//$posts will be an array of all posts sorted by post date
 	foreach ( $posts as $post ){
-  if($icounter <= $numberofposts){
+
+  if( $icounter <= $numberofposts ){
+
+   if( $post->event_end_date > $currentdate ){
     echo '<div class="small-12 medium-12 large-12 columns eventcontainer">';
     echo ' <div class="samll-12 medium-12 large-3 columns calendar-small">';
-    echo ' <p class="month">'.$post->event_start_date_month.'</p>';
-    echo ' <p class="day">'.$post->event_start_date_day.'</p>';
+    $date = date_create($post->event_end_date);
+    $post_month = date_format($date, 'm');
+
+    if ( $post_month <= $currentmonth ){
+     echo ' <p class="month">'. $currentmonthname .'</p>';
+    } else {
+     echo ' <p class="month">'.$post->event_start_date_month.'</p>';
+    }
+
+    if( $post->event_start_date < $currentdate && $post->event_end_date >= $currentdate ){
+     echo ' <p class="day">'. $currentday . '</p>';
+    }else{
+     echo ' <p class="day">'.$post->event_start_date_day.'</p>';
+    }
     echo ' </div>';
     echo ' <div class="small-12 medium-12 large-9 columns">';?>
      <a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php
     echo ' <p>' . $post->excerpt->rendered . '</p>' ;
     echo ' </div>';
     echo '</div>';
-
     $icounter++;
+
    }
+
 		}
+
+ }
 
    /* Generate View all button at bottom of event feed
     * Based upon which event feed is being shown.

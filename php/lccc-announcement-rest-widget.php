@@ -30,6 +30,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    $selectedfeedtype = $instance['selectedfeedtype'];
 			$widgetcategory = $instance['category'];
 			$displaylayout = $instance['layout'];
+     
    echo $before_widget;
    // Display the widget
 		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.' nopadding">';
@@ -82,8 +83,8 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    $lcccannouncments = '';
    $athleticannouncements = '';
 
-   $domain = 'http://' . $_SERVER['SERVER_NAME'];
-   //$domain = 'http://test.lorainccc.edu';
+   //$domain = 'http://' . $_SERVER['SERVER_NAME'];
+   $domain = 'http://test.lorainccc.edu';
 
    switch ( $selectedfeedtype ){
     case 'all-announcements':
@@ -100,10 +101,12 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 
 
    if ($widgetcategory != ''){
-    //$announcementcat = new EndPoint( $domain .'/athletics/wp-json/wp/v2/lccc_announcement?filter[event_categories]='. );
+    //$category = get_category_by_slug( $widgetcategory );
+    //$catID = $category->term_id;
+    //$catID = 7;
+    $athleticannouncements = new EndPoint( $domain .'/athletics/wp-json/wp/v2/lccc_announcement?filter[taxonomy]=category&filter[term]=' . $widgetcategory );
    }
-
-
+   
    //Create instance
    $multi = new MultiBlog( 1 );
 
@@ -171,7 +174,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 															echo '<p>' . $post->excerpt->rendered . '</p>' ;
 												echo '</div>';
 								echo '</div>';
-			
+
      }
    switch ( $selectedfeedtype ){
     case 'all-announcements' :

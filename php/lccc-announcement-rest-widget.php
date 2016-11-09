@@ -82,17 +82,27 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    $lcccannouncments = '';
    $athleticannouncements = '';
 
+   $domain = 'http://' . $_SERVER['SERVER_NAME'];
+   //$domain = 'http://test.lorainccc.edu';
+
    switch ( $selectedfeedtype ){
     case 'all-announcements':
-        $lcccannouncments = new EndPoint( 'http://test.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_announcement' );
+        $lcccannouncments = new EndPoint( $domain . '/mylccc/wp-json/wp/v2/lccc_announcement' );
+
         //$athleticannouncements = new EndPoint( 'https://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_announcement' );
      break;
 
     case 'all-athletics':
-        $athleticannouncements = new EndPoint( 'http://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_announcement' );
+        $athleticannouncements = new EndPoint( $domain . '/athletics/wp-json/wp/v2/lccc_announcement' );
         break;
    }
-   
+
+
+   if ($widgetcategory != ''){
+    //$announcementcat = new EndPoint( $domain .'/athletics/wp-json/wp/v2/lccc_announcement?filter[event_categories]='. );
+   }
+
+
    //Create instance
    $multi = new MultiBlog( 1 );
 
@@ -101,9 +111,11 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
     $multi->add_endpoint ( $lcccannouncments );
    };
 
-   if ($athleticannouncements != ''){
+   if ($athleticannouncements != '' && $widgetcategory == ''){
     $multi->add_endpoint ( $athleticannouncements );
    };
+
+
 
    //Fetch Endpoints
    $posts = $multi->get_posts();
@@ -124,9 +136,10 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 											echo '<p>' . $post->excerpt->rendered . '</p>';
 								echo '</div>';
 			  			echo '<div class="column row">';
-    								echo '<hr />';
-  						echo '</div>';
+								echo '<hr />';
+ 						 echo '</div>';
 								echo '</div>';
+          
      }
 
    switch ( $selectedfeedtype ){
@@ -227,10 +240,6 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
 ?>
 </select>
 </p>
-		<p>
- <label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Select category', 'wp_widget_plugin' ); ?>:</label>
-    <?php wp_dropdown_categories( array( 'show_option_none' =>' ','name' => $this->get_field_name( 'category' ), 'selected' => $widgetcategory ) ); ?>
-</p>
 <p>
  <label for="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>"><?php _e( 'Select feed type', 'wp_widget_plugin' ); ?>:</label>
  <select name="<?php echo $this->get_field_name( 'selectedfeedtype' ); ?>" id="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>" class="widefat">
@@ -246,7 +255,10 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
   ?>
 </select>
 </p>
-
+<p>
+ <label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Select category', 'wp_widget_plugin' ); ?>:</label>
+    <?php wp_dropdown_categories( array( 'show_option_none' =>' ','name' => $this->get_field_name( 'category' ), 'selected' => $widgetcategory ) ); ?>
+</p>
 <?php
 	}
 

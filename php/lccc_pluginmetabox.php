@@ -278,6 +278,10 @@ jQuery('#announcement_end_time').timepicker({
 
 });
 </script>
+<p>
+		<label for="announcement_meta_box_sub_heading"><?php _e( 'Sub Heading:', 'announcement_meta_box' ); ?></label><br>
+		<input class="widefat"  type="text" name="announcement_meta_box_sub_heading" id="announcement_meta_box_sub_heading" value="<?php echo announcement_meta_box_get_meta( 'announcement_meta_box_sub_heading' ); ?>">
+	</p>
 
 <h4>Submitted by:</h4>
 	<p>
@@ -301,9 +305,9 @@ jQuery('#announcement_end_time').timepicker({
 	</p>
 <p>
 <br>
-	<p>
-<h4 class="metabox-field-title">Audience:</h4>
+</p>
 
+<h4 class="metabox-field-title">Audience:</h4>
 	<p>
 		<input type="checkbox" name="announcement_meta_box_employee" id="announcement_meta_box_employee" value="LCCC Employees" <?php echo ( announcement_meta_box_get_meta( 'announcement_meta_box_employee' ) === 'LCCC Employees' ) ? 'checked' : ''; ?>>
 		<label for="announcement_meta_box_employee"><?php _e( 'LCCC Employees', 'lccc_announcement_metabox' ); ?></label>	
@@ -328,7 +332,7 @@ jQuery('#announcement_end_time').timepicker({
 			?>
 </select>
 
-<h4 class="metabox-field-title">announcement Dates and Times:</h4>
+<h4 class="metabox-field-title">Announcement Dates and Times:</h4>
 
 <p>		
 		<label for="announcement_start_date"><?php _e( 'announcement Start date:', 'announcement_meta_box' ); ?></label><br>
@@ -371,8 +375,12 @@ function announcement_meta_box_save( $post_id ) {
 	if ( ! isset( $_POST['announcement_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['announcement_meta_box_nonce'], '_announcement_meta_box_nonce' ) ) return;
 	if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 
+	if ( isset( $_POST['announcement_meta_box_sub_heading'] ) )
+		update_post_meta( $post_id, 'announcement_meta_box_sub_heading', esc_attr( $_POST['announcement_meta_box_sub_heading'] ) );
+		
 	if ( isset( $_POST['announcement_meta_box_name'] ) )
 		update_post_meta( $post_id, 'announcement_meta_box_name', esc_attr( $_POST['announcement_meta_box_name'] ) );
+	
 	if ( isset( $_POST['announcement_meta_box_phone'] ) )
 		update_post_meta( $post_id, 'announcement_meta_box_phone', esc_attr( $_POST['announcement_meta_box_phone'] ) );
 	if ( isset( $_POST['announcement_meta_box_e_mail'] ) )

@@ -88,7 +88,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    switch ( $selectedfeedtype ){
     case 'all-announcements':
         $lcccannouncments = new EndPoint( $domain . '/mylccc/wp-json/wp/v2/lccc_announcement' );
-        //$athleticannouncements = new EndPoint( 'https://temp.lorainccc.edu/athletics/wp-json/wp/v2/lccc_announcement' );
+        $athleticannouncements = new EndPoint( $domain . '/athletics/wp-json/wp/v2/lccc_announcement' );
      break;
 
     case 'all-athletics':
@@ -104,11 +104,11 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    $multi = new MultiBlog( 1 );
 
    //Add endpoints to instance
-   if ( $lcccannouncments != ''){
+   if ( $lcccannouncments != '' ){
     $multi->add_endpoint ( $lcccannouncments );
    };
 
-   if ($athleticannouncements != '' && $widgetcategory == ''){
+   if ($athleticannouncements != '' ){
     $multi->add_endpoint ( $athleticannouncements );
    };
 

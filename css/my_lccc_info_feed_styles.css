@@ -15,6 +15,9 @@ p.stocker-day {
     font-weight: 700;
     font-size: 1.75rem;
 }
+.view-all-athletics-button{    text-align: center;
+    padding: 1rem 2rem;
+    box-shadow: inset 0 0 10px #DCDCDC;}
 .checkbox-sub-selection{margin-top: -50px;}
 .midpoint-campus-center-news{background:#5B9340;}
 .lccc-sports-and-recreation-news{background: #764F51;}
@@ -58,6 +61,7 @@ h3.stocker-event-date{text-align: center; color: #fff;    font-size: 0.8375rem;}
 .sub-announcement-container{
 	background: #fff;
 	box-shadow: inset 0 0 10px #DCDCDC;
+	padding: 1rem;
 }
 .columns .lccc_announcement-sub-site .headerlogo-sub-site
 {
@@ -96,18 +100,18 @@ h2.headertext{margin: 0;}
 .lccc-font-lccc-reverse{color: #fff;}
 .lccc_events .headerlogo{padding-right: 0;}
 .lccc_events_header{max-height: 65px;margin-bottom: 1rem;}
-.columns.calender{	    width: 90px;
+.columns.calendar{	    width: 90px;
     height: 90px;
     background-image: url(../images/calendaricon_blue.svg);
     padding: 2rem 1rem;
     text-align: center;}
-.columns.calender-small{
+.columns.calendar-small{
 	    width: 63px;
     height: 63px;
     background-image: url(../images/calendar.png);
     text-align: center;
 }
-.widget p.month{margin-bottom: 0;margin-top: 12px;margin-left: 4px;width: 100%; font-weight: bold;color: #003B76;line-height: 1.7;font-size: 0.97rem;}
+.widget p.month{margin-bottom: 0;margin-top: 12px;margin-left: 4px;width: 100%; font-weight: bold;color: #003B76;line-height: 1.7;font-size: 0.90rem;}
 .widget p.day{margin-bottom: 0;    margin-top: -10px;
     margin-left: 9px; font-weight: bold;color: #003B76;}
 .widget h3.eventtitle{line-height: 1.3125;    

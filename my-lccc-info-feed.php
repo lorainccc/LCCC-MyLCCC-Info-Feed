@@ -85,7 +85,7 @@ function my_lccc_info_feed_scripts() {
 	wp_enqueue_style('my_lccc_font', plugin_dir_url( __FILE__ ) . 'fonts/styles.css');
 
 }
-add_action ('init','my_lccc_info_feed_scripts');
+add_action ('init','my_lccc_info_feed_scripts'); 
 
 function my_lccc_info_feed_wp_admin_scripts() {
  wp_enqueue_script('jquery-ui-datepicker');
@@ -240,7 +240,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
- 
+
  // Add Start Date Month
 	register_api_field( 'lccc_announcement',
 		'announcement_start_date_month',
@@ -250,7 +250,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
- 
+
  // Add Start Date Day
 	register_api_field( 'lccc_announcement',
 		'announcement_start_date_day',
@@ -318,6 +318,7 @@ function lccc_get_announcement_start_date_month( $object, $field_name, $request 
     	$eventstartmonth=date("M",$startdate);
 	return $eventstartmonth;
 }
+
 function lccc_get_announcement_start_date_day( $object, $field_name, $request ) {
     $starteventdate = announcement_meta_box_get_meta('announcement_start_date');
     $startdate=strtotime($starteventdate);
@@ -331,11 +332,11 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc_pluginmetabox.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/displayfunctions.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc_eventwidget.php' );
+//require_once( plugin_dir_path( __FILE__ ).'php/lccc_eventwidget.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcementwidget.php' );
+//require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcementwidget.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.php' );
+//require_once( plugin_dir_path( __FILE__ ).'php/lccc_announcement-subsite-widget.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_stocker_eventwidget.php' );
 
@@ -344,6 +345,21 @@ require_once( plugin_dir_path( __FILE__ ).'php/rest-api-fetch.php' );
 require_once( plugin_dir_path( __FILE__ ).'php/lccc-event-rest-widget.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc-announcement-rest-widget.php' );
+
+/*
+ * Adds the ability to query by custom fields.
+ * 
+ * Use ?filter[meta_query][0][key]= ** Custom field (full name not how it has been added to Rest API) ** &filter[meta_query][0][value]= ** Value of * custom field **
+ *
+ * Based upon: https://github.com/WP-API/WP-API/issues/2459
+ * Multiple Query Values: https://github.com/WP-API/WP-API/issues/2499
+*/
+
+add_filter( 'rest_query_vars', 'test_query_vars' );
+   function test_query_vars ( $vars ) {
+       $vars[] = 'meta_query';
+       return $vars;
+   }
 
 add_filter('pre_get_posts', 'query_post_type');
 function query_post_type($query) {

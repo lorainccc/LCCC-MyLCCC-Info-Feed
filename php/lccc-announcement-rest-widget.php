@@ -30,7 +30,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    $selectedfeedtype = $instance['selectedfeedtype'];
 			$widgetcategory = $instance['category'];
 			$displaylayout = $instance['layout'];
-     
+
    echo $before_widget;
    // Display the widget
 		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.' nopadding">';
@@ -46,10 +46,10 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 			}
 		if ($whattodisplay == 'lccc_announcement'){
 			switch($displaylayout){
-				case 'Home-page':	
+				case 'Home-page':
 			echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
 						echo '<h2 class="announcementheader">'.'In The News'.'</h2>';
-			echo '</div>';	
+			echo '</div>';
 				break;
 				case 'Sub-page':
 			   echo '<div class="small-12 medium-12 large-12 columns lccc_announcement-sub-site">';
@@ -62,11 +62,11 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 			echo '</div>';
 				break;
 			}
-   
+
 		}
 	  	$today = getdate();
 				$widgetcategory = get_cat_slug($widgetcategory);
-  
+
 		if ($whattodisplay == 'lccc_announcement'){
 /*
      $announcementargs=array(
@@ -104,7 +104,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
     // filters by categories
     $athleticannouncements = new EndPoint( $domain .'/athletics/wp-json/wp/v2/lccc_announcement?filter[taxonomy]=category&filter[term]=' . $widgetcategory );
    }
-   
+
    //Create instance
    $multi = new MultiBlog( 1 );
 
@@ -124,9 +124,14 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    if(empty ($posts)){
     echo 'No Posts Found!';
    }
+
+   //Setup variable for post counter
+   $icounter = 1;
+
 			switch($displaylayout){
-					case 'Home-page':	
+					case 'Home-page':
 									foreach ( $posts as $post ){
+          if( $post->event_end_date > $currentdate ){
 			     echo '<div class="small-12 medium-12 large-12 columns news-container">';
 								echo '<div class="small-12 medium-3 large-3 columns eventhumbnail">';
 								echo '<img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" border="0">';
@@ -141,9 +146,14 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 								echo '<hr />';
  						 echo '</div>';
 								echo '</div>';
-          
+    $icounter++;
+
+   }
      }
 
+   //Re-Setup variable for post counter *Just in Case*
+   $icounter = 1;
+     
    switch ( $selectedfeedtype ){
     case 'all-announcements' :
 							$currentpostype = 'Announcments';
@@ -157,11 +167,12 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
 		     echo '</div>';
        break;
-					
+
 		}
 					break;
 					case 'Sub-page':
 								foreach ( $posts as $post ){
+        if( $post->event_end_date > $currentdate ){
 			     echo '<div class="small-12 medium-12 large-12 columns sub-announcement-container">';
 															echo '<div class="samll-12 medium-12 large-3 columns calendar-small">';
 																			echo '<p class="month">'.$post->announcement_start_date_month.'</p>';
@@ -172,7 +183,9 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 															echo '<p>' . $post->excerpt->rendered . '</p>' ;
 												echo '</div>';
 								echo '</div>';
+    $icounter++;
 
+   }
      }
    switch ( $selectedfeedtype ){
     case 'all-announcements' :
@@ -187,14 +200,14 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
 		     echo '</div>';
      break;
-					
+
 		}
 								echo '</div>';
 					break;
 			}
 
 
-			
+
 		echo '</div>';
   echo $after_widget;
 	}
@@ -246,9 +259,9 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
  <label for="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>"><?php _e( 'Select feed type', 'wp_widget_plugin' ); ?>:</label>
  <select name="<?php echo $this->get_field_name( 'selectedfeedtype' ); ?>" id="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>" class="widefat">
  <?php
-   
+
   $feedtypeoptions = array('all-announcements', 'all-athletics');
-  
+
   foreach ( $feedtypeoptions as $feedtype ) {
    //$feedtypeslug = trim(str_replace('&nbsp;&nbsp;-&nbsp;', '', $feedtype));
    //$feedtypeslug = strtolower(str_replace(' ', '-', $feedtypeslug));

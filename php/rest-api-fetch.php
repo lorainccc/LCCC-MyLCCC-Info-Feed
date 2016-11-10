@@ -175,6 +175,9 @@ class MultiBlog {
    if($a->event_start_date != ''){
      return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
    }elseif($a->announcement_start_date != ''){
+
+    //reverse the order to desc
+
     return strtotime( $a->announcement_start_date ) < strtotime( $b->announcement_start_date );
    }else{
      return strtotime( $a->date ) - strtotime( $b->date );

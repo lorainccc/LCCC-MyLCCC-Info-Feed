@@ -94,17 +94,21 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
      break;
 
     case 'all-athletics':
+     if ($widgetcategory != ''){
+
+      // filters by categories
+      $athleticannouncements = new EndPoint( $domain .'/athletics/wp-json/wp/v2/lccc_announcement?filter[taxonomy]=category&filter[term]=' . $widgetcategory );
+      
+     }else{
         $athleticannouncements = new EndPoint( $domain . '/athletics/wp-json/wp/v2/lccc_announcement' );
+     }
         break;
+     
+    case 'homepage':
+     $lcccannouncments = new EndPoint( $domain . '/mylccc/wp-json/wp/v2/lccc_announcement?filter[taxonomy]=category&filter[term]=lccc-home-page' );
+     break;
     }
 
-
-   if ($widgetcategory != ''){
-
-    // filters by categories
-    $athleticannouncements = new EndPoint( $domain .'/athletics/wp-json/wp/v2/lccc_announcement?filter[taxonomy]=category&filter[term]=' . $widgetcategory );
-   }
-   
    //Create instance
    $multi = new MultiBlog( 1 );
 
@@ -260,7 +264,7 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
  <select name="<?php echo $this->get_field_name( 'selectedfeedtype' ); ?>" id="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>" class="widefat">
  <?php
    
-  $feedtypeoptions = array('all-announcements', 'all-athletics');
+  $feedtypeoptions = array('all-announcements', 'all-athletics', 'homepage');
   
   foreach ( $feedtypeoptions as $feedtype ) {
    //$feedtypeslug = trim(str_replace('&nbsp;&nbsp;-&nbsp;', '', $feedtype));

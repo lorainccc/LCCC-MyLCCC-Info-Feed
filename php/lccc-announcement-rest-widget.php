@@ -96,7 +96,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
     case 'all-athletics':
         $athleticannouncements = new EndPoint( $domain . '/athletics/wp-json/wp/v2/lccc_announcement' );
         break;
-   }
+    }
 
 
    if ($widgetcategory != ''){
@@ -132,10 +132,14 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 									foreach ( $posts as $post ){
             if( $icounter <= $numberofposts ){
 			     echo '<div class="small-12 medium-12 large-12 columns news-container">';
-								echo '<div class="small-12 medium-3 large-3 columns eventhumbnail">';
-								echo '<img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" border="0">';
-								echo '</div>';
-								echo '<div class="small-12 medium-9 large-9 columns">';
+        if ($post->better_featured_image->media_details->sizes->thumbnail->source_url != ''){
+         echo '<div class="small-12 medium-3 large-3 columns eventhumbnail">';
+         echo '<img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" border="0">';
+         echo '</div>';
+         echo '<div class="small-12 medium-9 large-9 columns">';
+        }else{
+         echo '<div class="small-12 medium-12 large-12 columns">';
+        }
   						?>
 								<a href="<?php echo $post->link; ?>"><h3><?php echo $post->title->rendered;?></h3></a>
 								<?php

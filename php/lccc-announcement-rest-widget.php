@@ -125,13 +125,12 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
     echo 'No Posts Found!';
    }
 
-   //Setup variable for post counter
-   $icounter = 1;
+      $icounter = 1;
 
 			switch($displaylayout){
 					case 'Home-page':
 									foreach ( $posts as $post ){
-          if( $post->event_end_date > $currentdate ){
+            if( $icounter <= $numberofposts ){
 			     echo '<div class="small-12 medium-12 large-12 columns news-container">';
 								echo '<div class="small-12 medium-3 large-3 columns eventhumbnail">';
 								echo '<img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" border="0">';
@@ -151,9 +150,6 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    }
      }
 
-   //Re-Setup variable for post counter *Just in Case*
-   $icounter = 1;
-     
    switch ( $selectedfeedtype ){
     case 'all-announcements' :
 							$currentpostype = 'Announcments';
@@ -172,7 +168,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 					break;
 					case 'Sub-page':
 								foreach ( $posts as $post ){
-        if( $post->event_end_date > $currentdate ){
+           if( $icounter <= $numberofposts ){
 			     echo '<div class="small-12 medium-12 large-12 columns sub-announcement-container">';
 															echo '<div class="samll-12 medium-12 large-3 columns calendar-small">';
 																			echo '<p class="month">'.$post->announcement_start_date_month.'</p>';

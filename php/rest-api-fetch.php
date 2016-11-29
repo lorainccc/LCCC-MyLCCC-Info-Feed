@@ -170,18 +170,20 @@ class MultiBlog {
 	 *
 	 * @return array
 	 */
-	protected function sort( array $data ) {
-  usort( $data, function ( $a, $b ) {
+		protected function sort( array $data ) {
+  
+  function sort_dates( $a, $b ){
    if($a->event_start_date != ''){
      return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
-     //reverse the order to desc
+    //reverse the order to desc
     }else{
      return strtotime( $a->date ) - strtotime( $b->date );
    }
-   //return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
-  } );
+  }
+  
+  usort( $data, "sort_dates" );
 
-		//$data = array_reverse( $data );
+		$data = array_reverse( $data );
 		return $data;
 	}
 }

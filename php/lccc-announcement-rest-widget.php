@@ -82,8 +82,8 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    $lcccannouncments = '';
    $athleticannouncements = '';
 
-   //$domain = 'http://' . $_SERVER['SERVER_NAME'];
-   $domain = 'http://test.lorainccc.edu';
+   $domain = 'http://' . $_SERVER['SERVER_NAME'];
+   //$domain = 'http://test.lorainccc.edu';
 
    switch ( $selectedfeedtype ){
     case 'all-announcements':

@@ -28,6 +28,7 @@ class LCCC_Feed_Widget extends WP_Widget {
 			// these are the widget options
 			$numberofposts = $instance['numberofposts'];
 			$eventfeeds = $instance['selectedfeedtype'];
+   $displaytype = esc_attr($instance['displaytype']);
 			$wheretodisplay  = $instance['wheretodisplay'];
 			$widgetheader = $instance['eventheader'];
 			$whattodisplay = 'lccc_events';
@@ -177,9 +178,22 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
      echo ' <p class="day">'.$post->event_start_date_day.'</p>';
     }
     echo ' </div>';
-    echo ' <div class="small-12 medium-12 large-9 columns">';?>
+    
+switch($displaytype){
+     case 'expanded':
+      echo ' <div class="small-12 medium-12 large-9 columns">';
+?>
      <a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php
-    echo ' <p>' . $post->excerpt->rendered . '</p>' ;
+    
+      echo ' <p>' . $post->excerpt->rendered . '</p>' ;
+     break;
+  
+     case 'collapsed':
+      echo ' <div class="small-12 medium-12 large-9 columns" style="margin:15px 0 0 0;">';
+?>
+     <a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php  
+     break;
+    }
     echo ' </div>';
     echo '</div>';
     $icounter++;
@@ -245,6 +259,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		if( $instance ){
 			$numberofposts = esc_attr($instance['numberofposts']);
 			$eventheader = esc_attr($instance['eventheader']);
+   $displaytype = esc_attr($instance['displaytype']);
 			$selectedfeedtype = esc_attr($instance['selectedfeedtype']);
 			$wheretodisplay = esc_attr($instance['wheretodisplay']);
 		} else {
@@ -255,7 +270,19 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		}
 		?>
 		<p>
-<label for="<?php echo $this->get_field_id('eventheader'); ?>"><?php _e('Number of posts', 'wp_widget_plugin'); ?></label>
+<label for="<?php echo $this->get_field_id('displaytype'); ?>"><?php _e('Display Type', 'wp_widget_plugin'); ?></label>
+<select name="<?php echo $this->get_field_name('displaytype'); ?>" id="<?php echo $this->get_field_id('displaytype'); ?>">
+<?php
+$options = array('select...', 'collapsed', 'expanded');
+foreach ($options as $option) {
+echo '<option value="' . $option . '" id="' . $option . '"', $displaytype == $option ? ' selected="selected"' : '', '>', $option, '</option>';
+}
+?>
+</select>
+</p>
+
+		<p>
+<label for="<?php echo $this->get_field_id('eventheader'); ?>"><?php _e('Type of Header', 'wp_widget_plugin'); ?></label>
 <select name="<?php echo $this->get_field_name('eventheader'); ?>" id="<?php echo $this->get_field_id('eventheader'); ?>">
 <?php
 $options = array('lccc-header','stocker-header','athletics-header','sport-header');
@@ -308,6 +335,7 @@ echo '<option value="' . $option . '" id="' . $option . '"', $eventheader == $op
 		$instance['numberofposts'] = strip_tags($new_instance['numberofposts']);
 		$instance['selectedfeedtype'] = strip_tags($new_instance['selectedfeedtype']);
 		$instance['eventheader'] = strip_tags($new_instance['eventheader']);
+  $instance['displaytype'] = strip_tags($new_instance['displaytype']);
 		return $instance;
 	}
 }

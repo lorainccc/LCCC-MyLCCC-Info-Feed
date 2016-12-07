@@ -87,7 +87,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		//$displaynumber = $numberofposts/$numberoffeeds;
 
 	//Grab posts (endpoints)
-  $domain = 'http://' . $_SERVER['SERVER_NAME'];
+  $domain = 'https://' . $_SERVER['SERVER_NAME'];
   //$domain = 'http://test.lorainccc.edu';
 	switch ( $eventfeeds ){
 		case 'all-events':
@@ -98,7 +98,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 			break;
 
 		case 'all-athletics':
-			$athleticevents = new Endpoint( 'http://test.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events' );
+			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events' );
 			break;
 
 		case 'all-stocker':
@@ -110,10 +110,10 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 			case 'womens-basketball':
 			case 'cross-country':
 			case 'softball':
-				$sportevents = new Endpoint( 'http://test.lorainccc.edu/athletics/wp-json/wp/v2/lccc_events?filter[event_categories]='.$eventfeeds );
+				$sportevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?filter[event_categories]='.$eventfeeds );
 			break;
 			default:
-			$categoryevents = new Endpoint( 'http://test.lorainccc.edu/mylccc/wp-json/wp/v2/lccc_events?filter[event_categories]='.$eventfeeds );
+			$categoryevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events?filter[event_categories]='.$eventfeeds );
 	}
 
 

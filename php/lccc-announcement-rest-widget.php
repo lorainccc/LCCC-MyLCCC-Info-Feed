@@ -97,7 +97,8 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
      if ($widgetcategory != ''){
 
       // filters by categories
-      $athleticannouncements = new EndPoint( $domain .'/athletics/wp-json/wp/v2/lccc_announcement?filter[taxonomy]=category&filter[term]=' . $widgetcategory );
+     $athleticannouncements = new EndPoint( $domain .'/athletics/wp-json/wp/v2/lccc_announcement?filter[athletic-category]=' . $widgetcategory );
+      
       
      }else{
         $athleticannouncements = new EndPoint( $domain . '/athletics/wp-json/wp/v2/lccc_announcement' );

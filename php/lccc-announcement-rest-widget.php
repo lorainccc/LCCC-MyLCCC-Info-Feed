@@ -280,10 +280,12 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
 <p>
  <label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Select category', 'wp_widget_plugin' ); ?>:</label>
  <select name="<?php echo $this->get_field_name('category');?>" id="<?php echo $this->get_field_id('category'); ?>">
-     <?php //wp_dropdown_categories( array( 'show_option_none' =>' ','name' => $this->get_field_name( 'category' ), 'selected' => $widgetcategory ) ); 
-  $lcannounce_cats = array('select...', 'Athletic News');
+     <?php //wp_dropdown_categories( array( 'show_option_none' =>' ','name' => $this->get_field_name( 'category' ), 'selected' => $widgetcategory ) );
+  $lcannounce_cats = array('select...', 'Athletics News');
   foreach ($lcannounce_cats as $category ){
-   echo '<option value="' . $option .'" id="' . $option . '"', $widgetcategory == $category ? 'selected="selected"' : '', '>', $category, '</option>' ;
+   $catslug = str_replace(' ', '-', $category);
+   $catslug = strtolower($catslug);
+   echo '<option value="' . $catslug .'" id="' . $catslug . '"', $widgetcategory == $catslug ? 'selected="selected"' : '', '>', $category, '</option>' ;
   }
  ?>
  </select>

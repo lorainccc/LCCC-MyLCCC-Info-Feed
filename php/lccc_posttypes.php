@@ -24,7 +24,6 @@ function register_cpt_lccc_announcement() {
 		'hierarchical' => false,
 		'description' => 'This is the post type created for the displaying the announcements of the Lorain County Community College',
 		'supports' => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'custom-fields', 'revisions' ),
-		'taxonomies' => array( 'category' ),
 		'public' => true,
 		'show_ui' => true,
 		'show_in_menu' => true,

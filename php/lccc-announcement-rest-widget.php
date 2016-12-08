@@ -151,8 +151,8 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
         
         //Check and see if there is an alternate destination
         
-        if($post->announcement_meta_box_altlink != ''){?>
-        <a href="<?php echo $post->announcement_meta_box_altlink; ?>"><h3><?php echo $post->title->rendered;?></h3></a>
+        if($post->announcement_altlink != ''){?>
+        <a href="<?php echo $post->announcement_altlink; ?>"><h3><?php echo $post->title->rendered;?></h3></a>
          <?php
         }else{
         ?>

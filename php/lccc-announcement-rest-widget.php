@@ -145,9 +145,18 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
         }else{
          echo '<div class="small-12 medium-12 large-12 columns">';
         }
-  						?>
+        
+        //Check and see if there is an alternate destination
+        
+        if($post->announcement_meta_box_altlink != ''){?>
+        <a href="<?php echo $post->announcement_meta_box_altlink; ?>"><h3><?php echo $post->title->rendered;?></h3></a>
+         <?php
+        }else{
+        ?>
 								<a href="<?php echo $post->link; ?>"><h3><?php echo $post->title->rendered;?></h3></a>
 								<?php
+        }
+             
 global $blog_id;
 $current_blog_details = get_blog_details( array( 'blog_id' => $blog_id ) );
 $sitepath = str_replace( '/','', $current_blog_details->path);

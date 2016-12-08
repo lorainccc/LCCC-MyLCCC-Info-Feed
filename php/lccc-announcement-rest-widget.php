@@ -151,7 +151,14 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
   						?>
 								<a href="<?php echo $post->link; ?>"><h3><?php echo $post->title->rendered;?></h3></a>
 								<?php
+global $blog_id;
+$current_blog_details = get_blog_details( array( 'blog_id' => $blog_id ) );
+$sitepath = str_replace( '/','', $current_blog_details->path);
+           if($sitepath != 'athletics'){
 											echo '<p>' . $post->excerpt->rendered . '</p>';
+            }else{
+            echo '<p>' . $post->content->rendered . '</p>';
+           }
 								echo '</div>';
 			  			echo '<div class="column row">';
 								echo '<hr />';

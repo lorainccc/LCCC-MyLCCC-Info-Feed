@@ -191,7 +191,17 @@ switch($displaytype){
      case 'collapsed':
       echo ' <div class="small-12 medium-12 large-9 columns" style="margin:15px 0 0 0;">';
 ?>
-     <a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php  
+     <a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><br />
+     <?php
+      if($post->event_start_date != ''){
+       $date = $post->event_start_date;
+      echo $date->format('M. j, Y');
+      }
+  
+      if($post->event_start_time != ''){
+      echo ' - ' . $post->event_start_time;
+     }
+  
      break;
     }
     echo ' </div>';

@@ -110,9 +110,6 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
      break;
     }
 
-
-   
-   
    //Create instance
    $multi = new MultiBlog( 1 );
 
@@ -142,7 +139,11 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 			     echo '<div class="small-12 medium-12 large-12 columns news-container">';
         if ($post->better_featured_image->media_details->sizes->thumbnail->source_url != ''){
          echo '<div class="small-12 medium-3 large-3 columns eventhumbnail">';
-         echo '<img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" border="0">';
+         if($post->announcement_altlink != ''){
+         echo '<a href="' . $post->announcement_altlink . '"><img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" border="0"></a>';
+         }else{
+         echo '<a href="' . $post->link . '"><img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" border="0"></a>';
+         }
          echo '</div>';
          echo '<div class="small-12 medium-9 large-9 columns">';
         }else{

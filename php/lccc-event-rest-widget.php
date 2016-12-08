@@ -204,8 +204,8 @@ switch($displaytype){
       }else{
        echo '<br />';
       }
-      if($post->announcement_location != ''){
-       echo '<span style="font-size:.9rem;">Location: ' . $post->announcement_location . '</span>';
+      if($post->event_location != ''){
+       echo '<span style="font-size:.9rem;">Location: ' . $post->event_location . '</span>';
       }
      break;
     }

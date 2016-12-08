@@ -178,10 +178,9 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
      echo ' <p class="day">'.$post->event_start_date_day.'</p>';
     }
     echo ' </div>';
-
+    echo ' <div class="small-12 medium-12 large-9 columns">';
 switch($displaytype){
      case 'expanded':
-      echo ' <div class="small-12 medium-12 large-9 columns">';
 ?>
      <a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php
 
@@ -189,7 +188,6 @@ switch($displaytype){
      break;
 
      case 'collapsed':
-      echo ' <div class="small-12 medium-12 large-9 columns" style="margin:15px 0 0 0;">';
 ?>
      <a href="<?php echo $post->link; ?>" style="font-size: 1.3rem; font-weight:600;"><?php echo $post->title->rendered; ?></a><br />
      <?php

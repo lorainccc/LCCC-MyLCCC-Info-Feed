@@ -178,30 +178,35 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
      echo ' <p class="day">'.$post->event_start_date_day.'</p>';
     }
     echo ' </div>';
-    
+
 switch($displaytype){
      case 'expanded':
       echo ' <div class="small-12 medium-12 large-9 columns">';
 ?>
      <a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php
-    
+
       echo ' <p>' . $post->excerpt->rendered . '</p>' ;
      break;
-  
+
      case 'collapsed':
       echo ' <div class="small-12 medium-12 large-9 columns" style="margin:15px 0 0 0;">';
 ?>
-     <a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><br />
+     <a href="<?php echo $post->link; ?>" style="font-size: 1.3rem; font-weight:600;"><?php echo $post->title->rendered; ?></a><br />
      <?php
       if($post->event_start_date != ''){
-       $date = $post->event_start_date;
-      echo $date->format('M. j, Y');
+       $postdate = new DateTime($post->event_start_date);
+      echo $postdate->format('M. j, Y');
       }
-  
+
       if($post->event_start_time != ''){
-      echo ' - ' . $post->event_start_time;
-     }
-  
+	      $posttime = new DateTime($post->event_start_time);
+       echo ' - ' . $posttime->format('g:i a') . '<br />';
+      }else{
+       echo '<br />';
+      }
+      if($post->announcement_location != ''){
+       echo '<span style="font-size:.9rem;">Location: ' . $post->announcement_location . '</span>';
+      }
      break;
     }
     echo ' </div>';
@@ -221,19 +226,19 @@ switch($displaytype){
 				switch ( $eventfeeds ){
 						case 'all-events':
 									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
-										echo '<a href="https://test.lorainccc.edu/mylccc/lccc_events/" class="button expand">View All Events </a>';
+										echo '<a href="' . $domain . '/mylccc/lccc_events/" class="button expand">View All Events </a>';
 									echo '</div>';
 							echo '</div>';
 						break;
 						case 'all-athletics':
 									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
-										echo '<a href="https://test.lorainccc.edu/athletics/lccc_events/" class="button expand">View All Events </a>';
+										echo '<a href="' . $domain . '/athletics/lccc_events/" class="button expand">View All Events </a>';
 									echo '</div>';
 							echo '</div>';
 						break;
 						case 'all-stocker':
 									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
-										echo '<a href="https://sites.lorainccc.edu/stocker/lccc_events/" class="button expand">View All Events </a>';
+										echo '<a href="' . $domain . '/stocker/lccc_events/" class="button expand">View All Events </a>';
 									echo '</div>';
 							echo '</div>';
 						break;
@@ -244,13 +249,13 @@ switch($displaytype){
 						case 'cross-country':
 						case 'softball':
 							echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
-										echo '<a href="https://test.lorainccc.edu/athletics/event-categories/'.$eventfeeds.'" class="button expand">View All Events </a>';
+										echo '<a href="' . $domain . '/athletics/event-categories/'.$eventfeeds.'" class="button expand">View All Events </a>';
 									echo '</div>';
 							echo '</div>';
 						break;
 						default:
 						echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
-										echo '<a href="https://test.lorainccc.edu/mylccc/event-categories/'.$eventfeeds.'" class="button expand">View All Events </a>';
+										echo '<a href="' . $domain . '/mylccc/event-categories/'.$eventfeeds.'" class="button expand">View All Events </a>';
 									echo '</div>';
 							echo '</div>';
 				}

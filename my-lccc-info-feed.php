@@ -85,7 +85,7 @@ function my_lccc_info_feed_scripts() {
 	wp_enqueue_style('my_lccc_font', plugin_dir_url( __FILE__ ) . 'fonts/styles.css');
 
 }
-add_action ('init','my_lccc_info_feed_scripts'); 
+add_action ('init','my_lccc_info_feed_scripts');
 
 function my_lccc_info_feed_wp_admin_scripts() {
  wp_enqueue_script('jquery-ui-datepicker');
@@ -149,7 +149,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
-	
+
      // Add Start Date Month
 	register_api_field( 'lccc_academicevent',
 		'event_start_date_month',
@@ -158,8 +158,8 @@ function eventapi_register_fields() {
 			'update_callback'	=> null,
 			'schema'			=> null
 		)
-	); 
-		
+	);
+
 		// Add Start Date Day
 	register_api_field( 'lccc_events',
 		'event_start_date_day',
@@ -169,7 +169,7 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
-	
+
 		// Add Start Date Day
 	register_api_field( 'lccc_academicevent',
 		'event_start_date_day',
@@ -178,8 +178,8 @@ function eventapi_register_fields() {
 			'update_callback'	=> null,
 			'schema'			=> null
 		)
-	);   
-		
+	);
+
 		// Add Start time
 	register_api_field( 'lccc_events',
 		'event_start_time',
@@ -260,6 +260,27 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
+
+ // Add Alternate Link
+	register_api_field( 'lccc_announcement',
+		'announcement_altlink',
+		array(
+			'get_callback'		=> 'lccc_get_announcement_altlink',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
+
+ // Add Location
+	register_api_field( 'lccc_announcement',
+		'announcement_location',
+		array(
+			'get_callback'		=> 'lccc_get_announcement_location',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
+
 }
 
 function gofurther_get_event_start_date( $object, $field_name, $request ) {
@@ -326,6 +347,14 @@ function lccc_get_announcement_start_date_day( $object, $field_name, $request ) 
 	return $eventstartday;
 }
 
+function lccc_get_announcement_altlink( $object, $field_name, $request ) {
+	return announcement_meta_box_get_meta('announcement_meta_box_altlink');
+}
+
+function lccc_get_announcement_location( $object, $field_name, $request ) {
+	return announcement_meta_box_get_meta('announcement_meta_box_announcement_location');
+}
+
 add_action( 'rest_api_init', 'eventapi_register_fields');
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_pluginmetabox.php' );
@@ -348,7 +377,7 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc-announcement-rest-widget.php
 
 /*
  * Adds the ability to query by custom fields.
- * 
+ *
  * Use ?filter[meta_query][0][key]= ** Custom field (full name not how it has been added to Rest API) ** &filter[meta_query][0][value]= ** Value of * custom field **
  *
  * Based upon: https://github.com/WP-API/WP-API/issues/2459

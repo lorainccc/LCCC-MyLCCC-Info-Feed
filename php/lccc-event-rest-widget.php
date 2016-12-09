@@ -87,7 +87,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		//$displaynumber = $numberofposts/$numberoffeeds;
 
 	//Grab posts (endpoints)
-  $domain = 'https://' . $_SERVER['SERVER_NAME'];
+  $domain = 'http://' . $_SERVER['SERVER_NAME'];
   //$domain = 'http://test.lorainccc.edu';
 	switch ( $eventfeeds ){
 		case 'all-events':
@@ -156,16 +156,6 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
    $currentmonthname = date("M");
 
 	//$posts will be an array of all posts sorted by post date
-
- usort($posts, function ( $a, $b ) {
-   if($a->event_start_date != ''){
-     return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
-    }else{
-     return strtotime( $a->date ) - strtotime( $b->date );
-   }
-  } );
-
-		$posts = array_reverse( $posts );
 
  foreach ( $posts as $post ){
 

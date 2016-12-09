@@ -156,27 +156,39 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
    $currentmonthname = date("M");
 
 	//$posts will be an array of all posts sorted by post date
-	foreach ( $posts as $post ){
+
+ usort($posts, function ( $a, $b ) {
+   if($a->event_start_date != ''){
+     return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
+    }else{
+     return strtotime( $a->date ) - strtotime( $b->date );
+   }
+  } );
+
+		$posts = array_reverse( $posts );
+
+ foreach ( $posts as $post ){
 
   if( $icounter <= $numberofposts ){
 
    if( $post->event_end_date > $currentdate ){
     echo '<div class="small-12 medium-12 large-12 columns eventcontainer">';
     echo ' <div class="samll-12 medium-12 large-3 columns calendar-small">';
+    
     $date = date_create($post->event_end_date);
     $post_month = date_format($date, 'm');
 
-    if ( $post_month <= $currentmonth ){
-     echo ' <p class="month">'. $currentmonthname .'</p>';
-    } else {
+    //if ( $post_month <= $currentmonth ){
+     //echo ' <p class="month">'. $currentmonthname .'</p>';
+    //} else {
      echo ' <p class="month">'.$post->event_start_date_month.'</p>';
-    }
+    //}
 
-    if( $post->event_start_date < $currentdate && $post->event_end_date >= $currentdate ){
-     echo ' <p class="day">'. $currentday . '</p>';
-    }else{
+    //if( $post->event_start_date < $currentdate && $post->event_end_date >= $currentdate ){
+     //echo ' <p class="day">'. $currentday . '</p>';
+    //}else{
      echo ' <p class="day">'.$post->event_start_date_day.'</p>';
-    }
+    //}
     echo ' </div>';
     echo ' <div class="small-12 medium-12 large-9 columns">';
 switch($displaytype){
@@ -189,7 +201,7 @@ switch($displaytype){
 
      case 'collapsed':
 ?>
-     <a href="<?php echo $post->link; ?>" style="font-size: 1.3rem; font-weight:600;"><?php echo $post->title->rendered; ?></a><br />
+     <a href="<?php echo $post->link; ?>" style="font-weight:600;"><?php echo $post->title->rendered; ?></a><br />
      <?php
       if($post->event_start_date != ''){
        $postdate = new DateTime($post->event_start_date);

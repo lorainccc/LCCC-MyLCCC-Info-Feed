@@ -97,7 +97,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
      if ($widgetcategory != ''){
 
       // filters by categories
-     $athleticannouncements = new EndPoint( $domain .'/athletics/wp-json/wp/v2/lccc_announcement?filter[athletic-category]=' . $widgetcategory );
+     $athleticannouncements = new EndPoint( $domain .'/athletics/wp-json/wp/v2/lccc_announcement?filter[athletic_category]=' . $widgetcategory );
       
       
      }else{
@@ -131,7 +131,10 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    }
 
       $icounter = 1;
-
+   
+   // Resort Posts Array
+		  $posts = array_reverse( $posts );
+   
 			switch($displaylayout){
 					case 'Home-page':	
 									foreach ( $posts as $post ){

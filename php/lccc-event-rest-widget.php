@@ -201,7 +201,7 @@ switch($displaytype){
 
      case 'collapsed':
 ?>
-     <a href="<?php echo $post->link; ?>" style="font-size: 1.3rem; font-weight:600;"><?php echo $post->title->rendered; ?></a><br />
+     <a href="<?php echo $post->link; ?>" style="font-weight:600;"><?php echo $post->title->rendered; ?></a><br />
      <?php
       if($post->event_start_date != ''){
        $postdate = new DateTime($post->event_start_date);

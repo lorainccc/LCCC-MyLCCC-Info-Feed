@@ -174,13 +174,12 @@ class MultiBlog {
   usort( $data, function ( $a, $b ) {
    if($a->event_start_date != ''){
      return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
-     //reverse the order to desc
     }else{
      return strtotime( $a->date ) - strtotime( $b->date );
    }
   } );
 
-		$data = array_reverse( $data );
+		//$data = array_reverse( $data );
 		return $data;
 	}
 }

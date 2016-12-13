@@ -98,11 +98,11 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 			break;
 
 		case 'all-athletics':
-			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events' );
+			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?filter[posts_per_page]=-1' );
 			break;
 
 		case 'all-stocker':
-			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events' );
+			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events?filter[posts_per_page]=-1' );
 			break;
 			case 'volleyball':
 			case 'baseball':
@@ -148,6 +148,10 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	if(empty($posts)){
 		echo 'No Posts Found!';
 	}
+
+usort( $posts, function ( $a, $b) {
+return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
+});
 
    $icounter = 1;
    $currentdate = date("Y-m-d");

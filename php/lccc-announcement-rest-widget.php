@@ -172,6 +172,14 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
             }else{
             echo '<p>' . $post->content->rendered . '</p>';
            }
+											if($post->announcement_altlink != ''){?>
+        <a class="button" href="<?php echo $post->announcement_altlink; ?>">More Information</a>
+         <?php
+        }else{
+        ?>
+								<a class="button" href="<?php echo $post->link; ?>">More Information</a>
+								<?php
+        }		
 								echo '</div>';
 			  			echo '<div class="column row">';
 								echo '<hr />';

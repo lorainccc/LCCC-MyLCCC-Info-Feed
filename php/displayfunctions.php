@@ -4,6 +4,45 @@
 //			do_action('lccc_calendar',$day, $month, $year);
 //}
 function todayPosts($month, $currentDay, $year){
+				$lcccevents = '';
+				$stockerevents = '';
+				$athleticevents = '';
+	
+		//Grab posts (endpoints)
+  $domain = 'http://' . $_SERVER['SERVER_NAME'];
+	
+	   //?filter[posts_per_page]='.$displaynumber.'
+			$lcccevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events?filter[posts_per_page]=-1' );
+			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?per_page=100' );
+			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events?filter[posts_per_page]=-1' );
+	
+		//Create instance
+	$multi = new MultiBlog( 1 );
+	
+		//Add endpoints to instance
+	if ( $lcccacademicevents != ''){
+		$multi->add_endpoint ( $lcccacademicevents );
+	};
+	if ( $lcccevents != ''){
+		$multi->add_endpoint ( $lcccevents );
+	};
+	if ( $athleticevents != ''){
+		$multi->add_endpoint ( $athleticevents );
+	};
+
+	if ( $stockerevents != ''){
+		$multi->add_endpoint ( $stockerevents );
+	};
+	//Fetch Endpoints
+	$posts = $multi->get_posts();
+	if(empty($posts)){
+		echo 'No Posts Found!';
+	}
+	
+usort( $posts, function ( $a, $b) {
+return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
+});
+	
 				global $myvar;
 				global $date;
 				global $event_month;
@@ -24,35 +63,17 @@ function todayPosts($month, $currentDay, $year){
 				}else{
 					$nextTwoDay = $currentDay;
 				}
-				$args = array(
-						'post_type' => 'lccc_event',
-						'meta_key' => 'event_start_date',
-						'meta_value' => $year . '/' . $month . '/' . $twoDay,
-					'meta_value_num' => time(),
-						'orderby' =>'meta_value_num',
-						'compare' => 'BETWEEN',
-						'type' => 'DATE'
-					);
-				query_posts( $args );
-				// The Query
-			$the_query = new WP_Query( $args );
-				// The Loop
-				if ( $the_query->have_posts() ) {
-										$todaysevents .= '<ul class="clanedardayseventslist">';
-										while ( $the_query->have_posts() ) {
-										$the_query->the_post();
-										$eventdate = event_meta_box_get_meta('event_start_date');	
-										$date=strtotime($eventdate);
-										$today_event_month=date("m",$date);
-										$today_event_day=date("j",$date);	
-											$todaysevents .= '<li><a href="'.get_the_permalink().'">'.get_the_title().'</a></li>';
+				$currentDate = $year . '-' . $month . '-' . $twoDay;
+				if($posts !=''){	
+							$todaysevents .= '<ul class="calendardayseventslist">';
+					foreach ( $posts as $post ){
+									if(strtotime($post->event_start_date) == strtotime($currentDate)){
+
+											$todaysevents .= '<li><a href="'.$post->links.'">'.$post->title->rendered.'</a></li>';
 									}
-									$todaysevents .= '</ul>';
-								} else {
-									// no posts found
+						}
+						$todaysevents .= '</ul>';
 				}
-				/* Restore original Post Data */
-				wp_reset_postdata();
 		return $todaysevents;
 }
 function build_calendar($day,$month,$year){
@@ -151,7 +172,7 @@ function build_previousMonth($month,$year,$monthString){
 	$date=strtotime($datetodisplay);
 	$monthName = date('F',$date); 
 	$prevMonthToDisplay = "$prevYear-$prevMonth-$startday";
- echo "<div style='display:inline-block;'><a href='/calendar/?d=".$prevMonthToDisplay."'><- " . $monthName . "</a></div>";
+ echo "<div style='display:inline-block;'><a href='calendar/?d=".$prevMonthToDisplay."'><- " . $monthName . "</a></div>";
 }
 	add_action('lccc_previous_month', 'build_previousMonth', 10, 3); 
 function build_nextMonth($month,$year,$monthString){
@@ -174,7 +195,7 @@ function build_nextMonth($month,$year,$monthString){
 	$date=strtotime($datetodisplay);
 	$monthName = date('F',$date); 
 	$nextmonthtodisplay = "$nextYear-$nextMonth-$startday";
- echo "<div style='text-align:right;'><a href='/calendar/?d=".$nextmonthtodisplay."'>" . $monthName . " -></a></div>";
+ echo "<div style='text-align:right;'><a href='calendar/?d=".$nextmonthtodisplay."'>" . $monthName . " -></a></div>";
 }
 add_action('lccc_next_month', 'build_nextMonth', 10, 3); 
 
@@ -253,10 +274,10 @@ function build_week($month,$year,$day) {
           $date = "$year-$month-$currentDayRel";
           
           if ($date == date("Y-m-d")){
-           $week .= "<li class='day today' rel='$date'><div class='daycontainer'><span class='today-date'><a class='datelink-currentday' href='/day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></div></li>";
+           $week .= "<li class='day today' rel='$date'><div class='daycontainer'><span class='today-date'><a class='datelink-currentday' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></div></li>";
           }
           else{
-           $week .= "<li class='day' rel='$date'><div class='daycontainer'><span class='day-date'><a class='datelink' href='/day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></div></li>";
+           $week .= "<li class='day' rel='$date'><div class='daycontainer'><span class='day-date'><a class='datelink' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></div></li>";
           }
 										$currentmonthdisplayed = $month;
 										$lastdaydisplayed = $currentDay;

@@ -390,6 +390,33 @@ add_filter( 'rest_query_vars', 'test_query_vars' );
        return $vars;
    }
 
+/**
+ * Grab latest post title by an event_start_date!
+ *
+ * @param array $data Options for the function.
+ * @return string|null Post title for the latest, * or null if none.
+ */
+function lc_event_func( $data ) {
+	$posts = get_posts( array(
+		'post_type' => 'lccc_event',
+		'meta_key' => 'event_start_date',
+		'meta_value' => $data['edate'],
+	) );
+
+	if ( empty( $posts ) ) {
+		return null;
+	}
+
+	return $posts;
+}
+
+add_action( 'rest_api_init', function () {
+	register_rest_route( 'my-lccc-info-feed/v2', '/eventdate/(?P&lt;edate&gt;[\d]+)', array(
+		'methods' => WP_REST_Server::READABLE,
+		'callback' => 'lc_event_func',
+	) );
+} );
+
 add_filter('pre_get_posts', 'query_post_type');
 function query_post_type($query) {
   if( is_category() ) {

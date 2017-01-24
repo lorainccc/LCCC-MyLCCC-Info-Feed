@@ -69,8 +69,87 @@ return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
 					foreach ( $posts as $post ){
 									if(strtotime($post->event_start_date) == strtotime($currentDate)){
 
-											$todaysevents .= '<li><a href="'.$post->links.'">'.$post->title->rendered.'</a></li>';
+											$todaysevents .= '<li><a href="'.$post->link.'">'.$post->title->rendered.'</a></li>';
 									}
+						}
+						$todaysevents .= '</ul>';
+				}
+		return $todaysevents;
+}
+function thisWeeksPosts($month, $currentDay, $year){
+				$lcccevents = '';
+				$stockerevents = '';
+				$athleticevents = '';
+	
+		//Grab posts (endpoints)
+  $domain = 'http://' . $_SERVER['SERVER_NAME'];
+	
+	   //?filter[posts_per_page]='.$displaynumber.'
+			$lcccevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events?filter[posts_per_page]=-1' );
+			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?per_page=100' );
+			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events?filter[posts_per_page]=-1' );
+	
+		//Create instance
+	$multi = new MultiBlog( 1 );
+	
+		//Add endpoints to instance
+	if ( $lcccacademicevents != ''){
+		$multi->add_endpoint ( $lcccacademicevents );
+	};
+	if ( $lcccevents != ''){
+		$multi->add_endpoint ( $lcccevents );
+	};
+	if ( $athleticevents != ''){
+		$multi->add_endpoint ( $athleticevents );
+	};
+
+	if ( $stockerevents != ''){
+		$multi->add_endpoint ( $stockerevents );
+	};
+	//Fetch Endpoints
+	$posts = $multi->get_posts();
+	if(empty($posts)){
+		echo 'No Posts Found!';
+	}
+	
+usort( $posts, function ( $a, $b) {
+return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
+});
+	
+				global $myvar;
+				global $date;
+				global $event_month;
+				global $event_day;
+				global $event_year;
+				$todaysevents = '';
+				$temp = strLen($currentDay);
+				$twoDay = '';
+	   $nextTwoDay = '';
+				if ($temp < 2){
+					$twoDay = '0' . $currentDay;
+				}else{
+					$twoDay = $currentDay;
+				}
+			 $nextDay = $currentDay + 1;
+				if ($temp < 2){
+					$nextTwoDay = '0' . $currentDay;
+				}else{
+					$nextTwoDay = $currentDay;
+				}
+				$currentDate = $year . '-' . $month . '-' . $twoDay;
+				if($posts !=''){	
+							$todaysevents .= '<ul class="calendardayseventslist">';
+					foreach ( $posts as $post ){
+									if(strtotime($post->event_start_date) == strtotime($currentDate)){
+										if( $post->event_end_time == '' ){
+											$todaysevents .= '<li><div class="small-12  medium-1 large-1 columns nopadding">'.$post->event_start_time.'</div><div class="small-12 medium-11 large-11 columns"><a href="'.$post->link.'">'.$post->title->rendered.'</a></div></li>';
+										}elseif($post->event_start_time != $post->event_end_time){
+											$todaysevents .= '<li><div class="small-12  medium-2 large-2 columns nopadding">'.$post->event_start_time.'-'.$post->event_end_time.'</div><div class="small-12 medium-10 large-10 columns"><a href="'.$post->link.'">'.$post->title->rendered.'</a></div></li>';
+												
+											}else{
+												$todaysevents .= '<li><div class="small-12  medium-1 large-1 columns nopadding">'.$post->event_start_time.'</div><div class="small-12 medium-11 large-11 columns"><a href="'.$post->link.'">'.$post->title->rendered.'</a></div></li>';
+											}
+								}
 						}
 						$todaysevents .= '</ul>';
 				}
@@ -127,10 +206,10 @@ function build_calendar($day,$month,$year){
 														$date = "$year-$month-$currentDayRel";
 										
 														if ($date == date("Y-m-d")){
-															$calendar .= "<td class='day today' rel='$date'><span class='calendar-today'><a class='datelink-currentday' href='/day/?d=$date'>$currentDay</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></td>";
+															$calendar .= "<td class='day today' rel='$date'><span class='calendar-today'><a class='datelink-currentday' href='day/?d=$date'>$currentDay</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></td>";
 														}
 														else{
-															$calendar .= "<td class='day' rel='$date'><span class='day-date'><a class='datelink' href='/day/?d=$date'>$currentDay</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></td>";
+															$calendar .= "<td class='day' rel='$date'><span class='day-date'><a class='datelink' href='day/?d=$date'>$currentDay</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></td>";
 														}
 
 														// Increment counters
@@ -274,10 +353,10 @@ function build_week($month,$year,$day) {
           $date = "$year-$month-$currentDayRel";
           
           if ($date == date("Y-m-d")){
-           $week .= "<li class='day today' rel='$date'><div class='daycontainer'><span class='today-date'><a class='datelink-currentday' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></div></li>";
+           $week .= "<li class='day today' rel='$date'><div class='daycontainer'><span class='today-date'><a class='datelink-currentday' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></li>";
           }
           else{
-           $week .= "<li class='day' rel='$date'><div class='daycontainer'><span class='day-date'><a class='datelink' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></div></li>";
+           $week .= "<li class='day' rel='$date'><div class='daycontainer'><span class='day-date'><a class='datelink' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></li>";
           }
 										$currentmonthdisplayed = $month;
 										$lastdaydisplayed = $currentDay;
@@ -367,10 +446,10 @@ function add_to_list($month,$year,$day) {
           $date = "$year-$month-$currentDayRel";
           
            if ($date == date("Y-m-d")){
-           $calendar .= "<li class='day today' rel='$date'><div class='daycontainer'><span class='today-date'><a class='datelink-currentday' href='/day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></div></li>";
+           $calendar .= "<li class='day today' rel='$date'><div class='daycontainer'><span class='today-date'><a class='datelink-currentday' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></li>";
           }
           else{
-           $calendar .= "<li class='day' rel='$date'><div class='daycontainer'><span class='day-date'><a class='datelink' href='/day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".todayPosts($month,$currentDay,$year)."</span></div></li>";
+           $calendar .= "<li class='day' rel='$date'><div class='daycontainer'><span class='day-date'><a class='datelink' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></li>";
           }
 						$lastdaydisplayed = $date;
 						$currentmonthdisplayed = $month;
@@ -421,7 +500,7 @@ function build_prevWeek($year,$month,$day){
  $startday = $lastdaydisplayed -7;
 	}
 	$nextdaydisplayed = "$year-$currentmonthdisplayed-$startday";
- echo "<div style='display:inline-block;'>&nbsp;</div><div style='text-align:center;'><a href='/week/?d=$nextdaydisplayed'><- Previous 7 Days</a></div>";
+ echo "<div style='display:inline-block;'>&nbsp;</div><div style='text-align:center;'><a href='week/?d=$nextdaydisplayed'><- Previous 7 Days</a></div>";
 }
 add_action('lccc_prev_week', 'build_prevWeek', 10, 3);
 function build_nextWeek($year,$month,$day){
@@ -443,7 +522,7 @@ function build_nextWeek($year,$month,$day){
  $startday = $lastdaydisplayed +7;
 	}
 	$nextdaydisplayed = "$year-$currentmonthdisplayed-$startday";
-	echo "<div style='display:inline-block;'>&nbsp;</div><div style='text-align:center;'><a href='/week/?d=$nextdaydisplayed'>Next 7 Days -></a></div>";
+	echo "<div style='display:inline-block;'>&nbsp;</div><div style='text-align:center;'><a href='week/?d=$nextdaydisplayed'>Next 7 Days -></a></div>";
 }
 add_action('lccc_next_week', 'build_nextWeek', 10, 3);
 

@@ -203,6 +203,12 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
 							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
 		     echo '</div>';
        break;
+					    case 'homepage' :
+							$currentpostype = 'Announcments';
+       echo '<div class="small-12 medium-12 large-12 columns">';
+							echo '<a href="https://www.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
+		     echo '</div>';
+       break;
 					
 		}
 					break;

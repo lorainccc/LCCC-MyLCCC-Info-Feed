@@ -105,7 +105,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 								}
     break;
     case 'all-stocker':
-					$stockerannouncements = $domain . '/stocker/wp-json/wp/v2/lccc_announcement';
+					$stockerannouncements = new EndPoint( $domain . '/stocker/wp-json/wp/v2/lccc_announcement');
 				break;	
     case 'homepage':
      $lcccannouncments = new EndPoint( $domain . '/mylccc/wp-json/wp/v2/lccc_announcement?filter[taxonomy]=category&filter[term]=lccc-home-page' );

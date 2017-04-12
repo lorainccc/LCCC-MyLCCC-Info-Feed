@@ -33,17 +33,6 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    echo $before_widget;
    // Display the widget
 		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.' nopadding">';
-		 if ($whattodisplay == 'lccc_event'){
-   echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
-							echo '<div class="small-12 medium-4 large-4 columns '.$whattodisplay.' headerlogo">';
-											echo '<i class="lccc-font-lccc-reverse">'.'</i>';
-							echo '</div>';
-							echo '<div class="small-12 medium-8 large-8 columns ">';
-										echo '<h2 class="headertext">'.'Events'.'</h2>';
-							echo '</div>';
-			echo '</div>';
-			}
-		if ($whattodisplay == 'lccc_announcement'){
 			switch($displaylayout){
 				case 'Home-page':	
 			echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
@@ -61,24 +50,10 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 			echo '</div>';
 				break;
 			}
-   
-		}
+
 	  	$today = getdate();
 				//$widgetcategory = get_cat_slug($widgetcategory);
   
-		if ($whattodisplay == 'lccc_announcement'){
-/*
-     $announcementargs=array(
-					'post_type' => 'lccc_announcement',
-					'post_status' => 'publish',
-					'taxonomy'	=> 'category',
-					'term'	=> $widgetcategory,
-					//'cat' => $widgetcategory,
-					'orderby' => 'date',
-					'order' => 'DESC',
-					);
-					$newevents = new WP_Query($announcementargs);*/
-
    $lcccannouncments = '';
    $athleticannouncements = '';
 			$stockerannouncements = '';
@@ -266,7 +241,7 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
 			}
 		echo '</div>';
   echo $after_widget;
-	}
+
 }
 	/**
 	 * Outputs the options form on admin

@@ -114,6 +114,10 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
     echo 'No Posts Found!';
    }
 
+		usort( $posts, function ( $a, $b) {
+return strtotime( $a->announcement_start_date ) - strtotime( $b->announcement_start_date );
+});
+		
       $icounter = 1;
    
    // Resort Posts Array

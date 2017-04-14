@@ -137,80 +137,21 @@ return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
 					$nextTwoDay = $currentDay;
 				}
 				$currentDate = $year . '-' . $month . '-' . $twoDay;
-				
 				if($posts !=''){	
-				$date = "$year-$month-$currentDay";
+							$todaysevents .= '<ul class="calendardayseventslist">';
 					foreach ( $posts as $post ){
-													//set the variable to see if a featured image exists
-							$featured = $post->featured_media;
-								if(strtotime($post->event_start_date) == strtotime($currentDate)){				
-											//Test to see if image exists. If the vaule is equal zero then no image exists
-														if($featured != 0){			
-														$todaysevents .= '<article class="small-12 medium-12 large-12 columns" id="post-'.$post->id->rendered.'" >';
-														$todaysevents .= '<div class="small-12 medium-3 large-3 columns nopadding">';
-														$todaysevents .= '<img src="'.$post->better_featured_image->media_details->sizes->medium->source_url.'" alt="'.$post->better_featured_image->alt_text.'">';	
-														$todaysevents .=	'</div>';
-														$todaysevents .=	'<div class="small-12 medium-9 large-9 columns event-details">';	
-														$todaysevents .=		'<div class="small-12 medium-12 large-12 columns  nopadding">';
-														$todaysevents .=	'<header class="entry-header">';
-														$todaysevents .=	'<a href="'.$post->link.'">';	
-														$todaysevents .=	'<h1 class="entry-title">'.$post->title->rendered.'</h1>';
-														$todaysevents .=	'</a>';
-														$todaysevents .=		'</header>';
-														$todaysevents .= '</div>';
-														$eventdate = $post->event_start_date;
-															if($eventdate !=''){
-															$newDate = date("F j, Y", strtotime($eventdate));
-															$todaysevents .= '<a class="datelink" href="day/?d='.$date.'">'.$newDate.'</a>';
-															}
-													if($post->event_start_time !=''){
-															$todaysevents .= '<p>'.'Time: '.$post->event_start_time.'</p>';	
-															}
-															$location = $post->event_location;
-															if ( $location != ''){
-																$todaysevents .= '<p>Location: '.$location.'</p>';
-															}	
-														$todaysevents .= '<div class="small-12 medium-12 large-12 columns nopadding">';	
-															$todaysevents .= ' <p>' . $post->excerpt->rendered . '</p><br />';
-															$todaysevents .= '<a class="button" href="'.$post->link.'">More Information</a>';
-														$todaysevents .= '</div>';
-														$todaysevents .= '</div>';			
-														$todaysevents .= '</article>';
-														
-														}else{
-														$todaysevents .= '<article class="small-12 medium-12 large-12 columns" id="post-'.$post->id->rendered.'" >';
-														$todaysevents .=	'<div class="small-12 medium-12 large-12 columns event-details">';	
-														$todaysevents .=		'<div class="small-12 medium-12 large-12 columns nopadding">';
-														$todaysevents .=	'<header class="entry-header event-header">';
-														$todaysevents .=	'<a href="'.$post->link.'">';	
-														$todaysevents .=	'<h1 class="entry-title">'.$post->title->rendered.'</h1>';
-														$todaysevents .=	'</a>';
-														$todaysevents .=		'</header>';
-														$todaysevents .= '</div>';
-														$eventdate = $post->event_start_date;
-															if($eventdate !=''){
-															$newDate = date("F j, Y", strtotime($eventdate));
-															$todaysevents .= '<p>Date: <a class="datelink" href="day/?d='.$date.'">'.$newDate.'</a></p>';
-															}
-													if($post->event_start_time !=''){
-															$todaysevents .= '<p>'.'Time: '.$post->event_start_time.'</p>';	
-															}
-															$location = $post->event_location;
-															if ( $location != ''){
-																$todaysevents .= '<p>Location: '.$location.'</p>';
-															}	
-															$todaysevents .= '<div class="small-12 medium-12 large-12 columns nopadding">';	
-															$todaysevents .= ' <p>' . $post->excerpt->rendered . '</p><br />';
-															$todaysevents .= '<a class="button" href="'.$post->link.'">More Information</a>';
-														$todaysevents .= '</div>';
-														$todaysevents .= '</div>';			
-														$todaysevents .= '</article>';
-						
-														}
-									
-					}
+									if(strtotime($post->event_start_date) == strtotime($currentDate)){
+										if( $post->event_end_time == '' ){
+											$todaysevents .= '<li><div class="small-12  medium-1 large-1 columns nopadding">'.$post->event_start_time.'</div><div class="small-12 medium-11 large-11 columns"><a href="'.$post->link.'">'.$post->title->rendered.'</a></div></li>';
+										}elseif($post->event_start_time != $post->event_end_time){
+											$todaysevents .= '<li><div class="small-12  medium-2 large-2 columns nopadding">'.$post->event_start_time.'-'.$post->event_end_time.'</div><div class="small-12 medium-10 large-10 columns"><a href="'.$post->link.'">'.$post->title->rendered.'</a></div></li>';
+												
+											}else{
+												$todaysevents .= '<li><div class="small-12  medium-1 large-1 columns nopadding">'.$post->event_start_time.'</div><div class="small-12 medium-11 large-11 columns"><a href="'.$post->link.'">'.$post->title->rendered.'</a></div></li>';
+											}
+								}
 						}
-			
+						$todaysevents .= '</ul>';
 				}
 		return $todaysevents;
 }
@@ -337,6 +278,7 @@ function build_nextMonth($month,$year,$monthString){
 }
 add_action('lccc_next_month', 'build_nextMonth', 10, 3); 
 
+ 
 
 //Below is the functions to genrate the week view
 				$displaycount =1;
@@ -374,8 +316,8 @@ function build_week($month,$year,$day) {
        // Get today's date and extract the day of the month to start on.
 	 			$currentDay = $day;
 						// Create the table tag opener and day headers
-    //$week = "<h3 class='calendar-list-header'>Week Of $monthName $currentDay, $year</h3><br />";
-					$week = "<div class='small-12 medium-12 large-12 columns archive-events-container'>";
+    $week = "<h3 class='calendar-list-header'>Week Of $monthName $currentDay, $year</h3><br />";
+					$week .= "<ul class='calendarlist'>";
      //$week .= "<caption>$monthName $year</caption>";
      //$week .= "<li>";
      // Create the week headers
@@ -411,10 +353,10 @@ function build_week($month,$year,$day) {
           $date = "$year-$month-$currentDayRel";
           
           if ($date == date("Y-m-d")){
-           $week .= "<div class='small-12 medium-12 large-12 columns nopadding' rel='$date'><div class='daycontainer'><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></div>";
+           $week .= "<li class='day today' rel='$date'><div class='daycontainer'><span class='today-date'><a class='datelink-currentday' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></li>";
           }
           else{
-           $week .= "<div class='small-12 medium-12 large-12 columns nopadding' rel='$date'><div class='daycontainer'><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></div>";
+           $week .= "<li class='day' rel='$date'><div class='daycontainer'><span class='day-date'><a class='datelink' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></li>";
           }
 										$currentmonthdisplayed = $month;
 										$lastdaydisplayed = $currentDay;
@@ -434,13 +376,12 @@ function build_week($month,$year,$day) {
      //}
      
      //$week .= "</li>";
-					$week .= "</div>";
+					$week .= "</ul>";
 					$lastdaydisplayed = $date;
      echo $week;
 }
 add_action('lccc_week', 'build_week', 10, 3);
 
-//This function Add Evenets to List if the current week rolls over into the next month
 function add_to_list($month,$year,$day) {
 					global $startday;
 					global $lastdaydisplayed;
@@ -465,8 +406,8 @@ function add_to_list($month,$year,$day) {
      // month in question.
      $dayOfWeek = $dateComponents['wday'];
      // Create the table tag opener and day headers
-     //$calendar = "<h4  class='calendar-month-subheader'>$monthName $year</h3>";
-					$calendar = "<div class='small-12 medium-12 large-12 columns archive-events-container'>";
+     $calendar = "<h4  class='calendar-month-subheader'>$monthName $year</h3>";
+					$calendar .= "<ul class='calendarlist'>";
      //$calendar .= "<caption>$monthName $year</caption>";
      //$calendar .= "<li>";
      // Create the calendar headers
@@ -505,10 +446,10 @@ function add_to_list($month,$year,$day) {
           $date = "$year-$month-$currentDayRel";
           
            if ($date == date("Y-m-d")){
-           $calendar .= "<div class='small-12 medium-12 large-12 columns nopadding' rel='$date'><div class='daycontainer'><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></div>";
+           $calendar .= "<li class='day today' rel='$date'><div class='daycontainer'><span class='today-date'><a class='datelink-currentday' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></li>";
           }
           else{
-           $calendar .= "<div class='small-12 medium-12 large-12 columns nopadding' rel='$date'><div class='daycontainer'><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></div>";
+           $calendar .= "<li class='day' rel='$date'><div class='daycontainer'><span class='day-date'><a class='datelink' href='day/?d=$date'>$monthName $currentDay, $year</a></span><span class='event_entries'>".thisWeeksPosts($month,$currentDay,$year)."</span></div></li>";
           }
 						$lastdaydisplayed = $date;
 						$currentmonthdisplayed = $month;
@@ -532,7 +473,7 @@ function add_to_list($month,$year,$day) {
      
      //$calendar .= "</li>";
 
-					$calendar .= "</div>";
+					$calendar .= "</ul>";
      echo $calendar;
 }
 add_action('lccc_add_to_list', 'add_to_list', 10, 3);

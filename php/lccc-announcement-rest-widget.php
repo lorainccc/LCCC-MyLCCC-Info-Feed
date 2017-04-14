@@ -33,11 +33,22 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    echo $before_widget;
    // Display the widget
 		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.' nopadding">';
+		 if ($whattodisplay == 'lccc_event'){
+   echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
+							echo '<div class="small-12 medium-4 large-4 columns '.$whattodisplay.' headerlogo">';
+											echo '<i class="lccc-font-lccc-reverse">'.'</i>';
+							echo '</div>';
+							echo '<div class="small-12 medium-8 large-8 columns ">';
+										echo '<h2 class="headertext">'.'Events'.'</h2>';
+							echo '</div>';
+			echo '</div>';
+			}
+		if ($whattodisplay == 'lccc_announcement'){
 			switch($displaylayout){
-				case 'Home-page':	
+				case 'Home-page':
 			echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
 						echo '<h2 class="announcementheader">'.'In The News'.'</h2>';
-			echo '</div>';	
+			echo '</div>';
 				break;
 				case 'Sub-page':
 			   echo '<div class="small-12 medium-12 large-12 columns lccc_announcement-sub-site">';
@@ -51,44 +62,51 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 				break;
 			}
 
+		}
 	  	$today = getdate();
 				//$widgetcategory = get_cat_slug($widgetcategory);
-  
+
+		if ($whattodisplay == 'lccc_announcement'){
+/*
+     $announcementargs=array(
+					'post_type' => 'lccc_announcement',
+					'post_status' => 'publish',
+					'taxonomy'	=> 'category',
+					'term'	=> $widgetcategory,
+					//'cat' => $widgetcategory,
+					'orderby' => 'date',
+					'order' => 'DESC',
+					);
+					$newevents = new WP_Query($announcementargs);*/
+
    $lcccannouncments = '';
    $athleticannouncements = '';
-			$stockerannouncements = '';
 
-			
-   //$domain = 'https://' . $_SERVER['SERVER_NAME'].'/';
-   $domain = 'http://test.lorainccc.edu/';
+   $domain = 'http://' . $_SERVER['SERVER_NAME'];
+   //$domain = 'http://www.lorainccc.edu';
 
    switch ( $selectedfeedtype ){
     case 'all-announcements':
-        $lcccannouncments = new EndPoint( $domain . 'mylccc/wp-json/wp/v2/lccc_announcement' );
+        $lcccannouncments = new EndPoint( $domain . '/mylccc/wp-json/wp/v2/lccc_announcement' );
 
-        $athleticannouncements = new EndPoint( $domain . 'athletics/wp-json/wp/v2/lccc_announcement' );
+        $athleticannouncements = new EndPoint( $domain . '/athletics/wp-json/wp/v2/lccc_announcement' );
 
      break;
 
-    case 'all-stocker':
-        $stockerannouncements = new EndPoint( $domain . 'stocker/wp-json/wp/v2/lccc_announcement' );
-     break;
-
-    
-				case 'all-athletics':
+    case 'all-athletics':
      if ($widgetcategory != ''){
 
       // filters by categories
-     $athleticannouncements = new EndPoint( $domain .'athletics/wp-json/wp/v2/lccc_announcement?filter[athletic_category]=' . $widgetcategory );
-      
-      
+     $athleticannouncements = new EndPoint( $domain .'/athletics/wp-json/wp/v2/lccc_announcement?filter[athletic_category]=' . $widgetcategory );
+
+
      }else{
-        $athleticannouncements = new EndPoint( $domain . 'athletics/wp-json/wp/v2/lccc_announcement' );
+        $athleticannouncements = new EndPoint( $domain . '/athletics/wp-json/wp/v2/lccc_announcement' );
      }
         break;
-     
+
     case 'homepage':
-     $lcccannouncments = new EndPoint( $domain . 'mylccc/wp-json/wp/v2/lccc_announcement?filter[taxonomy]=category&filter[term]=lccc-home-page' );
+     $lcccannouncments = new EndPoint( $domain . '/mylccc/wp-json/wp/v2/lccc_announcement?filter[taxonomy]=category&filter[term]=lccc-home-page' );
      break;
     }
 
@@ -99,9 +117,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    if ( $lcccannouncments != '' ){
     $multi->add_endpoint ( $lcccannouncments );
    };
-   if ( $stockerannouncements != '' ){
-    $multi->add_endpoint ( $stockerannouncements );
-   };
+
    if ($athleticannouncements != '' ){
     $multi->add_endpoint ( $athleticannouncements );
    };
@@ -114,17 +130,13 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
     echo 'No Posts Found!';
    }
 
-		usort( $posts, function ( $a, $b) {
-return strtotime( $a->announcement_start_date ) - strtotime( $b->announcement_start_date );
-});
-		
       $icounter = 1;
-   
+
    // Resort Posts Array
 		  $posts = array_reverse( $posts );
-   
+
 			switch($displaylayout){
-					case 'Home-page':	
+					case 'Home-page':
 									foreach ( $posts as $post ){
             if( $icounter <= $numberofposts ){
 			     echo '<div class="small-12 medium-12 large-12 columns news-container">';
@@ -140,9 +152,9 @@ return strtotime( $a->announcement_start_date ) - strtotime( $b->announcement_st
         }else{
          echo '<div class="small-12 medium-12 large-12 columns">';
         }
-        
+
         //Check and see if there is an alternate destination
-        
+
         if($post->announcement_altlink != ''){?>
         <a href="<?php echo $post->announcement_altlink; ?>"><h3><?php echo $post->title->rendered;?></h3></a>
          <?php
@@ -151,7 +163,7 @@ return strtotime( $a->announcement_start_date ) - strtotime( $b->announcement_st
 								<a href="<?php echo $post->link; ?>"><h3><?php echo $post->title->rendered;?></h3></a>
 								<?php
         }
-             
+
 global $blog_id;
 $current_blog_details = get_blog_details( array( 'blog_id' => $blog_id ) );
 $sitepath = str_replace( '/','', $current_blog_details->path);
@@ -160,14 +172,6 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
             }else{
             echo '<p>' . $post->content->rendered . '</p>';
            }
-											if($post->announcement_altlink != ''){?>
-        <a class="button" href="<?php echo $post->announcement_altlink; ?>">More Information</a>
-         <?php
-        }else{
-        ?>
-								<a class="button" href="<?php echo $post->link; ?>">More Information</a>
-								<?php
-        }		
 								echo '</div>';
 			  			echo '<div class="column row">';
 								echo '<hr />';
@@ -182,35 +186,27 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
     case 'all-announcements' :
 							$currentpostype = 'Announcments';
        echo '<div class="small-12 medium-12 large-12 columns">';
-							echo '<a href="'.$domain.'mylccc/lccc_announcement" class="button">View All News</a>';
+							echo '<a href="https://test.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
 		     echo '</div>';
        break;
-					case 'all-stocker' :
-							$currentpostype = 'Announcments';
-       echo '<div class="small-12 medium-12 large-12 columns">';
-							echo '<a href="'.$domain.'stocker/lccc_announcement" class="button">View All Announcements</a>';
-		     echo '</div>';
-     break;
 					case 'all-athletics' :
 							$currentpostype = 'Announcments';
        echo '<div class="small-12 medium-12 large-12 columns">';
-							echo '<a href="'.$domain.'athletics/lccc_announcement/" class="button">View All Athletic News</a>';
+							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
 		     echo '</div>';
        break;
-					    case 'homepage' :
-							$currentpostype = 'Announcments';
-       echo '<div class="small-12 medium-12 large-12 columns">';
-							echo '<a href="'.$domain.'mylccc/lccc_announcement" class="button">View All News</a>';
-		     echo '</div>';
-       break;
-					
+
 		}
 					break;
 					case 'Sub-page':
 								foreach ( $posts as $post ){
            if( $icounter <= $numberofposts ){
 			     echo '<div class="small-12 medium-12 large-12 columns sub-announcement-container">';
-															echo '<div class="small-12 medium-12 large-12 columns">';?>
+															echo '<div class="samll-12 medium-12 large-3 columns calendar-small">';
+																			echo '<p class="month">'.$post->announcement_start_date_month.'</p>';
+  																	echo '<p class="day">'.$post->announcement_start_date_day.'</p>';
+															echo '</div>';
+															echo '<div class="small-12 medium-12 large-9 columns">';?>
 																			<a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php
 															echo '<p>' . $post->excerpt->rendered . '</p>' ;
 												echo '</div>';
@@ -223,29 +219,26 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
     case 'all-announcements' :
 							$currentpostype = 'Announcments';
        echo '<div class="small-12 medium-12 large-12 columns view-all-athletics-button">';
-							echo '<a href="'.$domain.'mylccc/lccc_announcement" class="button">View All News</a>';
-		     echo '</div>';
-     break;
-					case 'all-stocker' :
-							$currentpostype = 'Announcments';
-       echo '<div class="small-12 medium-12 large-12 columns view-all-athletics-button">';
-							echo '<a href="'.$domain.'stocker/lccc_announcement" class="button">View All Announcments</a>';
+							echo '<a href="https://test.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
 		     echo '</div>';
      break;
 					case 'all-athletics' :
 							$currentpostype = 'Announcments';
        echo '<div class="small-12 medium-12 large-12 columns view-all-athletics-button">';
-							echo '<a href="'.$domain.'athletics/lccc_announcement/" class="button">View All Athletic News</a>';
+							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
 		     echo '</div>';
      break;
-					
+
 		}
 								echo '</div>';
 					break;
 			}
+
+
+
 		echo '</div>';
   echo $after_widget;
-
+	}
 }
 	/**
 	 * Outputs the options form on admin
@@ -294,9 +287,9 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
  <label for="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>"><?php _e( 'Select feed type', 'wp_widget_plugin' ); ?>:</label>
  <select name="<?php echo $this->get_field_name( 'selectedfeedtype' ); ?>" id="<?php echo $this->get_field_id( 'selectedfeedtype' ); ?>" class="widefat">
  <?php
-   
-  $feedtypeoptions = array('all-announcements','all-stocker', 'all-athletics', 'homepage');
-  
+
+  $feedtypeoptions = array('all-announcements', 'all-athletics', 'homepage');
+
   foreach ( $feedtypeoptions as $feedtype ) {
    //$feedtypeslug = trim(str_replace('&nbsp;&nbsp;-&nbsp;', '', $feedtype));
    //$feedtypeslug = strtolower(str_replace(' ', '-', $feedtypeslug));

@@ -172,13 +172,11 @@ class MultiBlog {
 	 */
 	protected function sort( array $data ) {
   usort( $data, function ( $a, $b ) {
-   /*if($a->event_start_date != ''){
+   if($a->event_start_date != ''){
      return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
-    } elseif($a->announcement_start_date != '') {
-				 return strtotime( $a->announcement_start_date ) - strtotime( $b->announcement_start_date );
-			}else{*/
+    }else{
      return strtotime( $a->date ) - strtotime( $b->date );
-   //}
+   }
   } );
 
 		//$data = array_reverse( $data );

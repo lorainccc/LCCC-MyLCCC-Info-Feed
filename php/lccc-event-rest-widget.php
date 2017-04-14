@@ -88,21 +88,21 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 
 	//Grab posts (endpoints)
   $domain = 'http://' . $_SERVER['SERVER_NAME'];
-  //$domain = 'http://test.lorainccc.edu';
+  //$domain = 'http://www.lorainccc.edu';
 	switch ( $eventfeeds ){
 		case 'all-events':
    //?filter[posts_per_page]='.$displaynumber.'
-			$lcccevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events?filter[posts_per_page]=-1' );
-			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?per_page=100' );
-			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events?filter[posts_per_page]=-1' );
+			$lcccevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events' );
+			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events' );
+			$stockerevents = new Endpoint( $domain . '/stocker/wp-json/wp/v2/lccc_events' );
 			break;
 
 		case 'all-athletics':
-			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?per_page=100' );
+			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events' );
 			break;
 
 		case 'all-stocker':
-			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events?filter[posts_per_page]=-1' );
+			$stockerevents = new Endpoint( $domain . 'stocker/wp-json/wp/v2/lccc_events' );
 			break;
 			case 'volleyball':
 			case 'baseball':
@@ -148,10 +148,6 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	if(empty($posts)){
 		echo 'No Posts Found!';
 	}
-	
-usort( $posts, function ( $a, $b) {
-return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
-});
 
    $icounter = 1;
    $currentdate = date("Y-m-d");
@@ -165,10 +161,10 @@ return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
 
   if( $icounter <= $numberofposts ){
 
-   if( $post->event_end_date > $currentdate ){
+   if( $post->event_end_date >= $currentdate ){
     echo '<div class="small-12 medium-12 large-12 columns eventcontainer">';
     echo ' <div class="samll-12 medium-12 large-3 columns calendar-small">';
-    
+
     $date = date_create($post->event_end_date);
     $post_month = date_format($date, 'm');
 

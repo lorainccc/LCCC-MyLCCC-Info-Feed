@@ -172,6 +172,7 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
             }else{
             echo '<p>' . $post->content->rendered . '</p>';
            }
+        echo '<a href="' . $post->link . '" class="button">Learn More</a>';            
 								echo '</div>';
 			  			echo '<div class="column row">';
 								echo '<hr />';

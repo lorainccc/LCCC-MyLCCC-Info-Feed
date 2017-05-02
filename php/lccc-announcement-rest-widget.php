@@ -173,7 +173,7 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
             echo '<p>' . $post->content->rendered . '</p>';
            }
         if($post->announcement_altlink != ''){        
-         echo '<a href="' . $post->announcement_altlink .'" class="button">Learn More</a>'; 
+         echo '<br /><a href="' . $post->announcement_altlink .'" class="button">Learn More</a>'; 
         }           
 								echo '</div>';
 			  			echo '<div class="column row">';

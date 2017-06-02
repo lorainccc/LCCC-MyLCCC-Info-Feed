@@ -29,7 +29,7 @@ class LCCC_Feed_Widget extends WP_Widget {
 			$numberofposts = $instance['numberofposts'];
 			$eventfeeds = $instance['selectedfeedtype'];
    $displaytype = esc_attr($instance['displaytype']);
-			$wheretodisplay  = $instance['wheretodisplay'];
+			//$wheretodisplay  = $instance['wheretodisplay'];
 			$widgetheader = $instance['eventheader'];
 			$whattodisplay = 'lccc_events';
 			echo $before_widget;
@@ -87,8 +87,8 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		//$displaynumber = $numberofposts/$numberoffeeds;
 
 	//Grab posts (endpoints)
-  $domain = 'http://' . $_SERVER['SERVER_NAME'];
-  //$domain = 'http://www.lorainccc.edu';
+  //$domain = 'http://' . $_SERVER['SERVER_NAME'];
+  $domain = 'http://www.lorainccc.edu';
 	switch ( $eventfeeds ){
 		case 'all-events':
    //?filter[posts_per_page]='.$displaynumber.'
@@ -101,9 +101,10 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events' );
 			break;
 
-		case 'all-stocker':
-			$stockerevents = new Endpoint( $domain . 'stocker/wp-json/wp/v2/lccc_events' );
+		case 'all-stocker': 
+			$stockerevents = new Endpoint( $domain . '/stocker/wp-json/wp/v2/lccc_events' );
 			break;
+   
 			case 'volleyball':
 			case 'baseball':
 			case 'mens-basketball':
@@ -276,12 +277,13 @@ switch($displaytype){
 			$eventheader = esc_attr($instance['eventheader']);
    $displaytype = esc_attr($instance['displaytype']);
 			$selectedfeedtype = esc_attr($instance['selectedfeedtype']);
-			$wheretodisplay = esc_attr($instance['wheretodisplay']);
+			//$wheretodisplay = esc_attr($instance['wheretodisplay']);
 		} else {
 			$numberofposts = '';
 			$eventheader = '';
 			$eventfeeds = '';
-			$wheretodisplay = '';
+			//$wheretodisplay = '';
+   $displaytype = '';
 		}
 		?>
 		<p>

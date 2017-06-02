@@ -222,8 +222,12 @@ switch($displaytype){
 
    /* Generate View all button at bottom of event feed
     * Based upon which event feed is being shown.
-    */
-
+    *
+    * Need to update $domain variable to use SSL since we're done calling the feeds.
+    */ 
+  $domain = 'https://' . $_SERVER['SERVER_NAME'];
+  //$domain = 'https://www.lorainccc.edu';
+   
 				switch ( $eventfeeds ){
 						case 'all-events':
 									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';

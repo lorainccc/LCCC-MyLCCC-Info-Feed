@@ -185,6 +185,10 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
    }
      }
 
+  //Need to update $domain variable to use SSL since we're done calling the feeds.
+  $domain = 'https://' . $_SERVER['SERVER_NAME'];
+  //$domain = 'https://www.lorainccc.edu';
+     
    switch ( $selectedfeedtype ){
     case 'all-announcements' :
 							$currentpostype = 'Announcments';

@@ -82,7 +82,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    $lcccannouncments = '';
    $athleticannouncements = '';
 
-   $domain = 'http://' . $_SERVER['SERVER_NAME'];
+   $domain = 'https://' . $_SERVER['SERVER_NAME'];
    //$domain = 'http://www.lorainccc.edu';
 
    switch ( $selectedfeedtype ){

@@ -91,8 +91,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
   //$domain = 'http://www.lorainccc.edu';
 	switch ( $eventfeeds ){
 		case 'all-events':
-   //?filter[posts_per_page]='.$displaynumber.'
-			$lcccevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events?per_page=100]' );
+ 		$lcccevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events?per_page=100' );
 			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?per_page=100' );
 			$stockerevents = new Endpoint( $domain . '/stocker/wp-json/wp/v2/lccc_events?per_page=100' );
 			break;

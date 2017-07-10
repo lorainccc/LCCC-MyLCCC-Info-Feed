@@ -189,6 +189,16 @@ function eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
+ 
+ 		// Add Start Date and Time
+	register_api_field( 'lccc_events',
+		'event_start_date_and_time',
+		array(
+			'get_callback'		=> 'lccc_get_event_start_date_and_time',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
 
     // Add Event end_date
 	register_api_field( 'lccc_events',
@@ -353,6 +363,10 @@ function lccc_get_announcement_altlink( $object, $field_name, $request ) {
 
 function lccc_get_event_location( $object, $field_name, $request ) {
 	return announcement_meta_box_get_meta('event_meta_box_event_location');
+}
+
+function lccc_get_event_start_date_and_time( $object, $field_name, $request ) {
+	return event_meta_box_get_meta('event_start_date_time');
 }
 
 add_action( 'rest_api_init', 'eventapi_register_fields');

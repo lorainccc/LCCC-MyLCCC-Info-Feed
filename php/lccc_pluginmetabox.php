@@ -194,9 +194,13 @@ if ( isset( $_POST['event_meta_box_stocker_ticket_link'] ) )
 	if ( isset( $_POST['event_start_date'] ) )
    update_post_meta( $post_id, 'start_date', esc_attr( $_POST['event_start_date'] ) );
 
-if ( isset( $_POST['event_start_time'] ) )
+ if ( isset( $_POST['event_start_time'] ) )
    update_post_meta( $post_id, 'event_start_time', esc_attr( $_POST['event_start_time'] ) );
 
+ if ( isset( $_POST['event_start_date'] ) )
+  $lc_event_start_date_time = $_POST['event_start_date'] . ' ' . $_POST['event_start_time'];
+   update_post_meta( $post_id, 'event_start_date_time', esc_attr( $lc_event_start_date_time ) );
+ 
 	if ( isset( $_POST['event_end_date'] ) )
    update_post_meta( $post_id, 'event_end_date', esc_attr( $_POST['event_end_date'] ) );
 

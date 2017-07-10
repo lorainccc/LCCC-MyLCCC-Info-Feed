@@ -121,9 +121,9 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	$multi = new MultiBlog( 1 );
 
 	//Add endpoints to instance
-	if ( $lcccacademicevents != ''){
+/*	if ( $lcccacademicevents != ''){
 		$multi->add_endpoint ( $lcccacademicevents );
-	};
+	};*/
 	if ( $lcccevents != ''){
 		$multi->add_endpoint ( $lcccevents );
 	};
@@ -142,6 +142,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		$multi->add_endpoint ( $categoryevents );
 	};
 
+   
 
 	//Fetch Endpoints
 	$posts = $multi->get_posts();
@@ -149,6 +150,8 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		echo 'No Posts Found!';
 	}
 
+   //$posts = event_sort($posts);   
+   
    $icounter = 1;
    $currentdate = date("Y-m-d");
    $currentday = date("d");
@@ -363,5 +366,13 @@ add_action( 'widgets_init', function(){
 	register_widget( 'LCCC_Feed_Widget' );
 });
 
+
+function event_sort( array $data ){
+ usort( $data, function ( $a, $b ) {
+   if($a->event_start_date_and_time != ''){
+     return strtotime( $a->event_start_date_and_time ) - strtotime( $b->event_start_date_and_time );
+   }
+    } );
+}
 
 ?>

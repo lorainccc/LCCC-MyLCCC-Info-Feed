@@ -174,6 +174,8 @@ class MultiBlog {
   usort( $data, function ( $a, $b ) {
    if($a->event_start_date != ''){
      return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
+   }elseif($a->event_start_date_time != ''){
+    return strtotime( $a->event_start_date_time ) - strtotime( $b->event_start_date_time );
     }else{
      return strtotime( $a->date ) - strtotime( $b->date );
    }

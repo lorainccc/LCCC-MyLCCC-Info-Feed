@@ -1,4 +1,77 @@
 <?php
+//register custom taxonomy first
+
+function be_register_taxonomies() {
+	$taxonomies = array(
+		array(
+			'slug'         => 'where_to_display',
+			'single_name'  => 'Where To Display',
+			'plural_name'  => 'Where To Display Locations',
+			'post_type'    => 'lccc_events',
+			'hierarchical' => true,
+			'rewrite'      => array( 'slug' => 'where-to-display' ),
+		),
+		array(
+			'slug'         => 'event_categories',
+			'single_name'  => 'Event Category',
+			'plural_name'  => 'Event Categories',
+			'post_type'    => 'lccc_events',
+			'hierarchical' => true,
+			'rewrite'      => array( 'slug' => 'event-categories' ),
+		),
+	
+	);
+	foreach( $taxonomies as $taxonomy ) {
+		$labels = array(
+			'name' => $taxonomy['plural_name'],
+			'singular_name' => $taxonomy['single_name'],
+			'search_items' =>  'Search ' . $taxonomy['plural_name'],
+			'all_items' => 'All ' . $taxonomy['plural_name'],
+			'parent_item' => 'Parent ' . $taxonomy['single_name'],
+			'parent_item_colon' => 'Parent ' . $taxonomy['single_name'] . ':',
+			'edit_item' => 'Edit ' . $taxonomy['single_name'],
+			'update_item' => 'Update ' . $taxonomy['single_name'],
+			'add_new_item' => 'Add New ' . $taxonomy['single_name'],
+			'new_item_name' => 'New ' . $taxonomy['single_name'] . ' Name',
+			'menu_name' => $taxonomy['plural_name']
+		);
+		
+		$rewrite = isset( $taxonomy['rewrite'] ) ? $taxonomy['rewrite'] : array( 'slug' => $taxonomy['rewrite'] );
+  $hierarchical = isset( $taxonomy['hierarchical'] ) ? $taxonomy['hierarchical'] : true;
+		register_taxonomy( $taxonomy['slug'], $taxonomy['post_type'], array(
+			'hierarchical' => $hierarchical,
+			'show_tagcloud' => false,
+			'labels' => $labels,
+			'show_ui' => true,
+			'query_var' => true,
+			'show_admin_column' => true,
+   'rewrite' => $rewrite,
+
+		));
+	}
+	
+}
+add_action( 'init', 'be_register_taxonomies', 5 );
+
+/**
+ * Add REST API support to an already registered taxonomy.
+ */
+add_action( 'init', 'lc_custom_taxonomy_rest_support', 25 );
+function lc_custom_taxonomy_rest_support() {
+  global $wp_taxonomies;
+ 
+  //be sure to set this to the name of your taxonomy!
+  $taxonomy_name = 'event_categories';
+ 
+  if ( isset( $wp_taxonomies[ $taxonomy_name ] ) ) {
+    $wp_taxonomies[ $taxonomy_name ]->show_in_rest = true;
+ 
+    // Optionally customize the rest_base or controller class
+    $wp_taxonomies[ $taxonomy_name ]->rest_base = $taxonomy_name;
+    $wp_taxonomies[ $taxonomy_name ]->rest_controller_class = 'WP_REST_Terms_Controller';
+  }
+}
+
 // Register Custom Post Type
 add_action( 'init', 'register_cpt_lccc_announcement' );
 
@@ -47,7 +120,7 @@ function register_cpt_lccc_announcement() {
 
 // Register Custom Post Type
 
-add_action( 'init', 'register_cpt_lccc_events' );
+add_action( 'init', 'register_cpt_lccc_events', 1 );
 
 function register_cpt_lccc_events() {
 
@@ -93,57 +166,6 @@ function register_cpt_lccc_events() {
 	register_post_type( 'lccc_events', $args );
 }
 
-function be_register_taxonomies() {
-	$taxonomies = array(
-		array(
-			'slug'         => 'where_to_display',
-			'single_name'  => 'Where To Display',
-			'plural_name'  => 'Where To Display Locations',
-			'post_type'    => 'lccc_events',
-					'hierarchical' => true,
-			'rewrite'      => array( 'slug' => 'where-to-display' ),
-		),
-		array(
-			'slug'         => 'event_categories',
-			'single_name'  => 'Event Category',
-			'plural_name'  => 'Event Categoies',
-			'post_type'    => 'lccc_events',
-			'hierarchical' => true,
-			'rewrite'      => array( 'slug' => 'event-categories' ),
-		),
-	
-	);
-	foreach( $taxonomies as $taxonomy ) {
-		$labels = array(
-			'name' => $taxonomy['plural_name'],
-			'singular_name' => $taxonomy['single_name'],
-			'search_items' =>  'Search ' . $taxonomy['plural_name'],
-			'all_items' => 'All ' . $taxonomy['plural_name'],
-			'parent_item' => 'Parent ' . $taxonomy['single_name'],
-			'parent_item_colon' => 'Parent ' . $taxonomy['single_name'] . ':',
-			'edit_item' => 'Edit ' . $taxonomy['single_name'],
-			'update_item' => 'Update ' . $taxonomy['single_name'],
-			'add_new_item' => 'Add New ' . $taxonomy['single_name'],
-			'new_item_name' => 'New ' . $taxonomy['single_name'] . ' Name',
-			'menu_name' => $taxonomy['plural_name']
-		);
-		
-		$rewrite = isset( $taxonomy['rewrite'] ) ? $taxonomy['rewrite'] : array( 'slug' => $taxonomy['slug'] );
-		$hierarchical = isset( $taxonomy['hierarchical'] ) ? $taxonomy['hierarchical'] : true;
-	
-		register_taxonomy( $taxonomy['slug'], $taxonomy['post_type'], array(
-			'hierarchical' => $hierarchical,
-			 'show_tagcloud' => false,
-			'labels' => $labels,
-			'show_ui' => true,
-			'query_var' => true,
-			'show_admin_column' => true,
-			'rewrite' => $rewrite,
-		));
-	}
-	
-}
-add_action( 'init', 'be_register_taxonomies' );
 
 
 /*
@@ -176,6 +198,6 @@ function lc_event_cpt_add_taxonomy_filters() {
 		}
 	}
 }
-add_action( 'restrict_manage_posts', 'lc_event_cpt_add_taxonomy_filters' );
+add_action( 'restrict_manage_posts', 'lc_event_cpt_add_taxonomy_filters', 4 );
 
 ?>

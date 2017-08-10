@@ -143,7 +143,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
         if ($post->better_featured_image->media_details->sizes->thumbnail->source_url != ''){
          echo '<div class="small-12 medium-3 large-3 columns eventhumbnail">';
          if($post->announcement_altlink != ''){
-         echo '<a href="' . $post->announcement_altlink . '"><img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" border="0"></a>';
+         echo '<a href="' . $post->announcement_altlink . '"><img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" alt="' . $post->title->rendered . '" border="0"></a>';
          }else{
          echo '<a href="' . $post->link . '"><img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" border="0"></a>';
          }

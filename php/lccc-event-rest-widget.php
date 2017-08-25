@@ -165,7 +165,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
   if( $icounter <= $numberofposts ){
 
    if( $post->event_end_date >= $currentdate ){
-    echo '<div class="small-12 medium-12 large-12 columns eventcontainer">';
+    echo '<div id="lc-event-feed" class="small-12 medium-12 large-12 columns eventcontainer">';
     echo ' <div class="samll-12 medium-12 large-3 columns calendar-small">';
 
     $date = date_create($post->event_end_date);

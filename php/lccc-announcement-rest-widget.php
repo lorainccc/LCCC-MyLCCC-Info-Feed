@@ -139,7 +139,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 					case 'Home-page':
 									foreach ( $posts as $post ){
             if( $icounter <= $numberofposts ){
-			     echo '<div class="small-12 medium-12 large-12 columns news-container">';
+			     echo '<div id="lc-announcement-feed" class="small-12 medium-12 large-12 columns news-container">';
         if ($post->better_featured_image->media_details->sizes->thumbnail->source_url != ''){
          echo '<div class="small-12 medium-3 large-3 columns eventhumbnail">';
          if($post->announcement_altlink != ''){

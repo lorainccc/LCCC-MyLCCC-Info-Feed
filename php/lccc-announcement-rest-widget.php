@@ -57,7 +57,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 											echo '<i class="lccc-font-lccc-reverse">'.'</i>';
 							echo '</div>';
 							echo '<div class="small-12 medium-8 large-9 columns ">';
-										echo '<h2 class="headertext">'.'Announcments'.'</h2>';
+										echo '<h2 class="headertext">'.'Announcements'.'</h2>';
 							echo '</div>';
 			echo '</div>';
 				break;

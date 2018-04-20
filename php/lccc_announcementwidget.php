@@ -78,7 +78,7 @@ class LCCC_Whats_Going_On_Announcement_Widget extends WP_Widget {
 					endif;
 		}
 		if ($whattodisplay == 'lccc_announcement'){
-					$currentpostype = 'Announcments';
+					$currentpostype = 'Announcements';
 			echo '<div class="small-12 medium-12 large-12 columns">';
 							echo '<a href="'.get_post_type_archive_link( $whattodisplay ).'" class="button">View All News</a>';
 		echo '</div>';

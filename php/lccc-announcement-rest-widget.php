@@ -124,6 +124,12 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    if(empty ($posts)){
     echo 'No Posts Found!';
    }
+			
+			//Reorder the posts
+	usort( $posts, function ( $a, $b) {
+	return strtotime( $b->date ) - strtotime( $a->date );
+});		
+		
 			switch($displaylayout){
 					case 'Home-page':	
 									foreach ( $posts as $post ){
@@ -148,7 +154,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
     case 'all-announcements' :
 							$currentpostype = 'Announcments';
        echo '<div class="small-12 medium-12 large-12 columns">';
-							echo '<a href="https://test.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
+							echo '<a href="/mylccc/lccc_announcement" class="button">View All News</a>';
 		     echo '</div>';
        break;
 					case 'all-athletics' :
@@ -178,7 +184,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
     case 'all-announcements' :
 							$currentpostype = 'Announcments';
        echo '<div class="small-12 medium-12 large-12 columns view-all-athletics-button">';
-							echo '<a href="https://test.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
+							echo '<a href="/mylccc/lccc_announcement" class="button">View All News</a>';
 		     echo '</div>';
      break;
 					case 'all-athletics' :

@@ -10,7 +10,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
  	public function __construct() {
 		$widget_ops = array(
 			'classname' 		=> 'LCCC_Announcement_Feed_Widget',
-			'description' =>	'LCCC Feed widget for displaying LCCC Announcments from other LCCC web sites.',
+			'description' =>	'LCCC Feed widget for displaying LCCC Announcements from other LCCC web sites.',
 		);
 		parent::__construct( 'LCCC_Announcement_Feed_Widget', 'LCCC Announcement Feed Widget', $widget_ops );
 	}
@@ -80,15 +80,15 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 					);
 					$newevents = new WP_Query($announcementargs);*/
 
-   $lcccannouncments = '';
+   $lcccannouncements = '';
    $athleticannouncements = '';
 
-   $domain = 'http://' . $_SERVER['SERVER_NAME'];
-   //$domain = 'http://test.lorainccc.edu';
+   //$domain = 'http://' . $_SERVER['SERVER_NAME'];
+   $domain = 'http://test.lorainccc.edu';
 
    switch ( $selectedfeedtype ){
     case 'all-announcements':
-        $lcccannouncments = new EndPoint( $domain . '/mylccc/wp-json/wp/v2/lccc_announcement' );
+        $lcccannouncements = new EndPoint( $domain . '/mylccc/wp-json/wp/v2/lccc_announcement' );
 
         $athleticannouncements = new EndPoint( $domain . '/athletics/wp-json/wp/v2/lccc_announcement' );
 
@@ -109,8 +109,8 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    $multi = new MultiBlog( 1 );
 
    //Add endpoints to instance
-   if ( $lcccannouncments != '' ){
-    $multi->add_endpoint ( $lcccannouncments );
+   if ( $lcccannouncements != '' ){
+    $multi->add_endpoint ( $lcccannouncements );
    };
 
    if ($athleticannouncements != '' ){
@@ -124,12 +124,6 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    if(empty ($posts)){
     echo 'No Posts Found!';
    }
-			
-			//Reorder the posts
-	usort( $posts, function ( $a, $b) {
-	return strtotime( $b->date ) - strtotime( $a->date );
-});		
-		
 			switch($displaylayout){
 					case 'Home-page':	
 									foreach ( $posts as $post ){
@@ -152,13 +146,13 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 
    switch ( $selectedfeedtype ){
     case 'all-announcements' :
-							$currentpostype = 'Announcments';
+							$currentpostype = 'Announcements';
        echo '<div class="small-12 medium-12 large-12 columns">';
-							echo '<a href="/mylccc/lccc_announcement" class="button">View All News</a>';
+							echo '<a href="https://test.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
 		     echo '</div>';
        break;
 					case 'all-athletics' :
-							$currentpostype = 'Announcments';
+							$currentpostype = 'Announcements';
        echo '<div class="small-12 medium-12 large-12 columns">';
 							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
 		     echo '</div>';
@@ -182,13 +176,13 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
      }
    switch ( $selectedfeedtype ){
     case 'all-announcements' :
-							$currentpostype = 'Announcments';
+							$currentpostype = 'Announcements';
        echo '<div class="small-12 medium-12 large-12 columns view-all-athletics-button">';
-							echo '<a href="/mylccc/lccc_announcement" class="button">View All News</a>';
+							echo '<a href="https://test.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
 		     echo '</div>';
      break;
 					case 'all-athletics' :
-							$currentpostype = 'Announcments';
+							$currentpostype = 'Announcements';
        echo '<div class="small-12 medium-12 large-12 columns view-all-athletics-button">';
 							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
 		     echo '</div>';

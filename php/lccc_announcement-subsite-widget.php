@@ -10,7 +10,7 @@
  * @link      http://www.lorainccc.edu
  * @copyright 2016 Lorain County Community College
  */
- 
+
  // Prevent direct file access
 if ( ! defined ( 'ABSPATH' ) ) {
 	exit;
@@ -78,16 +78,18 @@ class LCCC_Announcement_Sub_Site_Widget extends WP_Widget {
 	 */
 
 public function widget( $args, $instance ) {
-			$numberofposts = $instance['numberofposts']; 
+			$numberofposts = $instance['numberofposts'];
 			$whattodisplay = 'lccc_announcement';
 			$widgetcategory = $instance['category'];
 						$announcementheader = $instance['announcementheader'];
-		echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'-sub-site">';
-   echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header-sub-site">';
-							echo '<div class="small-5 medium-4 large-4 columns '.$whattodisplay.'-sub-site headerlogo-sub-site">';
-											echo '<i class="lccc-font-lccc-reverse">'.'</i>';
+
+            echo '<div class="grid-container">';
+		echo '<div class="small-12 medium-12 large-12 cell '.$whattodisplay.'-sub-site">';
+   echo '<div class="small-12 medium-12 large-12 cell '.$whattodisplay.'_header-sub-site">';
+							echo '<div class="small-5 medium-4 large-4 cell '.$whattodisplay.'-sub-site headerlogo-sub-site">';
+								echo '<img src="' . plugins_url( '../images/lccc-logo.svg', __FILE__ ) . '"  height="60" width="73" alt="Lorain County Community College Logo" > ';
 							echo '</div>';
-							echo '<div class="small-7 medium-8 large-8 columns announcement-header-text-container">';
+							echo '<div class="small-7 medium-8 large-8 cell announcement-header-text-container">';
 										echo '<h2 class="headertext">'.'Announcements'.'</h2>';
 							echo '</div>';
 			echo '</div>';
@@ -97,26 +99,27 @@ public function widget( $args, $instance ) {
   			'posts_per_page' => $numberofposts,
 					'where_to_display' => $widgetcategory,
 					);
-				echo '<div class="small-12 medium-12 large-12 columns sub-announcement-container">';
+				echo '<div class="small-12 medium-12 large-12 cell sub-announcement-container">';
 				$newevents = new WP_Query($subsiteannouncementargs);
 					if ( $newevents->have_posts() ) :
 									while ( $newevents->have_posts() ) : $newevents->the_post();
-														echo '<div class="small-12 medium-12 large-12 columns sub-announcement">';
+														echo '<div class="small-12 medium-12 large-12 cell sub-announcement">';
 														?>
-<a href="<?php the_permalink();?>"><?php the_title(); ?></a>	
-														<?php 
+<a href="<?php the_permalink();?>"><?php the_title(); ?></a>
+														<?php
 															the_excerpt();
 														echo '</div>';
 									endwhile;
 					endif;
-						echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
+						echo '<div class="small-12 medium-12 large-12 cell view-all-link">';
 							echo '<a href="'.get_post_type_archive_link( 'lccc_announcement' ).'" class="button expand">View All Announcements </a>';
-		echo '</div>';	
+		echo '</div>';
 				echo '</div>';
 		echo '</div>';
+    echo '</div>';
 	}
 
-	public function flush_widget_cache() 
+	public function flush_widget_cache()
 	{
     	wp_cache_delete( $this->get_widget_slug(), 'widget' );
 	}
@@ -132,7 +135,7 @@ public function widget( $args, $instance ) {
    $instance['announcementheader'] = strip_tags($new_instance['announcementheader']);
 			$instance['numberofposts'] = strip_tags($new_instance['numberofposts']);
 		 $instance['category'] = strip_tags($new_instance['category']);
-	
+
 		return $instance;
 
 	} // end widget
@@ -144,7 +147,7 @@ public function widget( $args, $instance ) {
 	 */
 	public function form( $instance ) {
 		// outputs the options form on admin
-		
+
 // Check values
 if( $instance) {
 					$announcementheader = esc_attr($instance['announcementheader']);
@@ -165,7 +168,7 @@ foreach ($options as $option) {
 echo '<option value="' . $option . '" id="' . $option . '"', $announcementheader == $option ? ' selected="selected"' : '', '>', $option, '</option>';
 }
 ?>
-</select>		
+</select>
 </p>
 <p>
 <label for="<?php echo $this->get_field_id('numberofposts'); ?>"><?php _e('Number of posts', 'wp_widget_plugin'); ?></label>
@@ -188,8 +191,8 @@ foreach ($options as $option) {
 echo '<option value="' . $option . '" id="' . $option . '"', $widgetcategory == $option ? ' selected="selected"' : '', '>', $option, '</option>';
 }
 ?>
-</select>		
-		
+</select>
+
 </p>
 <?php
 

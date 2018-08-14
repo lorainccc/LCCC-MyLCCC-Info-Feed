@@ -6,7 +6,7 @@ class LCCC_Whats_Going_On_Stocker_Event_Widget extends WP_Widget {
 	 * Sets up the widgets name etc
 	 */
 	public function __construct() {
-		$widget_ops = array( 
+		$widget_ops = array(
 				'classname' => 'LCCC_Stocker_Event_Widget',
 			'description' => 'LCCC Stocker Event Widget fpr displaying LCCC Stocker Events on LCCC Stocker web site',
 		);
@@ -21,7 +21,7 @@ class LCCC_Whats_Going_On_Stocker_Event_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 $widgetcategory = $instance['category'];
-		$numberofposts = $instance['numberofposts']; 
+		$numberofposts = $instance['numberofposts'];
 		$whattodisplay = 'lccc_events';
 		$widgetcategory = $instance['category'];
 
@@ -32,7 +32,7 @@ $today = getdate();
 				$firsteventdate ='';
     $nexteventdate ='';
 				$todaysevents = '';
-				$temp = strLen($currentDay);            
+				$temp = strLen($currentDay);
 				$twoDay = '';
 	   $nextTwoDay = '';
     if ($temp < 2){
@@ -54,11 +54,12 @@ $today = getdate();
 							$nextTwoDay = $currentDay;
 				}
      $today = "$year-$twomonth-$twoDay";
-					
+
 		// outputs the content of the widget
 	?>
-        <div class="row small-up-1 medium-up-2 large-up-4">
-  <?php 
+	<div class="grid-container">
+        <div class="grid-x grid-margin-x small-up-1 medium-up-2 large-up-4">
+  <?php
 		$eventargs=array(
 		'post_type' => 'lccc_events',
 		'post_status' => 'publish',
@@ -66,80 +67,84 @@ $today = getdate();
 		'where_to_display' => $widgetcategory,
 		'order'	=> 'ASC',
 		'orderby'=> 'meta_value',
-		'meta_key' => 'event_start_date', 
+		'meta_key' => 'event_start_date',
 	);
 					$newevents = new WP_Query($eventargs);
 					if ( $newevents->have_posts() ) :
 						while ( $newevents->have_posts() ) : $newevents->the_post();
 $starteventdate = event_meta_box_get_meta('event_start_date');
-		$starteventtime = event_meta_box_get_meta('event_start_time');  
+		$starteventtime = event_meta_box_get_meta('event_start_time');
 		$endeventdate = event_meta_box_get_meta('event_end_date');
 		$endtime = event_meta_box_get_meta('event_end_time');
 		$bgcolor = event_meta_box_get_meta('event_meta_box_stoccker_bg_color');
-      		$ticketlink = event_meta_box_get_meta('event_meta_box_stocker_ticket_link');	
+      		$ticketlink = event_meta_box_get_meta('event_meta_box_stocker_ticket_link');
 										$starttimevar=strtotime($starteventtime);
 										$starttime=	date("h:i a",$starttimevar);
 										$starteventtimehours = date("G",$starttimevar);
 										$starteventtimeminutes = date("i",$starttimevar);
-		
+
           $startdate=strtotime($starteventdate);
 										$eventstartdate=date("Y-m-d",$startdate);
 										$stockereventstartdate=date("M d, Y",$startdate);
 										$eventstartmonth=date("M",$startdate);
-										$eventstartday =date("j",$startdate);								
-										
+										$eventstartday =date("j",$startdate);
+
 										$endeventtimevar=strtotime($endtime);
 										$endeventtime = date("h:i a",$endeventtimevar);
 										$endeventtimehours = date("G",$endeventtimevar);
 										$endeventtimeminutes = date("i",$endeventtimevar);
-		
+
 										$enddate=strtotime($endeventdate);
 										$endeventdate = date("Y-m-d",$enddate);
 
-	if( $endeventdate >= $today){           
+	if( $endeventdate >= $today){
 ?>
-<div class="column">
+<div class="cell">
 	<?php
-									echo '<div class="small-12 medium-12 large-12 columns stocker-eventcontainer">';
-											echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns event_header">';
+									echo '<div class="small-12 medium-12 large-12 cell stocker-eventcontainer">';
+											echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 cell event_header">';
 												echo '<a href="'.get_the_permalink().'">';
 													the_title('<h2 class="stocker-event-title">','</h2>');
 										echo '</a>';
 													echo '<h3 class="stocker-event-date">'.$stockereventstartdate.'</h3>';
 											echo '</div>';
-					echo '<div class="small-12 medium-12 large-12 columns stocker_event_image">';
+					echo '<div class="small-12 medium-12 large-12 cell stocker_event_image">';
 																	 echo '<a href="'.get_the_permalink().'">';
 the_post_thumbnail();
 echo '</a>';
 											echo '</div>';
-											
+
 if($ticketlink == ''){
 	$ticketlink = 'https://tickets.lorainccc.edu/public/';
 }
-echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns stocker_event_footer">';
+echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 cell stocker_event_footer">';
 											echo '<a href="'.$ticketlink.'">';
 											echo '<h5 class="stocker-footer-header">Buy Tickets</h5>';
 											echo '</a>';
-											echo '</div>';							
+											echo '</div>';
 							echo '</div>';
         ?>
-            </div>  
+            </div>
 <?php
-		}				
+		}
 	endwhile;
 					endif;
 				?>
 </div>
+<!--</div>-->
 <?php
-
-		echo '<div class="small-12 medium-12 large-12 columns stocker-view-all-link">';
+//echo '<div class="grid-container">';
+		echo '<div class="small-12 medium-12 large-12 cell stocker-view-all-link">';
 							echo '<a href="'.get_post_type_archive_link( $whattodisplay ).'" class="button expand">View All Events </a>';
-		echo '</div>';	
 		echo '</div>';
+		//echo '</div>';
+		//echo '</div>';
 ?>
 
+</div>
+
 <?php
-		
+
 	}
 
 	/**
@@ -149,7 +154,7 @@ echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 c
 	 */
 	public function form( $instance ) {
 		// outputs the options form on admin
-		
+
 // Check values
 if( $instance) {
 					$numberofposts = esc_attr($instance['numberofposts']);
@@ -181,8 +186,8 @@ foreach ($options as $option) {
 echo '<option value="' . $option . '" id="' . $option . '"', $widgetcategory == $option ? ' selected="selected"' : '', '>', $option, '</option>';
 }
 ?>
-</select>		
-		
+</select>
+
 </p>
 
 <?php

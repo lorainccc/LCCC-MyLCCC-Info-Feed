@@ -6,7 +6,7 @@ class LCCC_Whats_Going_On_Announcement_Widget extends WP_Widget {
 	 * Sets up the widgets name etc
 	 */
 	public function __construct() {
-		$widget_ops = array( 
+		$widget_ops = array(
 			'classname' => 'LCCC_Whats_Going_On_Announcement_Widget',
 			'description' => 'LCCC Whats Going On Announcement Widget fpr displaying LCCC Announcements on LCCC sites',
 		);
@@ -23,30 +23,32 @@ class LCCC_Whats_Going_On_Announcement_Widget extends WP_Widget {
 		// outputs the content of the widget
   extract( $args );
    // these are the widget options
-			$numberofposts = $instance['numberofposts']; 
+			$numberofposts = $instance['numberofposts'];
 			$whattodisplay = 'lccc_announcement';
 			$widgetcategory = $instance['category'];
    echo $before_widget;
    // Display the widget
-		 echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'">';
+
+	 echo '<div class="grid-container">';
+		 echo '<div class="small-12 medium-12 large-12 cell '.$whattodisplay.'">';
 		 if ($whattodisplay == 'lccc_event'){
-   echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
-							echo '<div class="small-12 medium-4 large-4 columns '.$whattodisplay.' headerlogo">';
-											echo '<i class="lccc-font-lccc-reverse">'.'</i>';
+   echo '<div class="small-12 medium-12 large-12 cell '.$whattodisplay.'_header">';
+							echo '<div class="small-12 medium-4 large-4 cell '.$whattodisplay.' headerlogo">';
+											echo '<img src="' . plugins_url( '../images/lccc-logo.svg', __FILE__ ) . '"  height="60" width="73" alt="Lorain County Community College Logo" > ';
 							echo '</div>';
-							echo '<div class="small-12 medium-8 large-8 columns ">';
+							echo '<div class="small-12 medium-8 large-8 cell ">';
 										echo '<h2 class="headertext">'.'Events'.'</h2>';
 							echo '</div>';
 			echo '</div>';
 			}
 		if ($whattodisplay == 'lccc_announcement'){
-   echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
-						echo '<h2 class="announcementheader">'.'In The News'.'</h2>';				
+   echo '<div class="small-12 medium-12 large-12 cell '.$whattodisplay.'_header">';
+						echo '<h2 class="announcementheader">'.'In The News'.'</h2>';
 			echo '</div>';
 			}
 	  	$today = getdate();
 				$widgetcategory = get_cat_slug($widgetcategory);
-		
+
 		if ($whattodisplay == 'lccc_announcement'){
 					$announcementargs=array(
 					'post_type' => 'lccc_announcement',
@@ -60,17 +62,17 @@ class LCCC_Whats_Going_On_Announcement_Widget extends WP_Widget {
 					$newevents = new WP_Query($announcementargs);
 					if ( $newevents->have_posts() ) :
 									while ( $newevents->have_posts() ) : $newevents->the_post();
-			echo '<div class="small-12 medium-12 large-12 columns news-container">';
-								echo '<div class="small-12 medium-3 large-3 columns eventhumbnail">';
+			echo '<div class="small-12 medium-12 large-12 cell news-container">';
+								echo '<div class="small-12 medium-3 large-3 cell eventhumbnail">';
 												the_post_thumbnail();
 								echo '</div>';
-								echo '<div class="small-12 medium-9 large-9 columns">';
+								echo '<div class="small-12 medium-9 large-9 cell">';
   						?>
 								<a href="<?php the_permalink();?>"><?php the_title('<h3 class="eventtitle">','</h3>');?></a>
 								<?php
 											the_excerpt('<p>','</p>');
 								echo '</div>';
-			  			echo '<div class="column row">';
+			  			echo '<div class="cell grid-x grid-margin-x">';
     								echo '<hr />';
   						echo '</div>';
 								echo '</div>';
@@ -79,10 +81,11 @@ class LCCC_Whats_Going_On_Announcement_Widget extends WP_Widget {
 		}
 		if ($whattodisplay == 'lccc_announcement'){
 					$currentpostype = 'Announcments';
-			echo '<div class="small-12 medium-12 large-12 columns">';
+			echo '<div class="small-12 medium-12 large-12 cell">';
 							echo '<a href="'.get_post_type_archive_link( $whattodisplay ).'" class="button">View All News</a>';
 		echo '</div>';
 		}
+		echo '</div>';
 		echo '</div>';
   echo $after_widget;
 	}
@@ -94,7 +97,7 @@ class LCCC_Whats_Going_On_Announcement_Widget extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		// outputs the options form on admin
-		
+
 // Check values
 if( $instance) {
 					$numberofposts = esc_attr($instance['numberofposts']);
@@ -118,7 +121,7 @@ echo '<option value="' . $option . '" id="' . $option . '"', $numberofposts == $
 </p>
 		<p>
  <label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Select category', 'wp_widget_plugin' ); ?>:</label>
-    <?php wp_dropdown_categories( array( 'show_option_none' =>' ','name' => $this->get_field_name( 'category' ), 'selected' => $widgetcategory ) ); ?>			
+    <?php wp_dropdown_categories( array( 'show_option_none' =>' ','name' => $this->get_field_name( 'category' ), 'selected' => $widgetcategory ) ); ?>
 </p>
 <?php
 	}

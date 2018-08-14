@@ -29,7 +29,7 @@ class LCCC_Feed_Widget extends WP_Widget {
 			$numberofposts = $instance['numberofposts'];
 			$eventfeeds = $instance['selectedfeedtype'];
    $displaytype = esc_attr($instance['displaytype']);
-			$wheretodisplay  = $instance['wheretodisplay'];
+			//$wheretodisplay  = $instance['wheretodisplay'];
 			$widgetheader = $instance['eventheader'];
 			$whattodisplay = 'lccc_events';
 			echo $before_widget;
@@ -39,35 +39,36 @@ class LCCC_Feed_Widget extends WP_Widget {
 			echo '	 ';
 			echo '  </div>';
 			echo '</div>';
-					 echo '<div class="small-12 medium-12 large-12 columns lccc_events">';
+			echo '<div class="grid-container">';
+					 echo '<div class="small-12 medium-12 large-12 cell lccc_events">';
 //displays the header block of the events
 	if( $widgetheader == 'stocker-header'){
-		echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
-			echo '<div class="small-12 medium-12 large-12 columns event-header-text-container">';
+		echo '<div class="small-12 medium-12 large-12 cell '.$whattodisplay.'_header">';
+			echo '<div class="small-12 medium-12 large-12 cell event-header-text-container">';
 				echo '<h2 class="headertext">'.' Stocker Events'.'</h2>';
 			echo '</div>';
 		echo '</div>';
 	}elseif( $widgetheader == 'athletics-header'){
-echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
-			echo '<div class="small-12 medium-12 large-12 columns event-header-text-container">';
+echo '<div class="small-12 medium-12 large-12 cell '.$whattodisplay.'_header">';
+			echo '<div class="small-12 medium-12 large-12 cell event-header-text-container">';
 				echo '<h2 class="athletics-headertext">'.' Athletics Events'.'</h2>';
 			echo '</div>';
 		echo '</div>';
 }elseif (  $widgetheader =='lccc-header' ){
-		echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
-			echo '<div class="small-5 medium-5 large-5 columns '.$whattodisplay.' headerlogo">';
+		echo '<div class="small-12 medium-12 large-12 cell '.$whattodisplay.'_header">';
+			echo '<div class="small-5 medium-5 large-5 cell '.$whattodisplay.' headerlogo">';
    echo '<img src="' . plugins_url( '../images/lccc-logo.svg', __FILE__ ) . '"  height="60" width="73" alt="Lorain County Community College Logo" > ';
 			echo '</div>';
-			echo '<div class="small-7 medium-7 large-7 columns event-header-text-container">';
+			echo '<div class="small-7 medium-7 large-7 cell event-header-text-container">';
 				echo '<h2 class="headertext">'.'Events'.'</h2>';
 			echo '</div>';
 		echo '</div>';
 	}else{
-		echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
-			echo '<div class="small-5 medium-5 large-5 columns '.$whattodisplay.' headerlogo">';
+		echo '<div class="small-12 medium-12 large-12 cell '.$whattodisplay.'_header">';
+			echo '<div class="small-5 medium-5 large-5 cell '.$whattodisplay.' headerlogo">';
    echo '<img src="' . plugins_url( '../images/lccc-logo.svg', __FILE__ ) . '"  height="60" width="73" alt="Lorain County Community College Logo" > ';
 			echo '</div>';
-			echo '<div class="small-7 medium-7 large-7 columns event-header-text-container">';
+			echo '<div class="small-7 medium-7 large-7 cell event-header-text-container">';
 				echo '<h2 class="headertext">'.'Events'.'</h2>';
 			echo '</div>';
 		echo '</div>';
@@ -88,32 +89,32 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 
 	//Grab posts (endpoints)
   $domain = 'http://' . $_SERVER['SERVER_NAME'];
-  //$domain = 'http://test.lorainccc.edu';
+  //$domain = 'http://www.lorainccc.edu';
 	switch ( $eventfeeds ){
 		case 'all-events':
-   //?filter[posts_per_page]='.$displaynumber.'
-			$lcccevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events' );
-			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events' );
-			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events' );
+ 		$lcccevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events?per_page=100' );
+			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?per_page=100' );
+			$stockerevents = new Endpoint( $domain . '/stocker/wp-json/wp/v2/lccc_events?per_page=100' );
 			break;
 
 		case 'all-athletics':
-			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events' );
+			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?per_page=100' );
 			break;
 
 		case 'all-stocker':
-			$stockerevents = new Endpoint( 'http://sites.lorainccc.edu/stocker/wp-json/wp/v2/lccc_events' );
+			$stockerevents = new Endpoint( $domain . '/stocker/wp-json/wp/v2/lccc_events?per_page=100' );
 			break;
+
 			case 'volleyball':
 			case 'baseball':
 			case 'mens-basketball':
 			case 'womens-basketball':
 			case 'cross-country':
 			case 'softball':
-				$sportevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?filter[event_categories]='.$eventfeeds );
+				$sportevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?filter[event_categories]=' . $eventfeeds . '?per_page=100' );
 			break;
 			default:
-			$categoryevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events?filter[event_categories]='.$eventfeeds );
+			$categoryevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events?filter[event_categories]=' . $eventfeeds . '?per_page=100' );
 	}
 
 
@@ -121,9 +122,9 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	$multi = new MultiBlog( 1 );
 
 	//Add endpoints to instance
-	if ( $lcccacademicevents != ''){
+/*	if ( $lcccacademicevents != ''){
 		$multi->add_endpoint ( $lcccacademicevents );
-	};
+	};*/
 	if ( $lcccevents != ''){
 		$multi->add_endpoint ( $lcccevents );
 	};
@@ -143,11 +144,14 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	};
 
 
+
 	//Fetch Endpoints
 	$posts = $multi->get_posts();
 	if(empty($posts)){
 		echo 'No Posts Found!';
 	}
+
+   //$posts = event_sort($posts);
 
    $icounter = 1;
    $currentdate = date("Y-m-d");
@@ -161,10 +165,10 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 
   if( $icounter <= $numberofposts ){
 
-   if( $post->event_end_date > $currentdate ){
-    echo '<div class="small-12 medium-12 large-12 columns eventcontainer">';
-    echo ' <div class="samll-12 medium-12 large-3 columns calendar-small">';
-    
+   if( $post->event_end_date >= $currentdate ){
+    echo '<div id="lc-event-feed" class="small-12 medium-12 large-12 cell eventcontainer">';
+    echo ' <div class="samll-12 medium-12 large-3 cell calendar-small">';
+
     $date = date_create($post->event_end_date);
     $post_month = date_format($date, 'm');
 
@@ -180,7 +184,7 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
      echo ' <p class="day">'.$post->event_start_date_day.'</p>';
     //}
     echo ' </div>';
-    echo ' <div class="small-12 medium-12 large-9 columns">';
+    echo ' <div class="small-12 medium-12 large-9 cell">';
 switch($displaytype){
      case 'expanded':
 ?>
@@ -221,23 +225,27 @@ switch($displaytype){
 
    /* Generate View all button at bottom of event feed
     * Based upon which event feed is being shown.
+    *
+    * Need to update $domain variable to use SSL since we're done calling the feeds.
     */
+  $domain = 'https://' . $_SERVER['SERVER_NAME'];
+  //$domain = 'https://www.lorainccc.edu';
 
 				switch ( $eventfeeds ){
 						case 'all-events':
-									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
+									echo '<div class="small-12 medium-12 large-12 cell view-all-link">';
 										echo '<a href="' . $domain . '/mylccc/lccc_events/" class="button expand">View All Events </a>';
 									echo '</div>';
 							echo '</div>';
 						break;
 						case 'all-athletics':
-									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
+									echo '<div class="small-12 medium-12 large-12 cell view-all-link">';
 										echo '<a href="' . $domain . '/athletics/lccc_events/" class="button expand">View All Events </a>';
 									echo '</div>';
 							echo '</div>';
 						break;
 						case 'all-stocker':
-									echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
+									echo '<div class="small-12 medium-12 large-12 cell view-all-link">';
 										echo '<a href="' . $domain . '/stocker/lccc_events/" class="button expand">View All Events </a>';
 									echo '</div>';
 							echo '</div>';
@@ -248,15 +256,16 @@ switch($displaytype){
 						case 'womens-basketball':
 						case 'cross-country':
 						case 'softball':
-							echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
+							echo '<div class="small-12 medium-12 large-12 cell view-all-link">';
 										echo '<a href="' . $domain . '/athletics/event-categories/'.$eventfeeds.'" class="button expand">View All Events </a>';
 									echo '</div>';
 							echo '</div>';
 						break;
 						default:
-						echo '<div class="small-12 medium-12 large-12 columns view-all-link">';
+						echo '<div class="small-12 medium-12 large-12 cell view-all-link">';
 										echo '<a href="' . $domain . '/mylccc/event-categories/'.$eventfeeds.'" class="button expand">View All Events </a>';
 									echo '</div>';
+							echo '</div>';
 							echo '</div>';
 				}
 			echo $after_widget;
@@ -276,12 +285,13 @@ switch($displaytype){
 			$eventheader = esc_attr($instance['eventheader']);
    $displaytype = esc_attr($instance['displaytype']);
 			$selectedfeedtype = esc_attr($instance['selectedfeedtype']);
-			$wheretodisplay = esc_attr($instance['wheretodisplay']);
+			//$wheretodisplay = esc_attr($instance['wheretodisplay']);
 		} else {
 			$numberofposts = '';
 			$eventheader = '';
 			$eventfeeds = '';
-			$wheretodisplay = '';
+			//$wheretodisplay = '';
+   $displaytype = '';
 		}
 		?>
 		<p>
@@ -358,5 +368,13 @@ add_action( 'widgets_init', function(){
 	register_widget( 'LCCC_Feed_Widget' );
 });
 
+
+function event_sort( array $data ){
+ usort( $data, function ( $a, $b ) {
+   if($a->event_start_date_and_time != ''){
+     return strtotime( $a->event_start_date_and_time ) - strtotime( $b->event_start_date_and_time );
+   }
+    } );
+}
 
 ?>

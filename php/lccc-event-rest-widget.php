@@ -39,7 +39,7 @@ class LCCC_Feed_Widget extends WP_Widget {
 			echo '	 ';
 			echo '  </div>';
 			echo '</div>';
-					 echo '<div class="small-12 medium-12 large-12 columns lccc_events">';
+					 echo '<div id="lc-event-feed" class="small-12 medium-12 large-12 columns lccc_events">';
 //displays the header block of the events
 	if( $widgetheader == 'stocker-header'){
 		echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';

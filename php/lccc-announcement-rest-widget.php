@@ -46,7 +46,7 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 		if ($whattodisplay == 'lccc_announcement'){
 			switch($displaylayout){
 				case 'Home-page':
-			echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
+			echo '<div id="lc-announcement-feed" class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header">';
 						echo '<h2 class="announcementheader">'.'In The News'.'</h2>';
 			echo '</div>';
 				break;

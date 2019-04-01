@@ -294,6 +294,12 @@ jQuery('#announcement_end_time').timepicker({
 		<input class="widefat"  type="text" name="announcement_meta_box_sub_heading" id="announcement_meta_box_sub_heading" value="<?php echo announcement_meta_box_get_meta( 'announcement_meta_box_sub_heading' ); ?>">
 </p>
 
+<p>
+		<label for="announcement_meta_box_sub_heading"><?php _e( 'Learn More Text:', 'announcement_meta_box' ); ?></label><br>
+		<input class="widefat"  type="text" name="announcement_meta_box_sub_heading" id="announcement_meta_box_learn_more_text" value="<?php echo announcement_meta_box_get_meta( 'announcement_meta_box_learn_more_text' ); ?>">
+</p>
+
+
 <h4>Submitted by:</h4>
 	<p>
 		<label for="announcement_meta_box_name"><?php _e( 'Your Name', 'announcement_meta_box' ); ?></label><br>
@@ -389,8 +395,11 @@ function announcement_meta_box_save( $post_id ) {
 	if ( isset( $_POST['announcement_meta_box_sub_heading'] ) )
 		update_post_meta( $post_id, 'announcement_meta_box_sub_heading', esc_attr( $_POST['announcement_meta_box_sub_heading'] ) );
 
- if ( isset( $_POST['announcement_meta_box_altlink'] ) )
+ 	if ( isset( $_POST['announcement_meta_box_altlink'] ) )
 		update_post_meta( $post_id, 'announcement_meta_box_altlink', esc_attr( $_POST['announcement_meta_box_altlink'] ) );
+
+	if ( isset( $_POST['announcement_meta_box_learn_more_text'] ) )
+	update_post_meta( $post_id, 'announcement_meta_box_learn_more_text', esc_attr( $_POST['announcement_meta_box_learn_more_text'] ) );
 
 	if ( isset( $_POST['announcement_meta_box_name'] ) )
 		update_post_meta( $post_id, 'announcement_meta_box_name', esc_attr( $_POST['announcement_meta_box_name'] ) );

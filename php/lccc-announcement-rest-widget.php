@@ -143,9 +143,9 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
         if ($post->better_featured_image->media_details->sizes->thumbnail->source_url != ''){
          echo '<div class="small-12 medium-3 large-3 columns eventhumbnail">';
          if($post->announcement_altlink != ''){
-         echo '<a href="' . $post->announcement_altlink . '"><img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" alt="' . $post->title->rendered . '" border="0"></a>';
+         echo '<a href="' . $post->announcement_altlink . '"><img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" alt="' . $post->title->rendered . '"></a>';
          }else{
-         echo '<a href="' . $post->link . '"><img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'" border="0"></a>';
+         echo '<a href="' . $post->link . '"><img src="' . $post->better_featured_image->media_details->sizes->thumbnail->source_url .'"></a>';
          }
          echo '</div>';
          echo '<div class="small-12 medium-9 large-9 columns">';
@@ -171,10 +171,16 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
 											echo '<p>' . $post->excerpt->rendered . '</p>';
             }else{
             echo '<p>' . $post->content->rendered . '</p>';
-           }
-        if($post->announcement_altlink != ''){        
-         echo '<br /><a href="' . $post->announcement_altlink .'" class="button">Learn More</a>'; 
-        }           
+					 }
+				if($post->announcement_learnmoretext != ''){
+					if($post->announcement_altlink != ''){        
+						echo '<br /><a href="' . $post->announcement_altlink .'" class="button">' . $post->announcement_learnmoretext . '</a>'; 
+					 }
+				}else{
+					if($post->announcement_altlink != ''){        
+						echo '<br /><a href="' . $post->announcement_altlink .'" class="button">Learn More</a>'; 
+					 }           
+				}
 								echo '</div>';
 			  			echo '<div class="column row">';
 								echo '<hr />';

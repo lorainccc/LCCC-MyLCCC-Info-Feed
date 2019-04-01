@@ -281,6 +281,16 @@ function eventapi_register_fields() {
 		)
 	);
 
+	// Add Learn More Text
+	register_api_field( 'lccc_announcement',
+	'announcement_learnmoretext',
+	array(
+		'get_callback'		=> 'lccc_get_announcement_learnmoretext',
+		'update_callback'	=> null,
+		'schema'			=> null
+	)
+	);	
+
  // Add Location
 	register_api_field( 'lccc_events',
 		'event_location',
@@ -359,6 +369,10 @@ function lccc_get_announcement_start_date_day( $object, $field_name, $request ) 
 
 function lccc_get_announcement_altlink( $object, $field_name, $request ) {
 	return announcement_meta_box_get_meta('announcement_meta_box_altlink');
+}
+
+function lccc_get_announcement_learnmoretext( $object, $field_name, $request ) {
+	return announcement_meta_box_get_meta('announcement_meta_box_learn_more_text');
 }
 
 function lccc_get_event_location( $object, $field_name, $request ) {

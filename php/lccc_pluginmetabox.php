@@ -295,8 +295,8 @@ jQuery('#announcement_end_time').timepicker({
 </p>
 
 <p>
-		<label for="announcement_meta_box_sub_heading"><?php _e( 'Learn More Text:', 'announcement_meta_box' ); ?></label><br>
-		<input class="widefat"  type="text" name="announcement_meta_box_sub_heading" id="announcement_meta_box_learn_more_text" value="<?php echo announcement_meta_box_get_meta( 'announcement_meta_box_learn_more_text' ); ?>">
+		<label for="announcement_meta_box_learn_more_text"><?php _e( 'Learn More Text:', 'announcement_meta_box' ); ?></label><br>
+		<input class="widefat"  type="text" name="announcement_meta_box_learn_more_text" id="announcement_meta_box_learn_more_text" value="<?php echo announcement_meta_box_get_meta( 'announcement_meta_box_learn_more_text' ); ?>">
 </p>
 
 

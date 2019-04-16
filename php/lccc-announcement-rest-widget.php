@@ -199,7 +199,7 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
     case 'all-announcements' :
 							$currentpostype = 'Announcments';
        echo '<div class="small-12 medium-12 large-12 columns">';
-							echo '<a href="https://test.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
+							echo '<a href="/mylccc/lccc_announcement" class="button">View All News</a>';
 		     echo '</div>';
        break;
 					case 'all-athletics' :
@@ -232,7 +232,7 @@ $sitepath = str_replace( '/','', $current_blog_details->path);
     case 'all-announcements' :
 							$currentpostype = 'Announcments';
        echo '<div class="small-12 medium-12 large-12 columns view-all-athletics-button">';
-							echo '<a href="https://test.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
+							echo '<a href="/mylccc/lccc_announcement" class="button">View All News</a>';
 		     echo '</div>';
      break;
 					case 'all-athletics' :

@@ -7,24 +7,32 @@
  *     
 */
 
-function lc_addToGoogleCalendar($title='', $startdate='', $enddate='', $location='', $details='')
+function lc_addToGoogleCalendar($title, $startdate, $enddate, $location, $details)
 {
-    $startdate = ($startdate ? $startdate : time());
+/*     $startdate = ($startdate ? $startdate : time());
     $startdate = (is_numeric($startdate) ? $startdate : strtotime($startdate));
     $enddate = ($enddate ? $enddate : $startdate + 3600);
     $enddate = (is_numeric($enddate) ? $enddate : strtotime($enddate));   
+ */
     $google_url = "http://www.google.com/calendar/event";
     $action = "?action=TEMPLATE";
     $title = ( $title ? ("&text=" . urlencode($title)) : "") ;
-    $dates = "&dates=" . getIcalDate($startdate) . "Z/" . getIcalDate($enddate) . "Z";
+    $dates = "&dates=" . lc_formatDate($startdate) . "/" . lc_formatDate($enddate);
     $location = ( $location ? ("&location=" . urlencode($location)) : "") ;
     $details = ( $details ? ("&details=" . urlencode($details)) : "") ;
     $out = $google_url . $action . $title . $dates . $location . $details;
+    //$out = $dates;
     return $out;
 }
-function getIcalDate($time, $incl_time = true)
+
+/* function getIcalDate($time, $incl_time = true)
 {
     return $incl_time ? date('Ymd\THis', $time) : date('Ymd', $time);
+}
+ */
+function lc_formatDate($time){
+    $dt = date('Ymd\THis', strtotime($time));
+    return $dt;
 }
 
 ?>

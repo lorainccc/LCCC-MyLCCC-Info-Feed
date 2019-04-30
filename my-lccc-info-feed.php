@@ -403,6 +403,8 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc-event-rest-widget.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc-announcement-rest-widget.php' );
 
+require_once( plugin_dir_path( __FILE__ ).'php/lccc-add-google-calendar.php' );
+
 /*
  * Adds the ability to query by custom fields.
  *

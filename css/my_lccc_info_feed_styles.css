@@ -131,6 +131,39 @@ a.button, a.button, a.button.expand, a.button.expand{background-color: #003B76;}
 .eventcontainer:last-child {border-top: none;}
 .widget h2.announcementheader{font-size: 2.2rem;color: #003B76;}
 .view-all-link{text-align: center;}
+
+a.add-to-google, a.add-to-google:focus, a.add-to-google:hover{
+    background:#068795;
+    font-weight: 700;
+    vertical-align: baseline;
+ }
+ 
+ .add-to-calendar, .add-to-calendar:focus, .add-to-calendar:hover{
+    display: inline-block;
+    text-align: center;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transition: background-color 0.25s ease-out, color 0.25s ease-out;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    border-radius: 0;
+    padding: 0.85em 1em;
+    margin: 0 0 1rem 0;
+    font-size: 0.9rem;
+    background:#e36000; 
+    color: #fff;
+    font-weight: 700;
+    vertical-align: baseline;
+ }
+ 
+ .add-to-calendar:focus, .add-to-calendar:hover{
+    text-decoration:underline;
+ }
+ a.add-to-google:focus, a.add-to-google:hover, .add-to-calendar:focus, .add-to-calendar:hover{
+    box-shadow: #515151 0px 0px 10px;
+ }
+
 @media only screen and (max-width: 40em) { 
 .lccc_events .headerlogo {
     padding-right: 0;

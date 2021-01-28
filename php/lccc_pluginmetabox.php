@@ -108,25 +108,31 @@ jQuery('#event_end_time').timepicker({
 	</p>
 <h4 class="metabox-field-title">Event Dates and Times:</h4>
 
-<p>
+	<p>
 		<label for="event_start_date"><?php _e( 'Event Start date:', 'event_meta_box' ); ?></label><br>
 		<input type="text" name="event_start_date" id="event_start_date" value="<?php echo event_meta_box_get_meta( 'event_start_date' ); ?>">
 	</p>
 
-<p>
+	<p>
 		<label for="event_start_time"><?php _e( 'Event Start time:', 'event_meta_box' ); ?></label><br>
 		<input type="text" name="event_start_time" id="event_start_time" value="<?php echo event_meta_box_get_meta( 'event_start_time' ); ?>">
 	</p>
 
-<p>
+	<p>
 		<label for="event_end_date"><?php _e( 'Event End date:', 'event_meta_box' ); ?></label><br>
 		<input type="text" name="event_end_date" id="event_end_date" value="<?php echo event_meta_box_get_meta( 'event_end_date' ); ?>">
 	</p>
 
-<p>
+	<p>
 		<label for="event_end_time"><?php _e( 'Event End time:', 'event_meta_box' ); ?></label><br>
 		<input type="text" name="event_end_time" id="event_end_time" value="<?php echo event_meta_box_get_meta( 'event_end_time' ); ?>">
 	</p>
+
+	<p>
+		<label for="lc_event_spektrix_webid"><?php _e( 'Spektrix Web ID:', 'event_meta_box' ); ?></label><br>
+		<input type="text" name="event_spektrix_webid" id="lc_event_spektrix_webid" value="<?php echo event_meta_box_get_meta( 'lc_event_spektrix_webid' ); ?>">
+	</p>
+
 	<p>
 		<label for="event_meta_box_stoccker_bg_color"><?php _e( 'Stocker Backgound Color', 'event_meta_box' ); ?></label><br>
 		<input class="widefat" type="text" name="event_meta_box_stoccker_bg_color" id="event_meta_box_stoccker_bg_color" value="<?php echo event_meta_box_get_meta( 'event_meta_box_stoccker_bg_color' ); ?>">

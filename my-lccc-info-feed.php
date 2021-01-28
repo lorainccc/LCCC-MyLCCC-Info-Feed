@@ -291,11 +291,21 @@ function eventapi_register_fields() {
 	)
 	);	
 
- // Add Location
+ 	// Add Location
 	register_api_field( 'lccc_events',
 		'event_location',
 		array(
 			'get_callback'		=> 'lccc_get_event_location',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
+
+	//Add Spektrix Web ID
+	register_api_field( 'lccc_events',
+		'lc_event_spektrix_webid',
+		array(
+			'get_callback'		=> 'lc_event_spektrix_webid',
 			'update_callback'	=> null,
 			'schema'			=> null
 		)
@@ -383,6 +393,10 @@ function lccc_get_event_start_date_and_time( $object, $field_name, $request ) {
 	return event_meta_box_get_meta('event_start_date_time');
 }
 
+function lccc_get_event_spektrix_web_id( $object, $field_name, $request ) {
+	return event_meta_box_get_meta('lc_event_spektrix_webid');
+}
+
 add_action( 'rest_api_init', 'eventapi_register_fields');
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_pluginmetabox.php' );
@@ -400,6 +414,10 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc_stocker_eventwidget.php' );
 require_once( plugin_dir_path( __FILE__ ).'php/rest-api-fetch.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc-event-rest-widget.php' );
+
+require_once( plugin_dir_path( __FILE__ ).'php/lc-announce-widget-query.php' );
+
+require_once( plugin_dir_path( __FILE__ ).'php/lc-get-mylccc-info.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc-announcement-rest-widget.php' );
 

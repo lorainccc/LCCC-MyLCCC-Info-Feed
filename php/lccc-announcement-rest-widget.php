@@ -82,10 +82,10 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
    $lcccannouncments = '';
    $athleticannouncements = '';
 
-   $domain = 'https://' . $_SERVER['SERVER_NAME'];
+   //$domain = 'https://' . $_SERVER['SERVER_NAME'];
    //$domain = 'http://www.lorainccc.edu';
 
-   switch ( $selectedfeedtype ){
+/*    switch ( $selectedfeedtype ){
     case 'all-announcements':
         $lcccannouncments = new EndPoint( $domain . '/mylccc/wp-json/wp/v2/lccc_announcement' );
 
@@ -108,24 +108,26 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
     case 'homepage':
      $lcccannouncments = new EndPoint( $domain . '/mylccc/wp-json/wp/v2/lccc_announcement?filter[taxonomy]=category&filter[term]=lccc-home-page' );
      break;
-    }
+    } */
 
    //Create instance
-   $multi = new MultiBlog( 1 );
+   //$multi = new MultiBlog( 1 );
 
    //Add endpoints to instance
-   if ( $lcccannouncments != '' ){
+/*    if ( $lcccannouncments != '' ){
     $multi->add_endpoint ( $lcccannouncments );
    };
 
    if ($athleticannouncements != '' ){
     $multi->add_endpoint ( $athleticannouncements );
-   };
+   }; */
 
 
 
    //Fetch Endpoints
-   $posts = $multi->get_posts();
+   //$posts = $multi->get_posts();
+
+   $posts = lc_get_all_announcements();
    if(empty ($posts)){
     echo 'No Posts Found!';
    }

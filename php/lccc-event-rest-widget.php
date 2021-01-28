@@ -87,9 +87,9 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		//$displaynumber = $numberofposts/$numberoffeeds;
 
 	//Grab posts (endpoints)
-  $domain = 'https://' . $_SERVER['SERVER_NAME'];
+  //$domain = 'https://' . $_SERVER['SERVER_NAME'];
   //$domain = 'http://www.lorainccc.edu';
-	switch ( $eventfeeds ){
+/* 	switch ( $eventfeeds ){
 		case 'all-events':
  		$lcccevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events?per_page=100' );
 			$athleticevents = new Endpoint( $domain . '/athletics/wp-json/wp/v2/lccc_events?per_page=100' );
@@ -114,16 +114,16 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 			break;
 			default:
 			$categoryevents = new Endpoint( $domain . '/mylccc/wp-json/wp/v2/lccc_events?filter[event_categories]=' . $eventfeeds . '?per_page=100' );
-	}
+	} */
 
 
 	//Create instance
-	$multi = new MultiBlog( 1 );
+	//$multi = new MultiBlog( 1 );
 
 	//Add endpoints to instance
 /*	if ( $lcccacademicevents != ''){
 		$multi->add_endpoint ( $lcccacademicevents );
-	};*/
+	};
 	if ( $lcccevents != ''){
 		$multi->add_endpoint ( $lcccevents );
 	};
@@ -140,12 +140,15 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	};
 		if ( $categoryevents != ''){
 		$multi->add_endpoint ( $categoryevents );
-	};
+	};*/
 
    
 
 	//Fetch Endpoints
-	$posts = $multi->get_posts();
+	//$posts = $multi->get_posts();
+	
+	$posts = lc_get_all_events();
+	
 	if(empty($posts)){
 		echo 'No Posts Found!';
 	}

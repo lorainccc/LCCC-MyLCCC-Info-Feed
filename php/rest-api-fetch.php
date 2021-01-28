@@ -67,12 +67,32 @@ class Endpoint {
 	}
 
 	/**
-	 * Reset cache every 3 Hours
+	 * Reset cache to 3 Hours plus or minus 5-45 minutes
 	 */
 	protected function set_cache() {
 		if ( ! empty( $this->posts ) ) {
-			set_transient( $this->cache_key(), $this->posts, 10800 );
+			set_transient( $this->cache_key(), $this->posts, lc_cache_time() );
 		}
+	}
+
+	/**
+	 * Set cache time to 3 hours plus or minus 5-45 minutes
+	 * Varying cache time to stop cache rebuild collisions between multiple feeds
+	 */
+
+	protected function lc_cache_time() {
+		//default time
+		$lc_cache_time = 10800;
+
+		//add minutes to vary the set cache time
+		$lc_minutes_min = 5;
+		$lc_minutes_max = 45;
+
+		$lc_minutes_add = rand($lc_minutes_min, $lc_minutes_max);
+		$lc_time_to_add = $lc_minutes_add * 60;
+
+		$lc_new_cache_time = $lc_cache_time + $lc_time_to_add;
+		return $lc_new_cache_time;
 	}
 
 	/**

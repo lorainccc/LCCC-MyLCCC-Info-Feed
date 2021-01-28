@@ -123,7 +123,7 @@ add_action( 'wp_enqueue_scripts', 'enqueue_foundation' );
 // Add various fields to the JSON output
 function eventapi_register_fields() {
 	// Add Start Date
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_start_date',
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_date',
@@ -132,7 +132,7 @@ function eventapi_register_fields() {
 		)
 	);
 		// Add Start Date
-	register_api_field( 'lccc_academicevent',
+	register_rest_field( 'lccc_academicevent',
 		'event_start_date',
 		array(
 			'get_callback'		=> 'lcccacademic_get_event_start_date',
@@ -141,7 +141,7 @@ function eventapi_register_fields() {
 		)
 	);
    // Add Start Date Month
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_start_date_month',
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_date_month',
@@ -151,7 +151,7 @@ function eventapi_register_fields() {
 	);
 	
      // Add Start Date Month
-	register_api_field( 'lccc_academicevent',
+	register_rest_field( 'lccc_academicevent',
 		'event_start_date_month',
 		array(
 			'get_callback'		=> 'lcccacademic_get_event_start_date_month',
@@ -161,7 +161,7 @@ function eventapi_register_fields() {
 	); 
 		
 		// Add Start Date Day
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_start_date_day',
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_date_day',
@@ -171,7 +171,7 @@ function eventapi_register_fields() {
 	);
 	
 		// Add Start Date Day
-	register_api_field( 'lccc_academicevent',
+	register_rest_field( 'lccc_academicevent',
 		'event_start_date_day',
 		array(
 			'get_callback'		=> 'lcccacademic_get_event_start_date_day',
@@ -181,7 +181,7 @@ function eventapi_register_fields() {
 	);   
 		
 		// Add Start time
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_start_time',
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_time',
@@ -191,7 +191,7 @@ function eventapi_register_fields() {
 	);
 
     // Add Event end_date
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_end_date',
 		array(
 			'get_callback'		=> 'gofurther_get_event_end_date',
@@ -201,7 +201,7 @@ function eventapi_register_fields() {
 	);
 
     // Add Event end_time
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_end_time',
 		array(
 			'get_callback'		=> 'gofurther_get_event_end_time',
@@ -212,7 +212,7 @@ function eventapi_register_fields() {
 
 
     // Add Stocker bg_color
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_meta_box_stocker_bg_color',
 		array(
 			'get_callback'		=> 'gofurther_get_event_stocker_bg_color',
@@ -222,7 +222,7 @@ function eventapi_register_fields() {
 	);
 
     // Add Stocker link
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_meta_box_stocker_ticket_link',
 		array(
 			'get_callback'		=> 'gofurther_get_event_stocker_ticket_link',
@@ -232,7 +232,7 @@ function eventapi_register_fields() {
 	);
 
 // Add Announcment Start Date
-	register_api_field( 'lccc_announcement',
+	register_rest_field( 'lccc_announcement',
 		'announcement_start_date',
 		array(
 			'get_callback'		=> 'lccc_get_announcement_start_date',
@@ -242,7 +242,7 @@ function eventapi_register_fields() {
 	);
 
  // Add Start Date Month
-	register_api_field( 'lccc_announcement',
+	register_rest_field( 'lccc_announcement',
 		'announcement_start_date_month',
 		array(
 			'get_callback'		=> 'lccc_get_announcement_start_date_month',
@@ -252,7 +252,7 @@ function eventapi_register_fields() {
 	);
 
  // Add Start Date Day
-	register_api_field( 'lccc_announcement',
+	register_rest_field( 'lccc_announcement',
 		'announcement_start_date_day',
 		array(
 			'get_callback'		=> 'lccc_get_announcement_start_date_day',

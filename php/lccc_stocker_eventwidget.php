@@ -119,7 +119,7 @@ $today = getdate();
 									echo '</div>';
 									
 										echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns stocker_event_footer">';
-											echo '<a href="/stocker/choose-seats/?e=' . $lc_event_id . '" class="button buy-tickets" target="_blank">Buy Tickets</a>';
+											echo '<a href="/stocker/choose-seats/?e=' . $lc_event_id . '" target="_blank">';
 												echo '<h5 class="stocker-footer-header">Buy Tickets</h5>';
 											echo '</a>';
 										echo '</div>';							

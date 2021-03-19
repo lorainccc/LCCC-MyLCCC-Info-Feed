@@ -97,30 +97,33 @@ $today = getdate();
 
 							$enddate=strtotime($endeventdate);
 							$endeventdate = date("Y-m-d",$enddate);
+		
+		echo $endeventdate;
 
-	if( $endeventdate >= $today){           
+	if( $endeventdate >= $today){
+
 ?>
 <div class="column">
 	<?php
 									echo '<div class="small-12 medium-12 large-12 columns stocker-eventcontainer">';
-											echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns event_header">';
-												echo '<a href="'.get_the_permalink().'">';
-													the_title('<h2 class="stocker-event-title">','</h2>');
-										echo '</a>';
-													echo '<h3 class="stocker-event-date">'.$stockereventstartdate.'</h3>';
-											echo '</div>';
-					echo '<div class="small-12 medium-12 large-12 columns stocker_event_image">';
-																	 echo '<a href="'.get_the_permalink().'">';
-the_post_thumbnail();
-echo '</a>';
-											echo '</div>';
-											
-											echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns stocker_event_footer">';
-											echo '<a href="/stocker/choose-seats/?e=' . $lc_event_id . '" class="button buy-tickets" target="_blank">Buy Tickets</a>';
-											echo '<h5 class="stocker-footer-header">Buy Tickets</h5>';
+										echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns event_header">';
+											echo '<a href="'.get_the_permalink().'">';
+															the_title('<h2 class="stocker-event-title">','</h2>');
 											echo '</a>';
-											echo '</div>';							
-							echo '</div>';
+											echo '<h3 class="stocker-event-date">'.$stockereventstartdate.'</h3>';
+										echo '</div>';
+									echo '<div class="small-12 medium-12 large-12 columns stocker_event_image">';
+										echo '<a href="'.get_the_permalink().'">';
+												the_post_thumbnail();
+										echo '</a>';
+									echo '</div>';
+									
+										echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns stocker_event_footer">';
+											echo '<a href="/stocker/choose-seats/?e=' . $lc_event_id . '" class="button buy-tickets" target="_blank">Buy Tickets</a>';
+												echo '<h5 class="stocker-footer-header">Buy Tickets</h5>';
+											echo '</a>';
+										echo '</div>';							
+									echo '</div>';
         ?>
             </div>  
 <?php

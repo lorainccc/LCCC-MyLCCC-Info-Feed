@@ -53,6 +53,42 @@ jQuery('#event_end_time').timepicker({
 
 });
 </script>
+<?php 
+
+if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' ){
+?>
+<h4>Spektrix Event Update</h4>
+
+<p>
+	<a href="/stocker/wp-admin/edit.php?post_type=lccc_events&page=lc-event-import&lc_event_update=<?php echo $post->ID . "|" . event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ); ?>" class="button button-primary button-large">Update Event from Spektrix</a>
+	<span style="display:block; margin: 20px 0;"><i>Please note:</i> Clicking the above link will not update the Title or Description, just the start date and time, end date and time, price and location.</span>
+</p>
+
+<?php
+
+
+	    //$sDomain = "https://system.spektrix.com/stockerartscenter_run1";
+		$sDomain = "https://system.spektrix.com/stockerartscenter";
+		$lc_event_import = event_meta_box_get_meta('event_meta_box_stocker_spektrix_event_id');
+        $requestUrl =  $sDomain . "/api/v3/events/" . $lc_event_import . "?\$expand=instances";
+
+		$response = wp_remote_get( $requestUrl );
+        $json = json_decode( $response['body'] );        
+
+		$instances = $json->instances;
+
+		if( count($instances) > 1 ){
+			$i = count($instances);
+			do {
+				if($i == 1){
+					echo date_format(date_create($instances[$i-1]->start),"n/j/Y g:i A") . "" ;
+				}else{
+					echo date_format(date_create($instances[$i-1]->start),"n/j/Y g:i A") . " - Create Instance Specific Event" ;
+				}
+			} while ($i < count($instances));
+		}
+	}
+?>
 <h4>Sub Heading:</h4>
 <p>
 		<label for="event_meta_box_sub_heading"><?php _e( 'Stocker Event Sub Heading', 'event_meta_box' ); ?></label><br>

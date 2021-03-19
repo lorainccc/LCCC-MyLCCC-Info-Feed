@@ -53,6 +53,8 @@ jQuery('#event_end_time').timepicker({
 
 });
 </script>
+
+
 <?php 
 
 if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' ){
@@ -89,6 +91,7 @@ if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' 
 		}
 	}
 ?>
+
 <h4>Sub Heading:</h4>
 <p>
 		<label for="event_meta_box_sub_heading"><?php _e( 'Stocker Event Sub Heading', 'event_meta_box' ); ?></label><br>

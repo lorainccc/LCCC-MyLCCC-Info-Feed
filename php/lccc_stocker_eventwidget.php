@@ -76,9 +76,7 @@ $starteventdate = event_meta_box_get_meta('event_start_date');
 		$endeventdate = event_meta_box_get_meta('event_end_date');
 		$endtime = event_meta_box_get_meta('event_end_time');
 		$bgcolor = event_meta_box_get_meta('event_meta_box_stoccker_bg_color');
-      		
-		$lc_event_id = event_meta_box_get_meta('event_meta_box_stocker_spektrix_event_instance_id');
-
+      		$ticketlink = event_meta_box_get_meta('event_meta_box_stocker_ticket_link');	
 										$starttimevar=strtotime($starteventtime);
 										$starttime=	date("h:i a",$starttimevar);
 										$starteventtimehours = date("G",$starttimevar);
@@ -115,8 +113,11 @@ the_post_thumbnail();
 echo '</a>';
 											echo '</div>';
 											
-											echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns stocker_event_footer">';
-											echo '<a href="/stocker/choose-seats/?e=' . $lc_event_id . '" class="button buy-tickets" target="_blank">Buy Tickets</a>';
+if($ticketlink == ''){
+	$ticketlink = 'https://tickets.lorainccc.edu/public/';
+}
+echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns stocker_event_footer">';
+											echo '<a href="'.$ticketlink.'">';
 											echo '<h5 class="stocker-footer-header">Buy Tickets</h5>';
 											echo '</a>';
 											echo '</div>';							

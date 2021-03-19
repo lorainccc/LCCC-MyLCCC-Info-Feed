@@ -98,8 +98,6 @@ $today = getdate();
 							$enddate=strtotime($endeventdate);
 							$endeventdate = date("Y-m-d",$enddate);
 		
-		echo $endeventdate;
-
 	if( $endeventdate >= $today){
 
 ?>

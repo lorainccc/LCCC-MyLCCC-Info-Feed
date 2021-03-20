@@ -77,6 +77,7 @@ $today = getdate();
 							$endtime = event_meta_box_get_meta('event_end_time');
 							$bgcolor = event_meta_box_get_meta('event_meta_box_stoccker_bg_color');
 
+							$ticketlink = event_meta_box_get_meta( 'event_meta_box_stocker_ticket_link' );
 							$lc_event_id = event_meta_box_get_meta('event_meta_box_stocker_spektrix_event_instance_id');
 
 							$starttimevar=strtotime($starteventtime);
@@ -117,7 +118,11 @@ $today = getdate();
 									echo '</div>';
 									
 										echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns stocker_event_footer">';
+											if( $lc_event_id !== false ){
 											echo '<a href="/stocker/choose-seats/?e=' . $lc_event_id . '" target="_blank">';
+											}elseif( $ticketlink !== '' ){
+												echo '<a href="' . $ticketlink . '" target="_blank">';
+											}
 												echo '<h5 class="stocker-footer-header">Buy Tickets</h5>';
 											echo '</a>';
 										echo '</div>';							

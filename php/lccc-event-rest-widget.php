@@ -142,12 +142,11 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 		$multi->add_endpoint ( $categoryevents );
 	};*/
 
-   
-
 	//Fetch Endpoints
 	//$posts = $multi->get_posts();
-	
+
 	$posts = lc_get_all_events();
+
 	
 	if(empty($posts)){
 		echo 'No Posts Found!';

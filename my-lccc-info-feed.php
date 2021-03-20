@@ -121,9 +121,9 @@ add_action( 'wp_enqueue_scripts', 'enqueue_foundation' );
 */
 
 // Add various fields to the JSON output
-function eventapi_register_fields() {
+function lc_eventapi_register_fields() {
 	// Add Start Date
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_start_date',
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_date',
@@ -132,7 +132,7 @@ function eventapi_register_fields() {
 		)
 	);
 		// Add Start Date
-	register_api_field( 'lccc_academicevent',
+	register_rest_field( 'lccc_academicevent',
 		'event_start_date',
 		array(
 			'get_callback'		=> 'lcccacademic_get_event_start_date',
@@ -141,7 +141,7 @@ function eventapi_register_fields() {
 		)
 	);
    // Add Start Date Month
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_start_date_month',
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_date_month',
@@ -151,7 +151,7 @@ function eventapi_register_fields() {
 	);
 
      // Add Start Date Month
-	register_api_field( 'lccc_academicevent',
+	register_rest_field( 'lccc_academicevent',
 		'event_start_date_month',
 		array(
 			'get_callback'		=> 'lcccacademic_get_event_start_date_month',
@@ -161,7 +161,7 @@ function eventapi_register_fields() {
 	);
 
 		// Add Start Date Day
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_start_date_day',
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_date_day',
@@ -171,7 +171,7 @@ function eventapi_register_fields() {
 	);
 
 		// Add Start Date Day
-	register_api_field( 'lccc_academicevent',
+	register_rest_field( 'lccc_academicevent',
 		'event_start_date_day',
 		array(
 			'get_callback'		=> 'lcccacademic_get_event_start_date_day',
@@ -181,7 +181,7 @@ function eventapi_register_fields() {
 	);
 
 		// Add Start time
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_start_time',
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_time',
@@ -191,7 +191,7 @@ function eventapi_register_fields() {
 	);
  
  		// Add Start Date and Time
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_start_date_and_time',
 		array(
 			'get_callback'		=> 'lccc_get_event_start_date_and_time',
@@ -201,7 +201,7 @@ function eventapi_register_fields() {
 	);
 
     // Add Event end_date
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_end_date',
 		array(
 			'get_callback'		=> 'gofurther_get_event_end_date',
@@ -211,7 +211,7 @@ function eventapi_register_fields() {
 	);
 
     // Add Event end_time
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_end_time',
 		array(
 			'get_callback'		=> 'gofurther_get_event_end_time',
@@ -222,7 +222,7 @@ function eventapi_register_fields() {
 
 
     // Add Stocker bg_color
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_meta_box_stocker_bg_color',
 		array(
 			'get_callback'		=> 'gofurther_get_event_stocker_bg_color',
@@ -232,7 +232,7 @@ function eventapi_register_fields() {
 	);
 
     // Add Stocker link
-	register_api_field( 'lccc_events',
+	register_rest_field( 'lccc_events',
 		'event_meta_box_stocker_ticket_link',
 		array(
 			'get_callback'		=> 'gofurther_get_event_stocker_ticket_link',
@@ -243,27 +243,36 @@ function eventapi_register_fields() {
 
 	// Add Spektrix Event ID
 	register_rest_field( 'lccc_events',
-	'event_meta_box_stocker_spektrix_event_id',
-	array(
-		'get_callback'		=> 'gofurther_get_event_stocker_spektrix_event_id',
-		'update_callback'	=> null,
-		'schema'			=> null
-	)
+		'event_meta_box_stocker_spektrix_event_id',
+		array(
+			'get_callback'		=> 'gofurther_get_event_stocker_spektrix_event_id',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
 	);
 	 
 	// Add Spektrix Event Instance ID
 	register_rest_field( 'lccc_events',
-	'event_meta_box_stocker_spektrix_event_instance_id',
-	array(
-		'get_callback'	=> 'gofurther_get_event_stocker_spektrix_event_instance_id',
-		'update_callback'	=> null,
-		'schema'			=> null
-	)
+		'event_meta_box_stocker_spektrix_event_instance_id',
+		array(
+			'get_callback'		=> 'gofurther_get_event_stocker_spektrix_event_instance_id',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
 	);
+ 
+	// Add Location
+	 register_rest_field( 'lccc_events',
+		'event_location',
+		array(
+			'get_callback'		=> 'lccc_get_event_location',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	 );
 
-
-// Add Announcment Start Date
-	register_api_field( 'lccc_announcement',
+	// Add Announcment Start Date
+	register_rest_field( 'lccc_announcement',
 		'announcement_start_date',
 		array(
 			'get_callback'		=> 'lccc_get_announcement_start_date',
@@ -273,7 +282,7 @@ function eventapi_register_fields() {
 	);
 
  // Add Start Date Month
-	register_api_field( 'lccc_announcement',
+	register_rest_field( 'lccc_announcement',
 		'announcement_start_date_month',
 		array(
 			'get_callback'		=> 'lccc_get_announcement_start_date_month',
@@ -283,7 +292,7 @@ function eventapi_register_fields() {
 	);
 
  // Add Start Date Day
-	register_api_field( 'lccc_announcement',
+	register_rest_field( 'lccc_announcement',
 		'announcement_start_date_day',
 		array(
 			'get_callback'		=> 'lccc_get_announcement_start_date_day',
@@ -293,7 +302,7 @@ function eventapi_register_fields() {
 	);
 
  // Add Alternate Link
-	register_api_field( 'lccc_announcement',
+	register_rest_field( 'lccc_announcement',
 		'announcement_altlink',
 		array(
 			'get_callback'		=> 'lccc_get_announcement_altlink',
@@ -303,7 +312,7 @@ function eventapi_register_fields() {
 	);
 
 	// Add Learn More Text
-	register_api_field( 'lccc_announcement',
+	register_rest_field( 'lccc_announcement',
 	'announcement_learnmoretext',
 	array(
 		'get_callback'		=> 'lccc_get_announcement_learnmoretext',
@@ -311,27 +320,6 @@ function eventapi_register_fields() {
 		'schema'			=> null
 	)
 	);	
-
- 	// Add Location
-	register_api_field( 'lccc_events',
-		'event_location',
-		array(
-			'get_callback'		=> 'lccc_get_event_location',
-			'update_callback'	=> null,
-			'schema'			=> null
-		)
-	);
-
-	//Add Spektrix Web ID
-	register_api_field( 'lccc_events',
-		'lc_event_spektrix_webid',
-		array(
-			'get_callback'		=> 'lc_event_spektrix_webid',
-			'update_callback'	=> null,
-			'schema'			=> null
-		)
-	);
-
 }
 
 function gofurther_get_event_start_date( $object, $field_name, $request ) {
@@ -420,11 +408,7 @@ function lccc_get_event_start_date_and_time( $object, $field_name, $request ) {
 	return event_meta_box_get_meta('event_start_date_time');
 }
 
-function lccc_get_event_spektrix_web_id( $object, $field_name, $request ) {
-	return event_meta_box_get_meta('lc_event_spektrix_webid');
-}
-
-add_action( 'rest_api_init', 'eventapi_register_fields');
+add_action( 'rest_api_init', 'lc_eventapi_register_fields');
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc_pluginmetabox.php' );
 
@@ -440,11 +424,11 @@ require_once( plugin_dir_path( __FILE__ ).'php/lccc_stocker_eventwidget.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/rest-api-fetch.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'php/lccc-event-rest-widget.php' );
-
 require_once( plugin_dir_path( __FILE__ ).'php/lc-announce-widget-query.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lc-get-mylccc-info.php' );
+
+require_once( plugin_dir_path( __FILE__ ).'php/lccc-event-rest-widget.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'php/lccc-announcement-rest-widget.php' );
 

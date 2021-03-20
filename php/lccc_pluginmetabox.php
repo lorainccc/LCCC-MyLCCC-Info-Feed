@@ -76,7 +76,7 @@ if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' 
         $json = json_decode( $response['body'] );        
 
 		$instances = $json->instances;
-		
+
 		if( count($instances) > 1 ){
 			$i = count($instances);
 			do {

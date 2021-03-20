@@ -250,7 +250,7 @@ function lc_eventapi_register_fields() {
 			'schema'			=> null
 		)
 	);
-	 
+
 	// Add Spektrix Event Instance ID
 	register_rest_field( 'lccc_events',
 		'event_meta_box_stocker_spektrix_event_instance_id',
@@ -367,6 +367,7 @@ function gofurther_get_event_stocker_bg_color( $object, $field_name, $request ) 
 function gofurther_get_event_stocker_ticket_link( $object, $field_name, $request ) {
 	return event_meta_box_get_meta('event_meta_box_stocker_ticket_link');
 }
+
 function gofurther_get_event_stocker_spektrix_event_id( $object, $field_name, $request ){
 	return event_meta_box_get_meta('event_meta_box_stocker_spektrix_event_id');
 }
@@ -374,6 +375,7 @@ function gofurther_get_event_stocker_spektrix_event_id( $object, $field_name, $r
 function gofurther_get_event_stocker_spektrix_event_instance_id( $object, $field_name, $request ){
 	return event_meta_box_get_meta('event_meta_box_stocker_spektrix_event_instance_id');
 }
+
 function lccc_get_announcement_start_date( $object, $field_name, $request ) {
 	return announcement_meta_box_get_meta('announcement_start_date');
 }

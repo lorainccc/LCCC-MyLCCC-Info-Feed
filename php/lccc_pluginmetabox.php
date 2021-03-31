@@ -165,8 +165,30 @@ if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' 
 	</p>
 
 	<p>
-		<label for="event_meta_box_stoccker_bg_color"><?php _e( 'Stocker Backgound Color', 'event_meta_box' ); ?></label><br>
-		<input class="widefat" type="text" name="event_meta_box_stoccker_bg_color" id="event_meta_box_stoccker_bg_color" value="<?php echo event_meta_box_get_meta( 'event_meta_box_stoccker_bg_color' ); ?>">
+		<label for="event_meta_box_stoccker_bg_color"><?php _e( 'Stocker Backgound Color: ', 'event_meta_box' ); ?></label><br>
+		<div style="margin-left: 15px; display:block;"> 
+		<?php 
+
+			$colors=array
+			(
+				"Purple" 	=> "#67296e",
+				"Orange"	=> "#e36000",
+				"Green" 	=> "#6db400",
+				"Blue" 		=> "#1583cc",
+			);
+
+			$selectedBgColor = event_meta_box_get_meta( 'event_meta_box_stoccker_bg_color' );
+
+			foreach($colors as $color => $colorValue){
+				?>
+				<div style="margin: 5px 0; display:block;">
+					<div style="display:inline-block; width: 85px;"><input name="event_meta_box_stoccker_bg_color" type="radio" id="event_meta_box_stoccker_bg_color" value="<?php echo $colorValue; ?>" <?php echo ($selectedBgColor== $colorValue) ?  "checked" : "" ;  ?>/> <?php echo $color; ?></div>
+					<div style="min-width: 20px; min-height: 20px; display: inline-block; background-color: <?php echo $colorValue; ?>;">&nbsp;</div>
+				</div>
+			<?php
+			}
+		?>
+		</div>
 	</p>
 <p>
 		<label for="event_meta_box_stocker_ticket_link"><?php _e( 'Stocker Buy Tickets Link', 'event_meta_box' ); ?></label><br>

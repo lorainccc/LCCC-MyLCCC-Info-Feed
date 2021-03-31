@@ -174,6 +174,7 @@ if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' 
 				"Purple" 	=> "#67296e",
 				"Orange"	=> "#e36000",
 				"Green" 	=> "#6db400",
+				"Teal"		=> "#068795",
 				"Blue" 		=> "#1583cc",
 			);
 

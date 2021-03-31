@@ -165,11 +165,6 @@ if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' 
 	</p>
 
 	<p>
-		<label for="lc_event_spektrix_webid"><?php _e( 'Spektrix Web ID:', 'event_meta_box' ); ?></label><br>
-		<input type="text" name="event_spektrix_webid" id="lc_event_spektrix_webid" value="<?php echo event_meta_box_get_meta( 'lc_event_spektrix_webid' ); ?>">
-	</p>
-
-	<p>
 		<label for="event_meta_box_stoccker_bg_color"><?php _e( 'Stocker Backgound Color', 'event_meta_box' ); ?></label><br>
 		<input class="widefat" type="text" name="event_meta_box_stoccker_bg_color" id="event_meta_box_stoccker_bg_color" value="<?php echo event_meta_box_get_meta( 'event_meta_box_stoccker_bg_color' ); ?>">
 	</p>

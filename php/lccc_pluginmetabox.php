@@ -165,11 +165,6 @@ if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' 
 	</p>
 
 	<p>
-		<label for="event_start_date_time"><?php _e( 'Event Start Date & Time:', 'event_meta_box' ); ?></label><br>
-		<input type="text" name="event_start_date_time" id="event_start_date_time" value="<?php echo event_meta_box_get_meta( 'event_start_date_time' ); ?>">
-	</p>
-
-	<p>
 		<label for="lc_event_spektrix_webid"><?php _e( 'Spektrix Web ID:', 'event_meta_box' ); ?></label><br>
 		<input type="text" name="event_spektrix_webid" id="lc_event_spektrix_webid" value="<?php echo event_meta_box_get_meta( 'lc_event_spektrix_webid' ); ?>">
 	</p>
@@ -254,8 +249,8 @@ if ( isset( $_POST['event_meta_box_stocker_ticket_link'] ) )
 
 	if ( isset( $_POST['event_end_time'] ) )
    update_post_meta( $post_id, 'event_end_time', esc_attr( $_POST['event_end_time'] ) );
-
 	if ( isset( $_POST['event_meta_box_event_end_date_and_time_'] ) )
+
 		update_post_meta( $post_id, 'event_meta_box_event_end_date_and_time_', esc_attr( $_POST['event_meta_box_event_end_date_and_time_'] ) );
 
 	if ( isset( $_POST['event_meta_box_ticket_price_s_'] ) )

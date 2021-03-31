@@ -165,6 +165,11 @@ if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' 
 	</p>
 
 	<p>
+		<label for="event_start_date_time"><?php _e( 'Event Start Date & Time:', 'event_meta_box' ); ?></label><br>
+		<input type="text" name="event_start_date_time" id="event_start_date_time" value="<?php echo event_meta_box_get_meta( 'event_start_date_time' ); ?>">
+	</p>
+
+	<p>
 		<label for="lc_event_spektrix_webid"><?php _e( 'Spektrix Web ID:', 'event_meta_box' ); ?></label><br>
 		<input type="text" name="event_spektrix_webid" id="lc_event_spektrix_webid" value="<?php echo event_meta_box_get_meta( 'lc_event_spektrix_webid' ); ?>">
 	</p>

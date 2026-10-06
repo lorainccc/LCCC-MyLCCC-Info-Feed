@@ -198,7 +198,7 @@ class MultiBlog {
     //reverse the order to desc
     return strtotime( $a->announcement_start_date ) < strtotime( $b->announcement_start_date );
    }else{
-     return strtotime( $a->date ) - strtotime( $b->date );
+     	return strtotime( $a->date ) - strtotime( $b->date );
    }
    //return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
   } );

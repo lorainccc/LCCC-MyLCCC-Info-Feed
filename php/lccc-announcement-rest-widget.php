@@ -164,12 +164,12 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 								foreach ( $posts as $post ){
 			     echo '<div class="small-12 medium-12 large-12 columns sub-announcement-container">';
 															echo '<div class="samll-12 medium-12 large-3 columns calendar-small">';
-																			echo '<p class="month">'.$post->announcement_start_date_month.'</p>';
-  																	echo '<p class="day">'.$post->announcement_start_date_day.'</p>';
+																			echo '<p class="month">'.$post['announcement_start_date_month'].'</p>';
+  																	echo '<p class="day">'.$post['announcement_start_date_day'].'</p>';
 															echo '</div>';
 															echo '<div class="small-12 medium-12 large-9 columns">';?>
-																			<a href="<?php echo $post->link; ?>"><?php echo $post->title->rendered; ?></a><?php
-															echo '<p>' . $post->excerpt->rendered . '</p>' ;
+																			<a href="<?php echo $post['link']; ?>"><?php echo $post['title']['rendered']; ?></a><?php
+															echo '<p>' . $post['excerpt']['rendered'] . '</p>' ;
 												echo '</div>';
 								echo '</div>';
 
@@ -181,17 +181,14 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
 							echo '<a href="https://test.lorainccc.edu/mylccc/lccc_announcement" class="button">View All News</a>';
 		     echo '</div>';
      break;
-					case 'all-athletics' :
+	
+	 case 'all-athletics' :
 							$currentpostype = 'Announcements';
        echo '<div class="small-12 medium-12 large-12 columns view-all-athletics-button">';
 							echo '<a href="/athletics/lccc_announcement/" class="button">View All Athletic News</a>';
 		     echo '</div>';
      break;
-					
-		}
-								echo '</div>';
-					break;
-			}
+	}
 
 
 			
@@ -199,6 +196,8 @@ class LCCC_Announcement_Feed_Widget extends WP_Widget {
   echo $after_widget;
 	}
 }
+
+	}
 	/**
 	 * Outputs the options form on admin
 	 *

@@ -64,67 +64,100 @@ $today = getdate();
 		'post_status' => 'publish',
 		'posts_per_page' => $numberofposts,
 		'where_to_display' => $widgetcategory,
+		'meta_type' => 'DATE',
 		'order'	=> 'ASC',
 		'orderby'=> 'meta_value',
-		'meta_key' => 'event_start_date', 
+		'meta_key' => 'event_start_date',
 	);
 					$newevents = new WP_Query($eventargs);
+
+					$item_counter = 1;
+	
 					if ( $newevents->have_posts() ) :
 						while ( $newevents->have_posts() ) : $newevents->the_post();
-$starteventdate = event_meta_box_get_meta('event_start_date');
-		$starteventtime = event_meta_box_get_meta('event_start_time');  
-		$endeventdate = event_meta_box_get_meta('event_end_date');
-		$endtime = event_meta_box_get_meta('event_end_time');
-		$bgcolor = event_meta_box_get_meta('event_meta_box_stoccker_bg_color');
-      		$ticketlink = event_meta_box_get_meta('event_meta_box_stocker_ticket_link');	
-										$starttimevar=strtotime($starteventtime);
-										$starttime=	date("h:i a",$starttimevar);
-										$starteventtimehours = date("G",$starttimevar);
-										$starteventtimeminutes = date("i",$starttimevar);
-		
-          $startdate=strtotime($starteventdate);
-										$eventstartdate=date("Y-m-d",$startdate);
-										$stockereventstartdate=date("M d, Y",$startdate);
-										$eventstartmonth=date("M",$startdate);
-										$eventstartday =date("j",$startdate);								
-										
-										$endeventtimevar=strtotime($endtime);
-										$endeventtime = date("h:i a",$endeventtimevar);
-										$endeventtimehours = date("G",$endeventtimevar);
-										$endeventtimeminutes = date("i",$endeventtimevar);
-		
-										$enddate=strtotime($endeventdate);
-										$endeventdate = date("Y-m-d",$enddate);
 
-	if( $endeventdate >= $today){           
+							
+
+							$starteventdate = event_meta_box_get_meta('event_start_date');
+							$starteventtime = event_meta_box_get_meta('event_start_time');  
+							$endeventdate = event_meta_box_get_meta('event_end_date');
+							$endtime = event_meta_box_get_meta('event_end_time');
+							//$bgcolor = event_meta_box_get_meta('event_meta_box_stoccker_bg_color');
+
+							$ticketlink = event_meta_box_get_meta( 'event_meta_box_stocker_ticket_link' );
+							$lc_event_id = event_meta_box_get_meta('event_meta_box_stocker_spektrix_event_instance_id');
+
+							$starttimevar=strtotime($starteventtime);
+							$starttime=	date("h:i a",$starttimevar);
+							$starteventtimehours = date("G",$starttimevar);
+							$starteventtimeminutes = date("i",$starttimevar);
+		
+          					$startdate=strtotime($starteventdate);
+							$eventstartdate=date("Y-m-d",$startdate);
+							$stockereventstartdate=date("M d, Y",$startdate);
+							$eventstartmonth=date("M",$startdate);
+							$eventstartday =date("j",$startdate);								
+							
+							$endeventtimevar=strtotime($endtime);
+							$endeventtime = date("h:i a",$endeventtimevar);
+							$endeventtimehours = date("G",$endeventtimevar);
+							$endeventtimeminutes = date("i",$endeventtimevar);
+
+							$enddate=strtotime($endeventdate);
+							$endeventdate = date("Y-m-d",$enddate);
+	
+	if( $endeventdate >= $today){
+	
 ?>
 <div class="column">
 	<?php
-									echo '<div class="small-12 medium-12 large-12 columns stocker-eventcontainer">';
-											echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns event_header">';
-												echo '<a href="'.get_the_permalink().'">';
-													the_title('<h2 class="stocker-event-title">','</h2>');
-										echo '</a>';
-													echo '<h3 class="stocker-event-date">'.$stockereventstartdate.'</h3>';
-											echo '</div>';
-					echo '<div class="small-12 medium-12 large-12 columns stocker_event_image">';
-																	 echo '<a href="'.get_the_permalink().'">';
-the_post_thumbnail();
-echo '</a>';
-											echo '</div>';
-											
-if($ticketlink == ''){
-	$ticketlink = 'https://tickets.lorainccc.edu/public/';
+	//echo $eventstartdate . "<br/>";
+switch ( $item_counter ) {
+	case '1':
+		//Orange
+		$bgcolor = "#e36000";
+	break;
+	case '2':
+		//Teal
+		$bgcolor = "#068795";
+	break;
+	case '3':
+		//Green
+		$bgcolor = "#6db400";
+	break;
+	case '4':
+		//Purple 
+		$bgcolor = "#67296e";
+	break;		
 }
-echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns stocker_event_footer">';
-											echo '<a href="'.$ticketlink.'">';
-											echo '<h5 class="stocker-footer-header">Buy Tickets</h5>';
-											echo '</a>';
-											echo '</div>';							
-							echo '</div>';
+	
+	echo '<div class="small-12 medium-12 large-12 columns stocker-eventcontainer">';
+		echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns event_header">';
+			echo '<a href="'.get_the_permalink().'">';
+							the_title('<h2 class="stocker-event-title">','</h2>');
+			echo '</a>';
+			echo '<h3 class="stocker-event-date">'.$stockereventstartdate.'</h3>';
+		echo '</div>';
+	echo '<div class="small-12 medium-12 large-12 columns stocker_event_image">';
+		echo '<a href="'.get_the_permalink().'">';
+				the_post_thumbnail();
+		echo '</a>';
+	echo '</div>';
+	
+		echo '<div style="background:'.$bgcolor.';" class="small-12 medium-12 large-12 columns stocker_event_footer">';
+			if( $lc_event_id !== false ){
+			echo '<a href="/stocker/choose-seats/?e=' . $lc_event_id . '" target="_blank">';
+			}elseif( $ticketlink !== '' ){
+				echo '<a href="' . $ticketlink . '" target="_blank">';
+			}
+				echo '<h5 class="stocker-footer-header">Buy Tickets</h5>';
+			echo '</a>';
+		echo '</div>';							
+	echo '</div>';
         ?>
             </div>  
 <?php
+	$item_counter++;
 		}				
 	endwhile;
 					endif;

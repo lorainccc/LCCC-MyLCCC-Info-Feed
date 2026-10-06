@@ -52,6 +52,7 @@ class My_Lccc_Info_Feed_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+
 	}
 
 	/**

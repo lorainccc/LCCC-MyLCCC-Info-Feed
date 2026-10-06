@@ -145,12 +145,14 @@ echo '<div class="small-12 medium-12 large-12 columns '.$whattodisplay.'_header"
 	//Fetch Endpoints
 	$posts = $multi->get_posts();
 	if(empty($posts)){
-		echo 'No Posts Found!';
+		echo ' <div class="small-12 medium-12 large-9 columns">';
+		echo '	No Events Found!';
+		echo ' </div>';
 	}
 
    $icounter = 1;
    $currentdate = date("Y-m-d");
-   $currentday = date("d");
+   $currentday = date("j");
    $currentmonth = date("m");
    $currentmonthname = date("M");
 

@@ -56,24 +56,62 @@ jQuery('#event_end_time').timepicker({
 
 
 <?php 
+	//$sDomain = "https://system.spektrix.com/stockerartscenter_run1";
+	$sDomain = "https://system.spektrix.com/stockerartscenter";
 
-if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' ){
+	$lc_event_connect = $_GET['lc_eventconnect'];
+	$lc_event_instance_connect = $_GET['lc_instanceconnect'];
+	$lc_event_syncdetails = $_GET['lc_eventsyncdetails'];
+
+	if( !empty( $lc_event_connect ) ){
+		update_post_meta( $post->ID, 'event_meta_box_stocker_spektrix_event_id', esc_attr( $lc_event_connect ) );
+		update_post_meta( $post->ID, 'event_meta_box_stocker_spektrix_event_instance_id', esc_attr( $lc_event_instance_connect ) );
+	}
+
+
+
+	if( !empty( $lc_event_syncdetails ) ){
+
+		$requestUrl =  $sDomain . "/api/v3/instances/" . $lc_event_syncdetails;
+
+		$response = wp_remote_get( $requestUrl );
+        $json = json_decode( $response['body'] );
+
+		$lc_venue_Request_Url = $sDomain . "/api/v3/instances/" . $lc_event_syncdetails . "/plan";
+        $lc_venue_Response = wp_remote_get( $lc_venue_Request_Url );
+        $lc_venue_Json = json_decode( $lc_venue_Response['body'] );
+        $lc_venue_Name = $lc_venue_Json->name;
+
+		update_post_meta( $post->ID, 'event_meta_box_stocker_spektrix_event_id', esc_attr( $json->event->id ) ); 
+		update_post_meta( $post->ID, 'event_meta_box_stocker_spektrix_event_instance_id', esc_attr( $json->id ) ); 
+		update_post_meta( $post->ID, 'event_start_date', esc_attr( date_format( date_create( $json->start ), "Y-m-d" ) ) );
+		update_post_meta( $post->ID, 'start_date', esc_attr( date_format( date_create( $json->start ), "Y-m-d" ) ) ); 
+		update_post_meta( $post->ID, 'event_start_time', esc_attr( date_format( date_create( $json->start ),"h:i a" ) ) );
+		update_post_meta( $post->ID, 'event_start_date_time', esc_attr( date_format( date_create( $json->start ),"Y-m-d H:i" ) ) );
+		//update_post_meta( $newId, 'event_meta_box_ticket_price_s_', esc_attr( $json->attribute_TicketPrice ) ); 	
+		update_post_meta( $post->ID, 'event_meta_box_event_location', esc_attr( $lc_venue_Name ) );
+
+	}
+
+if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_instance_id' ) != ''){
 ?>
 <h4>Spektrix Event Update</h4>
-
 <p>
 	<a href="/stocker/wp-admin/edit.php?post_type=lccc_events&page=lc-event-import&lc_event_update=<?php echo $post->ID . "|" . event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ); ?>" class="button button-primary button-large">Update Event from Spektrix</a>
 	<span style="display:block; margin: 20px 0;"><i>Please note:</i> Clicking the above link will not update the Title or Description, just the start date and time, end date and time, price and location.</span>
 </p>
-
+<p>
+	<b>Event ID:</b> <?php echo event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ); ?><br/>
+	<b>Event Instance ID:</b> <?php echo event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_instance_id' ); ?><br/>
+	<span style="display:block; margin: 20px 0;"><i>Use with caution!</i></span>
+	<a href="/stocker/wp-admin/edit.php?post_type=lccc_events&page=lc-event-import&lc_event_remove=<?php echo $post->ID . "|" . event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) . "|" . event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_instance_id' ); ?>" class="button button-primary button-large">Remove Spektrix ID</a>
+	<span style="display:block; margin: 20px 0;">Clicking the above link will remove the Spektrix ID from the Event.  Only use if the wrong event in Spektrix is connected to the event in the Stocker website.</span>
+</p>
 <?php
 
-
-	    //$sDomain = "https://system.spektrix.com/stockerartscenter_run1";
-		$sDomain = "https://system.spektrix.com/stockerartscenter";
 		$lc_event_import = event_meta_box_get_meta('event_meta_box_stocker_spektrix_event_id');
         $requestUrl =  $sDomain . "/api/v3/events/" . $lc_event_import . "?\$expand=instances";
-
+	
 		$response = wp_remote_get( $requestUrl );
         $json = json_decode( $response['body'] );        
 
@@ -81,21 +119,43 @@ if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' 
 		
 		if( count($instances) > 1 ){
 			$i = count($instances);
-			do {
-				if($i == 1){
-					echo date_format(date_create($instances[$i-1]->start),"n/j/Y g:i A") . "" ;
-				}else{
-					echo date_format(date_create($instances[$i-1]->start),"n/j/Y g:i A") . " - Create Instance Specific Event" ;
-				}
-			} while ($i < count($instances));
-		}
-	}
-?>
 
+			for ($x = 0; $x <= $i-1; $x++) {
+				echo "Show Dates/Times: " . date_format(date_create($instances[$x]->start),"n/j/Y g:i A") . " - <a href='" . add_query_arg( 'lc_eventsyncdetails', $instances[$x]->id ) . "'><b>Add Details to this Event</b></a></br>";
+			} 
+		}
+	}else{
+		$lc_event_name = $post->post_title;
+		$lc_today_date = date("Y/m/d");
+		$requestUrl = $sDomain . "/api/v3/events?name=" . $lc_event_name . "&instanceStart_from=" . $lc_today_date . "&\$expand=instances";
+
+		$response = wp_remote_get( $requestUrl );
+
+        $json = json_decode( $response['body'] );
+
+		$rCount = count( $json );
+		for ($x = 0; $x <= $rCount-1; $x++) {
+			if( !$json[$x]->name == ''){
+				echo "<p><i>Connect to Spektrix?</i> - <a href='" . add_query_arg( 'lc_eventconnect', $json[$x]->id ) . "&" . add_query_arg( 'lc_instanceconnect', $json[$x]->instances[0]->id ) . "'><b>" . $json[$x]->name . " | Date: " . date_format(date_create($json[$x]->firstInstanceDateTime),"m/d/Y") ."</b></a></p>";
+			}
+		}
+
+	}
+
+
+
+?>
 <h4>Sub Heading:</h4>
 <p>
 		<label for="event_meta_box_sub_heading"><?php _e( 'Stocker Event Sub Heading', 'event_meta_box' ); ?></label><br>
 		<input class="widefat" type="text" name="event_meta_box_sub_heading" id="event_meta_box_sub_heading" value="<?php echo event_meta_box_get_meta( 'event_meta_box_sub_heading' ); ?>">
+	</p>
+
+<h4>Learn More Button Label:</h4>
+<p>
+		<label for="event_meta_box_learn_more"><?php _e( 'Learn More Button Label', 'event_meta_box' ); ?></label><br>
+		<input class="widefat" type="text" name="event_meta_box_learn_more" id="event_meta_box_learn_more" value="<?php echo event_meta_box_get_meta( 'event_meta_box_learn_more' ); ?>">
+		<span>Provides a custom label for the Learn More button.  Required for Web Accessibility for each link that goes to a unique destination to be labeled uniquely.</span>
 	</p>
 
 <h4>Submitted by:</h4>
@@ -165,25 +225,49 @@ if( event_meta_box_get_meta( 'event_meta_box_stocker_spektrix_event_id' ) != '' 
 <p>
 		<label for="event_end_time"><?php _e( 'Event End time:', 'event_meta_box' ); ?></label><br>
 		<input type="text" name="event_end_time" id="event_end_time" value="<?php echo event_meta_box_get_meta( 'event_end_time' ); ?>">
-	</p>	
-	<p>
-		<label for="event_meta_box_stoccker_bg_color"><?php _e( 'Stocker Backgound Color', 'event_meta_box' ); ?></label><br>
-		<input class="widefat" type="text" name="event_meta_box_stoccker_bg_color" id="event_meta_box_stoccker_bg_color" value="<?php echo event_meta_box_get_meta( 'event_meta_box_stoccker_bg_color' ); ?>">
 	</p>
-<p>
+
+<!--	<p>
+		<label for="event_meta_box_stoccker_bg_color"><?php //_e( 'Stocker Backgound Color: ', 'event_meta_box' ); ?></label><br>
+		<div style="margin-left: 15px; display:block;"> 
+		<?php 
+		/*
+			$colors=array
+			(
+				"Purple" 	=> "#67296e",
+				"Orange"	=> "#e36000",
+				"Green" 	=> "#6db400",
+				"Teal"		=> "#068795",
+				"Blue" 		=> "#1583cc",
+			);
+
+			$selectedBgColor = event_meta_box_get_meta( 'event_meta_box_stoccker_bg_color' );
+
+			foreach($colors as $color => $colorValue){
+			*/
+				?>
+				<div style="margin: 5px 0; display:block;">
+					<div style="display:inline-block; width: 85px;"><input name="event_meta_box_stoccker_bg_color" type="radio" id="event_meta_box_stoccker_bg_color" value="<?php echo $colorValue; ?>" <?php echo ($selectedBgColor== $colorValue) ?  "checked" : "" ;  ?>/> <?php echo $color; ?></div>
+					<div style="min-width: 20px; min-height: 20px; display: inline-block; background-color: <?php echo $colorValue; ?>;">&nbsp;</div>
+				</div>
+			<?php
+			//}
+		?>
+		</div>
+	</p>-->
+	<p>
 		<label for="event_meta_box_stocker_ticket_link"><?php _e( 'Stocker Buy Tickets Link', 'event_meta_box' ); ?></label><br>
 		<input class="widefat" type="text" name="event_meta_box_stocker_ticket_link" id="event_meta_box_stocker_ticket_link" value="<?php echo event_meta_box_get_meta( 'event_meta_box_stocker_ticket_link' ); ?>">
 	</p>
-<h4 class="metabox-field-title">Who should your audience contact for more information?</h4>
-<p>
-			<label for="lccc_event_contact_name"><?php _e( 'Name:', 'event_meta_box' ); ?></label><br>
-			<input class="widefat"  type="text" name="lccc_event_contact_name" id="lccc_event_contact_name" value="<?php echo event_meta_box_get_meta( 'lccc_event_contact_name' ); ?>">
+	<h4 class="metabox-field-title">Who should your audience contact for more information?</h4>
+	<p>
+		<label for="lccc_event_contact_name"><?php _e( 'Name:', 'event_meta_box' ); ?></label><br>
+		<input class="widefat"  type="text" name="lccc_event_contact_name" id="lccc_event_contact_name" value="<?php echo event_meta_box_get_meta( 'lccc_event_contact_name' ); ?>">
 		<label for="event_meta_box_contact_phone_"><?php _e( 'Phone:', 'event_meta_box' ); ?></label><br>
 		<input class="widefat"  type="text" name="event_meta_box_contact_phone_" id="event_meta_box_contact_phone_" value="<?php echo event_meta_box_get_meta( 'event_meta_box_contact_phone_' ); ?>">
 		<label for="event_meta_box_contact_email"><?php _e( 'Email:', 'event_meta_box' ); ?></label><br>
 		<input class="widefat"  type="text" name="event_meta_box_contact_email" id="event_meta_box_contact_email" value="<?php echo event_meta_box_get_meta( 'event_meta_box_contact_email' ); ?>">
-
-	<label for="event_meta_box_associated_web_address_"><?php _e( 'Website:', 'event_meta_box' ); ?></label><br>
+		<label for="event_meta_box_associated_web_address_"><?php _e( 'Website:', 'event_meta_box' ); ?></label><br>
 		<input class="widefat"  type="text" name="event_meta_box_associated_web_address_" id="event_meta_box_associated_web_address_" value="<?php echo event_meta_box_get_meta( 'event_meta_box_associated_web_address_' ); ?>">
 	</p>
 
@@ -203,7 +287,10 @@ if ( isset( $_POST['event_meta_box_stocker_ticket_link'] ) )
 		update_post_meta( $post_id, 'event_meta_box_stocker_ticket_link', esc_attr( $_POST['event_meta_box_stocker_ticket_link'] ) );
 	if ( isset( $_POST['event_meta_box_sub_heading'] ) )
 		update_post_meta( $post_id, 'event_meta_box_sub_heading', esc_attr( $_POST['event_meta_box_sub_heading'] ) );
-	
+
+	if ( isset( $_POST['event_meta_box_learn_more'] ) )
+		update_post_meta( $post_id, 'event_meta_box_learn_more', esc_attr( $_POST['event_meta_box_learn_more'] ) );
+
 	if ( isset( $_POST['event_meta_box_phone'] ) )
 		update_post_meta( $post_id, 'event_meta_box_phone', esc_attr( $_POST['event_meta_box_phone'] ) );
 	if ( isset( $_POST['event_meta_box_e_mail'] ) )
@@ -267,7 +354,32 @@ if ( isset( $_POST['event_start_time'] ) )
 		update_post_meta( $post_id, 'event_meta_box_display_start_date_and_time', esc_attr( $_POST['event_meta_box_display_start_date_and_time'] ) );
 	if ( isset( $_POST['event_meta_box_display_end_date_and_time'] ) )
 		update_post_meta( $post_id, 'event_meta_box_display_end_date_and_time', esc_attr( $_POST['event_meta_box_display_end_date_and_time'] ) );
-}
+
+    // Send Log for Stocker Events
+
+	$lc_site_path = get_site_url();
+	
+	if( $lc_site_path == 'https://www.lorainccc.edu/stocker' ){
+
+		$lc_log_title = 'Dev Log: Stocker Event Metadata Save';
+
+
+		$lc_author_id = $_POST['post_author'];
+
+		$lc_author = get_user_by( 'id', $lc_author_id );
+
+		$lc_site_title = get_bloginfo( 'name' );
+
+
+		$lc_log_body = "";
+		$lc_log_body .= "appended string";
+		$lc_log_body .= "appended string";
+
+		//lc_send_email_log($lc_log_title, $lc_log_body);
+	}	
+
+
+	}
 add_action( 'save_post', 'event_meta_box_save' );
 /*
 	Announcement Metabox
@@ -317,6 +429,36 @@ jQuery('#announcement_end_time').timepicker({
 
 });
 </script>
+
+<?php 
+
+	$lc_site_url = get_bloginfo('url');
+	$lc_site_url = str_replace("https://". $_SERVER['HTTP_HOST']."/", "", $lc_site_url);
+
+	if($lc_site_url == "mylccc"){
+		echo '<p>';
+		echo '<label for="announcement_meta_box_postorder">' . _e( 'Order of Post', 'announcement_meta_box' ) . '</label><br>';
+		echo '<input class="widefat" type="text" name="announcement_meta_box_postorder" id="announcement_meta_box_postorder" value="' . announcement_meta_box_get_meta( 'announcement_meta_box_postorder' ) . '">';
+		echo '</p>';
+	}
+
+?>
+
+<p>
+		<label for="announcement_meta_box_altlink"><?php _e( 'Alternate Destination', 'announcement_meta_box' ); ?></label><br>
+		<input class="widefat" type="text" name="announcement_meta_box_altlink" id="announcement_meta_box_altlink" value="<?php echo announcement_meta_box_get_meta( 'announcement_meta_box_altlink' ); ?>">
+</p>
+
+<p>
+		<label for="announcement_meta_box_sub_heading"><?php _e( 'Sub Heading:', 'announcement_meta_box' ); ?></label><br>
+		<input class="widefat"  type="text" name="announcement_meta_box_sub_heading" id="announcement_meta_box_sub_heading" value="<?php echo announcement_meta_box_get_meta( 'announcement_meta_box_sub_heading' ); ?>">
+</p>
+
+<p>
+		<label for="announcement_meta_box_learn_more_text"><?php _e( 'Learn More Text:', 'announcement_meta_box' ); ?></label><br>
+		<input class="widefat"  type="text" name="announcement_meta_box_learn_more_text" id="announcement_meta_box_learn_more_text" value="<?php echo announcement_meta_box_get_meta( 'announcement_meta_box_learn_more_text' ); ?>">
+</p>
+
 
 <h4>Submitted by:</h4>
 	<p>
@@ -409,6 +551,18 @@ function announcement_meta_box_save( $post_id ) {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 	if ( ! isset( $_POST['announcement_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['announcement_meta_box_nonce'], '_announcement_meta_box_nonce' ) ) return;
 	if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+
+	if ( isset( $_POST['announcement_meta_box_postorder'] ) )
+	update_post_meta( $post_id, 'announcement_meta_box_postorder', esc_attr( $_POST['announcement_meta_box_postorder'] ) );
+
+	if ( isset( $_POST['announcement_meta_box_sub_heading'] ) )
+		update_post_meta( $post_id, 'announcement_meta_box_sub_heading', esc_attr( $_POST['announcement_meta_box_sub_heading'] ) );
+
+ 	if ( isset( $_POST['announcement_meta_box_altlink'] ) )
+		update_post_meta( $post_id, 'announcement_meta_box_altlink', esc_attr( $_POST['announcement_meta_box_altlink'] ) );
+
+	if ( isset( $_POST['announcement_meta_box_learn_more_text'] ) )
+	update_post_meta( $post_id, 'announcement_meta_box_learn_more_text', esc_attr( $_POST['announcement_meta_box_learn_more_text'] ) );
 
 	if ( isset( $_POST['announcement_meta_box_name'] ) )
 		update_post_meta( $post_id, 'announcement_meta_box_name', esc_attr( $_POST['announcement_meta_box_name'] ) );

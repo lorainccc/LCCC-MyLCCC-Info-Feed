@@ -128,16 +128,19 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_date',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
 		)
 	);
-		// Add Start Date
+		// Add Start Date,
 	register_rest_field( 'lccc_academicevent',
 		'event_start_date',
 		array(
 			'get_callback'		=> 'lcccacademic_get_event_start_date',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);
    // Add Start Date Month
@@ -146,7 +149,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_date_month',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);
 	
@@ -156,7 +161,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'lcccacademic_get_event_start_date_month',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	); 
 		
@@ -166,7 +173,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_date_day',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);
 	
@@ -176,7 +185,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'lcccacademic_get_event_start_date_day',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);   
 		
@@ -186,7 +197,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'gofurther_get_event_start_time',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);
 
@@ -196,7 +209,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'gofurther_get_event_end_date',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);
 
@@ -206,7 +221,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'gofurther_get_event_end_time',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);
 
@@ -217,7 +234,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'gofurther_get_event_stocker_bg_color',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);
 
@@ -227,7 +246,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'gofurther_get_event_stocker_ticket_link',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);
 
@@ -257,7 +278,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'lccc_get_announcement_start_date',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);
 
@@ -267,7 +290,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'lccc_get_announcement_start_date_month',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);
 
@@ -277,7 +302,9 @@ function eventapi_register_fields() {
 		array(
 			'get_callback'		=> 'lccc_get_announcement_start_date_day',
 			'update_callback'	=> null,
-			'schema'			=> null
+			'schema'			=> null,
+
+
 		)
 	);
 
